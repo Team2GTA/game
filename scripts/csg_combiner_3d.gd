@@ -1,11 +1,11 @@
 extends CSGCombiner3D
 var poss = []
 func  _ready() -> void:
+	poss = [%f1.position,%f2.position,%f3.position,%f4.position,%f5.position,%f6.position,%f7.position,%f8.position,%f9.position]
 	#Gets position of the rooms
-	poss = [%f1.position,%f2.position,%f3.position,%f4.position]
-
+	
 func _physics_process(delta: float) -> void:
-
+	
 	var index = 0
 	var min_dist = %Player.global_position.distance_to(poss[0])
 	if Input.is_action_just_pressed("ui_menu"):
@@ -17,11 +17,6 @@ func _physics_process(delta: float) -> void:
 				index =i
 		shuffle_fixed(poss,index)
 
-	#Shuffles the positons
-	%f1.position = poss[0]
-	%f2.position = poss[1]
-	%f3.position = poss[2]
-	%f4.position = poss[3]
 	
 #Function to Shuffle while keeping one value constant
 func shuffle_fixed(array:Array, k: int):
@@ -29,3 +24,7 @@ func shuffle_fixed(array:Array, k: int):
 	array.remove_at(k)
 	array.shuffle()
 	array.insert(k,fixed_array[0])
+	
+	#Shuffles the positons
+	for i in range(array.size()):
+		get_node("f%d"%(i+1)).position = array[i]
