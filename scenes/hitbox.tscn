@@ -1,14 +1,16 @@
 [gd_scene load_steps=2 format=3 uid="uid://cjbwt1hegmion"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_x6lip"]
-size = Vector3(16, 1, 16)
+size = Vector3(21, 9.7, 21)
 
 [node name="hitbox" type="Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.5, 0)
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
-transform = Transform3D(16, 0, 0, 0, 1, 0, 0, 0, 16, 0, 0, 0)
+transform = Transform3D(16, 0, 0, 0, 1, 0, 0, 0, 16, 0, 4.5, 0)
 visible = false
+size = Vector3(1.3000001, 10, 1.3000001)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.3500004, 0)
 shape = SubResource("BoxShape3D_x6lip")
