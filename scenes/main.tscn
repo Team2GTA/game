@@ -2,7 +2,7 @@
 
 [ext_resource type="Material" uid="uid://dyj3olp740hx7" path="res://resources/main.tres" id="1_0wfyh"]
 [ext_resource type="PackedScene" uid="uid://bnendg2va3g74" path="res://scenes/player.tscn" id="1_o5qli"]
-[ext_resource type="Script" path="res://scripts/main.gd" id="1_tbgi4"]
+[ext_resource type="Script" uid="uid://cso8446o65ws1" path="res://scripts/main.gd" id="1_tbgi4"]
 [ext_resource type="Script" uid="uid://cns8gg6dx0n16" path="res://scripts/csg_combiner_3d.gd" id="2_sugp2"]
 [ext_resource type="PackedScene" uid="uid://cjbwt1hegmion" path="res://scenes/hitbox.tscn" id="4_jyhfs"]
 
@@ -48,6 +48,9 @@ emission = Color(0.47788018, 0.47788012, 0.47788012, 1)
 albedo_color = Color(1.4944644, 2.3369708, 3.6007304, 1)
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_jyhfs"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tbgi4"]
+size = Vector3(10.1, 9, 13.6)
 
 [node name="main" type="Node3D" unique_id=1963971271]
 script = ExtResource("1_tbgi4")
@@ -618,7 +621,7 @@ transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 8.4703295e-22
 size = Vector3(0.3, 8.400001, 58.600002)
 
 [node name="CSGBox3D8" type="CSGBox3D" parent="Corridors" unique_id=1506539489]
-transform = Transform3D(1.0000001, 0, 1.182172e-07, 0, 1, 0, -1.182172e-07, 0, 1.0000001, 50.2, 4.5000005, 102.385)
+transform = Transform3D(1.0000001, 0, 1.182172e-07, 0, 1, 0, -1.182172e-07, 0, 1.0000001, 47.2, 4.5000005, 102.385)
 size = Vector3(6.5, 1, 25.93)
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Corridors/CSGBox3D8" unique_id=2126519936]
@@ -719,6 +722,66 @@ size = Vector3(0.3, 8.400001, 58.600002)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, -87.073814, -2.9)
 shape = SubResource("WorldBoundaryShape3D_jyhfs")
 
+[node name="TP" type="CSGCombiner3D" parent="." unique_id=681861981]
+use_collision = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="TP" unique_id=1435769706]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.10000062, 0.3000002, 85.84999)
+size = Vector3(8.400001, 1, 56.5)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="TP/CSGBox3D" unique_id=709866920]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.321789, 3.7000003, 0.05000305)
+size = Vector3(0.3, 6.6, 58.600002)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="TP/CSGBox3D" unique_id=738043218]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.178211, 3.7000003, 0.05000305)
+size = Vector3(0.3, 6.6, 58.600002)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="TP/CSGBox3D" unique_id=2089660172]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0.2217865, 6.5000005, 0.05000305)
+size = Vector3(0.3, 8.400001, 58.600002)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="TP/CSGBox3D" unique_id=1916258954]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0, 3.347466, 29.039803)
+size = Vector3(6.3, 8.6, 0.4)
+
+[node name="tp1" type="Area3D" parent="TP/CSGBox3D" unique_id=1531453704]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 5)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TP/CSGBox3D/tp1" unique_id=1001539878]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.7, 20.399994)
+shape = SubResource("BoxShape3D_tbgi4")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="TP" unique_id=356643989]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0.10000062, 0.3000002, -118.05001)
+size = Vector3(8.400001, 1, 56.5)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="TP/CSGBox3D2" unique_id=1285361473]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.321789, 3.7000003, 0.05000305)
+size = Vector3(0.3, 6.6, 58.600002)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="TP/CSGBox3D2" unique_id=2085300837]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.178211, 3.7000003, 0.05000305)
+size = Vector3(0.3, 6.6, 58.600002)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="TP/CSGBox3D2" unique_id=1874702898]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0.2217865, 6.5000005, 0.05000305)
+size = Vector3(0.3, 8.400001, 58.600002)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="TP/CSGBox3D2" unique_id=1724780306]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0, 3.347466, 29.039803)
+size = Vector3(6.3, 8.6, 0.4)
+
+[node name="tp" type="Area3D" parent="TP/CSGBox3D2" unique_id=560497856]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 5)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TP/CSGBox3D2/tp" unique_id=801985971]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.7, 19.299995)
+shape = SubResource("BoxShape3D_tbgi4")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=1367185815]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -131.505)
+
 [connection signal="body_entered" from="Rooms/f1/f1" to="Rooms" method="_on_hitbox_body_entered"]
 [connection signal="body_entered" from="Rooms/f2/hitbox" to="Rooms" method="_on_hitbox_body_entered"]
 [connection signal="body_entered" from="Rooms/f3/hitbox" to="Rooms" method="_on_hitbox_body_entered"]
@@ -729,3 +792,5 @@ shape = SubResource("WorldBoundaryShape3D_jyhfs")
 [connection signal="body_entered" from="Rooms/f8/hitbox" to="Rooms" method="_on_hitbox_body_entered"]
 [connection signal="body_entered" from="Rooms/f9/hitbox" to="Rooms" method="_on_hitbox_body_entered"]
 [connection signal="body_entered" from="WorldBorder" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_entered" from="TP/CSGBox3D/tp1" to="Player" method="_on_tp_1_body_entered"]
+[connection signal="body_entered" from="TP/CSGBox3D2/tp" to="Player" method="_on_tp_body_entered"]

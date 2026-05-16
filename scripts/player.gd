@@ -56,9 +56,15 @@ func shoot_bullet():
 	%Timer.wait_time = rate
 	%Timer.start()
 
+func _on_tp_1_body_entered(body: Node3D) -> void:
+	if body.position.z < 0 and body == %Player:
+		body.position.z = 101.795
+	elif body.position.z > 0 and body == %Player:
+		body.position.z = -131.505
 
-func _on_area_3d_body_entered(body: Node3D) -> void:
-	if position.z >0:
-		position.z = -20
-	elif position.z <0:
-		position.z = 22
+
+func _on_tp_body_entered(body: Node3D) -> void:
+	if body.position.z < 0 and body == %Player:
+		body.position.z = 101.795
+	elif body.position.z > 0 and body == %Player:
+		body.position.z = -131.505
