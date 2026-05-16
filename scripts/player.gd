@@ -55,3 +55,10 @@ func shoot_bullet():
 	new_bullet.global_transform = %Marker3D.global_transform
 	%Timer.wait_time = rate
 	%Timer.start()
+
+
+func _on_area_3d_body_entered(body: Node3D) -> void:
+	if position.z >0:
+		position.z = -20
+	elif position.z <0:
+		position.z = 22
