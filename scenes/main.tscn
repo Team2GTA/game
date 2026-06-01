@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://cso8446o65ws1" path="res://scripts/main.gd" id="1_tbgi4"]
 [ext_resource type="Script" uid="uid://cns8gg6dx0n16" path="res://scripts/csg_combiner_3d.gd" id="2_sugp2"]
 [ext_resource type="PackedScene" uid="uid://cjbwt1hegmion" path="res://scenes/hitbox.tscn" id="4_jyhfs"]
-[ext_resource type="Script" path="res://scripts/ui.gd" id="6_tefeu"]
+[ext_resource type="Script" uid="uid://cndixswnnqg2b" path="res://scripts/ui.gd" id="6_tefeu"]
 [ext_resource type="Texture2D" uid="uid://dfybody42ydnj" path="res://assests/pixil-frame-0.png" id="7_o6xl0"]
 
 [sub_resource type="Environment" id="Environment_tbgi4"]
@@ -1392,8 +1392,8 @@ Sprint : Shift"
 [connection signal="body_entered" from="NavigationRegion3D/Rooms/f8/hitbox" to="NavigationRegion3D/Rooms" method="_on_hitbox_body_entered"]
 [connection signal="body_exited" from="NavigationRegion3D/Rooms/f8/hitbox" to="." method="_on_hitbox_body_exited"]
 [connection signal="body_entered" from="NavigationRegion3D/Rooms/f9/hitbox" to="NavigationRegion3D/Rooms" method="_on_hitbox_body_entered"]
-[connection signal="body_exited" from="NavigationRegion3D/Rooms/f9/hitbox" to="." method="_on_hitbox_body_exited"]
 [connection signal="body_exited" from="NavigationRegion3D/Rooms/f9/hitbox" to="." method="_on_hitbox_8_body_exited"]
+[connection signal="body_exited" from="NavigationRegion3D/Rooms/f9/hitbox" to="." method="_on_hitbox_body_exited"]
 [connection signal="body_entered" from="NavigationRegion3D/TP/CSGBox3D/tp" to="Player" method="_on_tp_body_entered"]
 [connection signal="body_entered" from="NavigationRegion3D/TP/CSGBox3D4/tp" to="Player" method="_on_tp_body_entered"]
 [connection signal="body_entered" from="NavigationRegion3D/TP/CSGBox3D3/tp" to="Player" method="_on_tp_body_entered"]
