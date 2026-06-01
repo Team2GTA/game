@@ -67,6 +67,9 @@ font_color = Color(0, 0, 0, 1)
 [sub_resource type="LabelSettings" id="LabelSettings_tbgi4"]
 font_size = 53
 
+[sub_resource type="LabelSettings" id="LabelSettings_85g3d"]
+font_size = 53
+
 [sub_resource type="LabelSettings" id="LabelSettings_o6xl0"]
 font_size = 70
 font_color = Color(0.9225001, 1, 0.06999999, 1)
@@ -82,7 +85,7 @@ shadow_offset = Vector2(20, 20)
 
 [node name="main" type="Node3D" unique_id=1963971271]
 script = ExtResource("1_tbgi4")
-spawn_cap = 20
+spawn_cap = 25
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1352099103]
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 99, 0)
@@ -655,194 +658,113 @@ omni_attenuation = 0.505
 [node name="SpawnMarkers" type="Node3D" parent="NavigationRegion3D/Rooms" unique_id=1893779971]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6)
 
-[node name="Marker3D7" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=958243550]
+[node name="f1_1" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=958243550]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.52749, 0, 0)
 
-[node name="CSGTorus3D" type="CSGTorus3D" parent="NavigationRegion3D/Rooms/SpawnMarkers/Marker3D7" unique_id=560390007]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.9000015, 0)
-material = ExtResource("1_0wfyh")
+[node name="f1_2" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=856796330]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.52749, 0, -12.900001)
 
-[node name="Marker3D2" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=856796330]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.52749, 0, -5.2000003)
+[node name="f1_3" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=1202494729]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.57251, 0, 1)
 
-[node name="CSGTorus3D" type="CSGTorus3D" parent="NavigationRegion3D/Rooms/SpawnMarkers/Marker3D2" unique_id=423693684]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.9000015, 0)
-material = ExtResource("1_0wfyh")
+[node name="f1_4" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=1805964254]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.57251, 0, -13.7)
 
-[node name="Marker3D3" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=1202494729]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4274902, 0, -5.2000003)
+[node name="f2_1" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=547612308]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72.4725, 0, 0.79999924)
 
-[node name="CSGTorus3D" type="CSGTorus3D" parent="NavigationRegion3D/Rooms/SpawnMarkers/Marker3D3" unique_id=1223631024]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.9000015, 0)
-material = ExtResource("1_0wfyh")
+[node name="f2_2" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=515136852]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 71.47251, 0, -14.000002)
 
-[node name="Marker3D8" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=458308364]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.52749, 0, 39.3)
+[node name="f2_3" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=1956777132]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 86.272514, 0, -14.300002)
 
-[node name="CSGTorus3D" type="CSGTorus3D" parent="NavigationRegion3D/Rooms/SpawnMarkers/Marker3D8" unique_id=2078528832]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.9000015, 0)
-material = ExtResource("1_0wfyh")
+[node name="f2_4" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=1924180047]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 86.272514, 0, 1.499999)
 
-[node name="Marker3D9" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=1625093339]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.52749, 0, 34.1)
+[node name="f3_1" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=809576981]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 71.67251, 0, 47.8)
 
-[node name="CSGTorus3D" type="CSGTorus3D" parent="NavigationRegion3D/Rooms/SpawnMarkers/Marker3D9" unique_id=1719761847]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.9000015, 0)
-material = ExtResource("1_0wfyh")
+[node name="f3_2" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=1012232203]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 71.97251, 0, 33.3)
 
-[node name="Marker3D10" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=1281682212]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4274902, 0, 34.1)
-
-[node name="CSGTorus3D" type="CSGTorus3D" parent="NavigationRegion3D/Rooms/SpawnMarkers/Marker3D10" unique_id=302741572]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.9000015, 0)
-material = ExtResource("1_0wfyh")
-
-[node name="Marker3D11" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=809576981]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 82.67251, 0, 39.3)
-
-[node name="CSGTorus3D" type="CSGTorus3D" parent="NavigationRegion3D/Rooms/SpawnMarkers/Marker3D11" unique_id=572002305]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.9000015, 0)
-material = ExtResource("1_0wfyh")
-
-[node name="Marker3D12" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=1012232203]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 82.67251, 0, 34.1)
-
-[node name="CSGTorus3D" type="CSGTorus3D" parent="NavigationRegion3D/Rooms/SpawnMarkers/Marker3D12" unique_id=392617754]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.9000015, 0)
-material = ExtResource("1_0wfyh")
-
-[node name="Marker3D13" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=714763136]
+[node name="f3_3" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=714763136]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 87.772514, 0, 34.1)
 
-[node name="CSGTorus3D" type="CSGTorus3D" parent="NavigationRegion3D/Rooms/SpawnMarkers/Marker3D13" unique_id=1654622798]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.9000015, 0)
-material = ExtResource("1_0wfyh")
+[node name="f3_4" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=1860850899]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 87.772514, 0, 48.3)
 
-[node name="Marker3D14" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=547612308]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 82.67251, 0, -8.800001)
+[node name="f4_1" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=2128246085]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.7, 0, -92.75514)
 
-[node name="CSGTorus3D" type="CSGTorus3D" parent="NavigationRegion3D/Rooms/SpawnMarkers/Marker3D14" unique_id=2092573359]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.9000015, 0)
-material = ExtResource("1_0wfyh")
+[node name="f4_2" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=1127110960]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 0, -92.45514)
 
-[node name="Marker3D15" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=515136852]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 82.67251, 0, -14.000002)
+[node name="f4_3" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=1124626597]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.6000004, 0, -78.55514)
 
-[node name="CSGTorus3D" type="CSGTorus3D" parent="NavigationRegion3D/Rooms/SpawnMarkers/Marker3D15" unique_id=2078625303]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.9000015, 0)
-material = ExtResource("1_0wfyh")
+[node name="f4_4" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=609894578]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.7, 0, -78.55514)
 
-[node name="Marker3D16" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=1956777132]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 87.772514, 0, -14.000002)
+[node name="f5_1" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=458308364]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.52749, 0, 49.4)
 
-[node name="CSGTorus3D" type="CSGTorus3D" parent="NavigationRegion3D/Rooms/SpawnMarkers/Marker3D16" unique_id=1059635867]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.9000015, 0)
-material = ExtResource("1_0wfyh")
+[node name="f5_2" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=1625093339]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.3725104, 0, 34.1)
 
-[node name="Marker3D17" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=1597778787]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 82.67251, 0, -86.700005)
+[node name="f5_3" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=1281682212]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.6274905, 0, 34.1)
 
-[node name="CSGTorus3D" type="CSGTorus3D" parent="NavigationRegion3D/Rooms/SpawnMarkers/Marker3D17" unique_id=774280597]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.9000015, 0)
-material = ExtResource("1_0wfyh")
+[node name="f5_4" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=75206669]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.07251, 0, 49.8)
 
-[node name="Marker3D18" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=276625716]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 82.67251, 0, -91.9)
+[node name="f6_1" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=1597778787]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 71.372505, 0, -76.8)
 
-[node name="CSGTorus3D" type="CSGTorus3D" parent="NavigationRegion3D/Rooms/SpawnMarkers/Marker3D18" unique_id=2115985106]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.9000015, 0)
-material = ExtResource("1_0wfyh")
+[node name="f6_2" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=276625716]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 71.17251, 0, -91.9)
 
-[node name="Marker3D19" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=1766147792]
+[node name="f6_3" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=1766147792]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 87.772514, 0, -91.9)
 
-[node name="CSGTorus3D" type="CSGTorus3D" parent="NavigationRegion3D/Rooms/SpawnMarkers/Marker3D19" unique_id=1629317053]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.9000015, 0)
-material = ExtResource("1_0wfyh")
+[node name="f6_4" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=1926034888]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 87.772514, 0, -75.2)
 
-[node name="Marker3D20" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=1887229894]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55.277508, 0, -86.700005)
+[node name="f7_1" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=1887229894]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39.177505, 0, -76.600006)
 
-[node name="CSGTorus3D" type="CSGTorus3D" parent="NavigationRegion3D/Rooms/SpawnMarkers/Marker3D20" unique_id=1296831881]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.9000015, 0)
-material = ExtResource("1_0wfyh")
-
-[node name="Marker3D21" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=253538645]
+[node name="f7_2" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=253538645]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55.277508, 0, -91.9)
 
-[node name="CSGTorus3D" type="CSGTorus3D" parent="NavigationRegion3D/Rooms/SpawnMarkers/Marker3D21" unique_id=1327999058]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.9000015, 0)
-material = ExtResource("1_0wfyh")
+[node name="f7_3" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=255358023]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55.277508, 0, -77)
 
-[node name="Marker3D22" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=1945258849]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50.17747, 0, -91.9)
+[node name="f7_4" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=1945258849]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40.47747, 0, -92.700005)
 
-[node name="CSGTorus3D" type="CSGTorus3D" parent="NavigationRegion3D/Rooms/SpawnMarkers/Marker3D22" unique_id=310758965]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.9000015, 0)
-material = ExtResource("1_0wfyh")
+[node name="f8_1" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=1993518184]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.67751, 0, 1.8999949)
 
-[node name="Marker3D23" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=1993518184]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51.17751, 0, -7.7000055)
+[node name="f8_2" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=1949906224]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51.17751, 0, -13.700003)
 
-[node name="CSGTorus3D" type="CSGTorus3D" parent="NavigationRegion3D/Rooms/SpawnMarkers/Marker3D23" unique_id=1956649525]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.9000015, 0)
-material = ExtResource("1_0wfyh")
+[node name="f8_3" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=1928596401]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51.17751, 0, 1.5999975)
 
-[node name="Marker3D24" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=1949906224]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -51.17751, 0, -12.9000025)
+[node name="f8_4" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=228244189]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.47747, 0, -14.100002)
 
-[node name="CSGTorus3D" type="CSGTorus3D" parent="NavigationRegion3D/Rooms/SpawnMarkers/Marker3D24" unique_id=52231331]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.9000015, 0)
-material = ExtResource("1_0wfyh")
+[node name="f9_1" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=1105754166]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.977512, 0, 48.199997)
 
-[node name="Marker3D25" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=228244189]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46.077473, 0, -12.9000025)
-
-[node name="CSGTorus3D" type="CSGTorus3D" parent="NavigationRegion3D/Rooms/SpawnMarkers/Marker3D25" unique_id=778124601]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.9000015, 0)
-material = ExtResource("1_0wfyh")
-
-[node name="Marker3D26" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=1105754166]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50.57751, 0, 40.299995)
-
-[node name="CSGTorus3D" type="CSGTorus3D" parent="NavigationRegion3D/Rooms/SpawnMarkers/Marker3D26" unique_id=530017294]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.9000015, 0)
-material = ExtResource("1_0wfyh")
-
-[node name="Marker3D27" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=1855959289]
+[node name="f9_2" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=1855959289]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50.57751, 0, 35.1)
 
-[node name="CSGTorus3D" type="CSGTorus3D" parent="NavigationRegion3D/Rooms/SpawnMarkers/Marker3D27" unique_id=801365106]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.9000015, 0)
-material = ExtResource("1_0wfyh")
+[node name="f9_3" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=1643579213]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50.57751, 0, 49)
 
-[node name="Marker3D28" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=2077637777]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.477474, 0, 35.1)
-
-[node name="CSGTorus3D" type="CSGTorus3D" parent="NavigationRegion3D/Rooms/SpawnMarkers/Marker3D28" unique_id=1030695256]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.9000015, 0)
-material = ExtResource("1_0wfyh")
-
-[node name="Marker3D4" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=2128246085]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -80.85514)
-
-[node name="CSGTorus3D" type="CSGTorus3D" parent="NavigationRegion3D/Rooms/SpawnMarkers/Marker3D4" unique_id=1612813598]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.9000015, 0)
-material = ExtResource("1_0wfyh")
-
-[node name="Marker3D5" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=1127110960]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.3, 0, -80.85514)
-
-[node name="CSGTorus3D" type="CSGTorus3D" parent="NavigationRegion3D/Rooms/SpawnMarkers/Marker3D5" unique_id=1874859026]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.9000015, 0)
-material = ExtResource("1_0wfyh")
-
-[node name="Marker3D6" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=1124626597]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.3, 0, -78.55514)
-
-[node name="CSGTorus3D" type="CSGTorus3D" parent="NavigationRegion3D/Rooms/SpawnMarkers/Marker3D6" unique_id=572770995]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.9000015, 0)
-material = ExtResource("1_0wfyh")
+[node name="f9_4" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=2077637777]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.377472, 0, 33.6)
 
 [node name="Corridors" type="CSGCombiner3D" parent="NavigationRegion3D" unique_id=1865471026]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47.300003, -4.9, -78.6)
@@ -1273,6 +1195,14 @@ offset_right = 183.0
 offset_bottom = 73.0
 text = "Score : "
 label_settings = SubResource("LabelSettings_tbgi4")
+
+[node name="Stamina" type="Label" parent="UI" unique_id=810476558]
+layout_mode = 0
+offset_left = 1678.0
+offset_top = -2.0
+offset_right = 1914.0
+offset_bottom = 71.0
+label_settings = SubResource("LabelSettings_85g3d")
 
 [node name="Restart" type="Button" parent="UI" unique_id=1167172121]
 layout_mode = 0

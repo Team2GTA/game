@@ -12,6 +12,7 @@ var bob_time = 0.0
 var cam_base_pos
 var bob_enabled = true
 var previous 
+var stamina
 
 signal update_score
 signal player_dead
@@ -23,6 +24,7 @@ signal player_hit
 @onready var axe_anim = $Camera3D/Axe/AnimationPlayer
 
 func _ready():
+	stamina = 50
 	health = max_health
 	previous = 0.0
 	weapon = "gun"
@@ -39,7 +41,7 @@ func _unhandled_input(event):
 		)
 	if Input.is_action_just_pressed("1"):
 		weapon = "gun"
-	elif Input.is_action_just_pressed("2") and $"..".level>1:
+	elif Input.is_action_just_pressed("2"):
 		weapon = "axe"
 
 	match weapon:
@@ -57,10 +59,10 @@ func _unhandled_input(event):
 func _physics_process(delta):
 	#Sprint set-up
 	var speed = 5.5
-	if Input.is_action_pressed("sprint") and is_on_floor():
+	if Input.is_action_pressed("sprint") and is_on_floor() and stamina>0:
 		speed = lerp(previous, 10.0, 8*delta)
 		previous = 10.0
-	elif Input.is_action_pressed("sprint"):
+	elif Input.is_action_pressed("sprint")and stamina>0:
 		speed = lerp(previous, 7.0, 8*delta)
 		previous = 7.0
 	elif is_on_floor(): 
@@ -69,6 +71,15 @@ func _physics_process(delta):
 	else:
 		speed = lerp(previous, 2.0, 8*delta)
 		previous = 2.0
+	
+	#if Input.is_action_pressed("sprint") and stamina>0:
+		#await get_tree().create_timer(1).timeout
+		#stamina -=2
+		#print(stamina)
+	#
+	#if Input.is_action_just_released("sprint"):
+		#await get_tree().create_timer(0.5).timeout
+		#stamina+=2
 	
 	#Movement of player
 	var input_direction_2d = Input.get_vector(
@@ -104,7 +115,6 @@ func _physics_process(delta):
 		"gun":
 			%Rifle.visible = true
 			$Camera3D/Axe.visible = false
-
 			%Camera3D.fov = lerp(%Camera3D.fov, target_fov, 10.0 * delta)
 			if Input.is_action_pressed("shoot"):
 				if !gun_anim.is_playing():
