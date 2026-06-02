@@ -27,6 +27,7 @@ signal player_hit
 @onready var gun_cast = $Camera3D/Rifle/RayCast3D
 @onready var axe_anim = $Camera3D/Axe/AnimationPlayer
 
+
 func _ready():
 	health = max_health
 	weapon = "gun"
@@ -145,7 +146,6 @@ func _physics_process(delta):
 func get_floor_properties():
 	if floor_cast.is_colliding():
 		var collider = floor_cast.get_collider()
-		print(collider)
 		var surface = "default"
 		if collider.is_in_group("ice"):
 			surface = "ice"
@@ -175,8 +175,8 @@ func _on_tp_body_entered(body: Node3D) -> void:
 	elif body.position.z > 0 and body == %Player:
 		body.position.z = -131.505
 
-func hit():
-	health -= randi_range(4, 8)
+func hit(dam):
+	health -= dam
 	emit_signal("player_hit")
 	if health <= 0:
 		die()

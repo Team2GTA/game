@@ -56,7 +56,7 @@ func in_range() -> bool:
 
 func hit_finished():
 	if in_range():
-		player.hit()
+		player.hit(randi_range(2,6))
 
 func _on_area_3d_body_part_hit(dam: Variant, weapon: String = "gun") -> void:
 	health -= dam
