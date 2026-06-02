@@ -29,7 +29,7 @@ var spawned = 0
 
 const PICKUP = preload("res://scenes/pickup.tscn")
 const ZOMBIE = preload("res://scenes/Zombie.tscn")
-const SPAWN_RANGE = 20.0
+const SPAWN_RANGE = 30.0
 var target_hp = 30
 
 func _ready() -> void:
@@ -47,8 +47,10 @@ func _ready() -> void:
 	score_bar.text = "SCORE: " + str(%Player.score)
 
 func _process(delta: float) -> void:
-	if $Player/Camera3D/Rifle.max_capacity ==0:
-		$Player/Camera3D/Rifle.max_capacity=15
+	dif=level*10+wave*2
+	spawn_cap = 2*dif
+	#if $Player/Camera3D/Rifle.max_capacity ==0:
+		#$Player/Camera3D/Rifle.max_capacity=15
 	if state == "level_transition" and !level_loading:
 		level_loading = true
 		level_transition()
@@ -81,10 +83,11 @@ func spawn_zombie() -> void:
 			zombie.global_position = random_marker.global_position + random_offset
 			zombie.rotation.y = random_angle
 			zombie.speed = randf_range(0.1, 0.4) * dif
+			zombie.scale = Vector3(1,1,1)*randf_range(0.9,1.2)
 			zombie.player = %Player
-			zombie.health = level * 5 + 10
+			zombie.health = level * 10 + 10
 		
-		var wait_time = randf_range(4, 12) / dif
+		var wait_time = randf_range(4, 8) / dif
 		await get_tree().create_timer(wait_time).timeout
 	
 	spawning = false
@@ -164,7 +167,7 @@ func _on_wave_over() -> void:
 	spawn_zombie()
 
 func wave_handle():
-	if %Player.score >= (10*level) and !wave_triggered and level<=3:
+	if %Player.score >= (20*level+wave*5+10) and !wave_triggered and level<=3:
 		wave_triggered = true
 		state = "intermidiate"
 		pause_spawn()
@@ -186,14 +189,18 @@ func state_machine():
 			restart.visible = false
 			resume.visible = false
 			$UI/black.visible = true
+			$UI/Quit.visible = true
 			$UI/PixilFrame0.visible = false
 			$UI/Controls.visible = true
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 			get_tree().paused = true
 		"play":
+			$UI/Stamina.visible = true
+			$UI/Stamina.text = "STAMINA\n"+str(%Player.stamina)
 			$UI/CheckBox2.visible = false
 			$UI/CheckBox.visible = false
 			$UI/Controls.visible = false
+			$UI/Quit.visible = false
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED  
 			hp_bar.visible = $UI.hide
 			hp_ghost.visible = $UI.hide
@@ -214,6 +221,7 @@ func state_machine():
 			level_handle()
 			wave_handle()
 		"dead":
+			$UI/Quit.visible = true
 			$UI/CheckBox2.visible = true
 			hp_bar.visible = false
 			bullets.visible = false
@@ -226,6 +234,7 @@ func state_machine():
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 			get_tree().paused = true
 		"win":
+			$UI/Quit.visible = true
 			$UI/CheckBox2.visible = true
 			hp_bar.visible = false
 			bullets.visible = false
@@ -239,6 +248,8 @@ func state_machine():
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 			get_tree().paused = true
 		"intermidiate":
+			update_health()
+			$UI/Stamina.text = "STAMINA\n"+str(%Player.stamina)
 			if $Player/Camera3D/Rifle.reloading:
 				bullets.text = "Reloading...."
 			else:
@@ -248,8 +259,7 @@ func state_machine():
 func level_handle():
 	if level == 1:
 		spawn_markers.position = Vector3(0,0,6)
-		spawn_cap = 20
-		dif = 10
+		spawn_cap = 25
 		if wave > 3 and !wave_triggered:
 			wave_triggered = true
 			state = "win"
@@ -261,7 +271,7 @@ func level_handle():
 	elif level == 2:
 		spawn_markers.position = Vector3(0,37,6)
 		spawn_cap = 35
-		dif = 20
+
 
 func level_transition():
 	await get_tree().create_timer(2.0).timeout
