@@ -18,9 +18,8 @@ func  _process(delta: float) -> void:
 			main.state = "paused" 
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 			get_tree().paused = true
+			$Quit.visible = true
 			$Score.position = Vector2(820.0,283.333)
-			#$Stamina.visible = true
-			#$Stamina.text = str(%Player.stamina)
 			$Controls.visible = true
 			$Restart.visible = true
 			$Resume.visible = true
@@ -77,3 +76,7 @@ func start_countdown():
 
 func _on_check_box_2_toggled(toggled_on: bool) -> void:
 	hide = toggled_on
+
+
+func _on_quit_pressed() -> void:
+	get_tree().quit()

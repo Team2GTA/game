@@ -83,6 +83,7 @@ func spawn_zombie() -> void:
 			zombie.global_position = random_marker.global_position + random_offset
 			zombie.rotation.y = random_angle
 			zombie.speed = randf_range(0.1, 0.4) * dif
+			zombie.scale = Vector3(1,1,1)*randf_range(0.9,1.2)
 			zombie.player = %Player
 			zombie.health = level * 10 + 10
 		
@@ -188,14 +189,18 @@ func state_machine():
 			restart.visible = false
 			resume.visible = false
 			$UI/black.visible = true
+			$UI/Quit.visible = true
 			$UI/PixilFrame0.visible = false
 			$UI/Controls.visible = true
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 			get_tree().paused = true
 		"play":
+			$UI/Stamina.visible = true
+			$UI/Stamina.text = "STAMINA\n"+str(%Player.stamina)
 			$UI/CheckBox2.visible = false
 			$UI/CheckBox.visible = false
 			$UI/Controls.visible = false
+			$UI/Quit.visible = false
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED  
 			hp_bar.visible = $UI.hide
 			hp_ghost.visible = $UI.hide
@@ -216,6 +221,7 @@ func state_machine():
 			level_handle()
 			wave_handle()
 		"dead":
+			$UI/Quit.visible = true
 			$UI/CheckBox2.visible = true
 			hp_bar.visible = false
 			bullets.visible = false
@@ -228,6 +234,7 @@ func state_machine():
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 			get_tree().paused = true
 		"win":
+			$UI/Quit.visible = true
 			$UI/CheckBox2.visible = true
 			hp_bar.visible = false
 			bullets.visible = false
@@ -241,6 +248,8 @@ func state_machine():
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 			get_tree().paused = true
 		"intermidiate":
+			update_health()
+			$UI/Stamina.text = "STAMINA\n"+str(%Player.stamina)
 			if $Player/Camera3D/Rifle.reloading:
 				bullets.text = "Reloading...."
 			else:

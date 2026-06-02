@@ -44,4 +44,6 @@ unique_name_in_owner = true
 wait_time = 0.4
 one_shot = true
 
+[node name="FloorCast" type="RayCast3D" parent="." unique_id=1651069506]
+
 [connection signal="shot" from="." to="Camera3D/Rifle" method="_on_player_shot"]

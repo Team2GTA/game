@@ -85,7 +85,6 @@ shadow_offset = Vector2(20, 20)
 
 [node name="main" type="Node3D" unique_id=1963971271]
 script = ExtResource("1_tbgi4")
-spawn_cap = 25
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1352099103]
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 99, 0)
@@ -1168,7 +1167,6 @@ offset_top = 75.0
 offset_right = 330.0
 offset_bottom = 108.0
 scale = Vector2(1.667, 1.667)
-max_value = 30.0
 show_percentage = false
 
 [node name="HP2_ghost" type="ProgressBar" parent="UI" unique_id=1914762907]
@@ -1178,7 +1176,6 @@ offset_top = 75.0
 offset_right = 330.0
 offset_bottom = 108.0
 scale = Vector2(1.667, 1.667)
-max_value = 30.0
 show_percentage = false
 
 [node name="HP" type="Label" parent="UI" unique_id=1159572759]
@@ -1198,11 +1195,13 @@ label_settings = SubResource("LabelSettings_tbgi4")
 
 [node name="Stamina" type="Label" parent="UI" unique_id=810476558]
 layout_mode = 0
-offset_left = 1678.0
-offset_top = -2.0
-offset_right = 1914.0
-offset_bottom = 71.0
+offset_left = 1398.0
+offset_top = 18.0
+offset_right = 1900.0
+offset_bottom = 91.0
+text = "S"
 label_settings = SubResource("LabelSettings_85g3d")
+horizontal_alignment = 1
 
 [node name="Restart" type="Button" parent="UI" unique_id=1167172121]
 layout_mode = 0
@@ -1299,6 +1298,15 @@ Switch Weapons : 1 and 2
 Menu : Esc
 Sprint : Shift"
 
+[node name="Quit" type="Button" parent="UI" unique_id=408255739]
+layout_mode = 0
+offset_left = 696.0
+offset_top = 821.0
+offset_right = 1266.0
+offset_bottom = 943.0
+theme_override_font_sizes/font_size = 83
+text = "QUIT"
+
 [connection signal="wave_over" from="." to="." method="_on_wave_over"]
 [connection signal="player_dead" from="Player" to="." method="_on_player_player_dead"]
 [connection signal="player_hit" from="Player" to="." method="_on_player_player_hit"]
@@ -1335,3 +1343,4 @@ Sprint : Shift"
 [connection signal="pressed" from="UI/Start" to="UI" method="_on_start_pressed"]
 [connection signal="toggled" from="UI/CheckBox" to="UI" method="_on_check_box_toggled"]
 [connection signal="toggled" from="UI/CheckBox2" to="UI" method="_on_check_box_2_toggled"]
+[connection signal="pressed" from="UI/Quit" to="UI" method="_on_quit_pressed"]
