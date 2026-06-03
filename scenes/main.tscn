@@ -115,7 +115,7 @@ collision_layer = 3
 collision_mask = 3
 script = ExtResource("2_sugp2")
 
-[node name="f1" type="CSGBox3D" parent="NavigationRegion3D/Rooms" unique_id=2036144963 groups=["rooms"]]
+[node name="f1" type="CSGBox3D" parent="NavigationRegion3D/Rooms" unique_id=2036144963 groups=["rooms", "traps"]]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.9, 0)
 layers = 3
@@ -1160,6 +1160,7 @@ layout_mode = 0
 offset_right = 1156.0
 offset_bottom = 649.0
 scale = Vector2(1.667, 1.667)
+mouse_filter = 2
 color = Color(1, 0, 0, 0.5568628)
 
 [node name="black" type="ColorRect" parent="UI" unique_id=493976881]

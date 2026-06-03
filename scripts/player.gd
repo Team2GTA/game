@@ -16,6 +16,7 @@ var stamina_timer = 0.0
 var regen_timer = 0.0
 var accel
 var decel
+var inv 
 
 signal update_score
 signal player_dead
@@ -30,6 +31,7 @@ signal player_hit
 
 func _ready():
 	health = max_health
+	inv = 1
 	weapon = "gun"
 	score = 0
 	accel=10.0
@@ -60,7 +62,36 @@ func _unhandled_input(event):
 			pass
 
 func _physics_process(delta):
-	get_floor_properties()
+	floor_cast.get_floor_properties()
+	var trap = floor_cast.get_material_properties()
+	
+	if trap and inv:
+		match trap.trap_type:
+			"base":
+				hit(trap.trap_damage)
+				inv = 0
+				await get_tree().create_timer(trap.timing).timeout
+				inv = 1
+
+			"fast":
+				hit(trap.trap_damage)
+				inv = 0
+				await get_tree().create_timer(trap.timing).timeout
+				inv = 1
+	
+	match floor_cast.surface:
+			"ice":
+				accel = 2.0
+				decel = 0.5
+			"mud":
+				accel = 4.0
+				decel = 15.0
+			"wood":
+				accel = 8.0
+				decel = 6.0
+			_:
+				accel = 10.0
+				decel = 8.0
 	
 	# stamina drain
 	if Input.is_action_pressed("sprint") and stamina > 0:
@@ -144,48 +175,6 @@ func _physics_process(delta):
 					axe_anim.play("swing")
 
 	move_and_slide()
-
-var current_room = null
-
-func get_floor_properties():
-	if floor_cast.is_colliding():
-		var collider = floor_cast.get_collider()
-		
-		var x = null
-		for j in collider.get_children():
-			if j.is_in_group("rooms"):
-				if x:
-					x = j if position.distance_to(j.position) < position.distance_to(x.position) else x
-				else:
-					x = j
-		
-		if x == current_room:
-			return  
-		current_room = x
-		
-		var surface = "default"
-		if x:
-			if x.is_in_group("ice"):
-				surface = "ice"
-			elif x.is_in_group("mud"):
-				surface = "mud"
-			elif x.is_in_group("wood"):
-				surface = "wood"
-		
-		match surface:
-			"ice":
-				accel = 2.0
-				decel = 0.5
-			"mud":
-				accel = 4.0
-				decel = 15.0
-			"wood":
-				accel = 8.0
-				decel = 6.0
-			_:
-				accel = 10.0
-				decel = 8.0
-
 
 func _on_tp_body_entered(body: Node3D) -> void:
 	if body.position.z < 0 and body == %Player:

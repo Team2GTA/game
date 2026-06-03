@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://chdcqgk15c6e0"]
+
+[ext_resource type="Script" uid="uid://kbjohv0bquep" path="res://scripts/floor_scanner.gd" id="1_cun8f"]
+
+[node name="FloorCast" type="RayCast3D" unique_id=1467298939]
+script = ExtResource("1_cun8f")

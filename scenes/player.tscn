@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dgwalcvrqs0kg" path="res://scripts/player.gd" id="1_g2els"]
 [ext_resource type="PackedScene" uid="uid://cjut3wpjao76r" path="res://scenes/rifle.tscn" id="2_g2els"]
 [ext_resource type="PackedScene" uid="uid://2pynoe8dirur" path="res://scenes/axe.tscn" id="3_qhqgy"]
+[ext_resource type="PackedScene" uid="uid://chdcqgk15c6e0" path="res://scenes/floor_scanner.tscn" id="4_dqkch"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u8vuu"]
 
@@ -44,6 +45,6 @@ unique_name_in_owner = true
 wait_time = 0.4
 one_shot = true
 
-[node name="FloorCast" type="RayCast3D" parent="." unique_id=1651069506]
+[node name="FloorCast" parent="." unique_id=1467298939 instance=ExtResource("4_dqkch")]
 
 [connection signal="shot" from="." to="Camera3D/Rifle" method="_on_player_shot"]

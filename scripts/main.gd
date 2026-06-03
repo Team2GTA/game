@@ -49,8 +49,6 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	dif=level*10+wave*2
 	spawn_cap = 2*dif
-	#if $Player/Camera3D/Rifle.max_capacity ==0:
-		#$Player/Camera3D/Rifle.max_capacity=15
 	if state == "level_transition" and !level_loading:
 		level_loading = true
 		level_transition()
