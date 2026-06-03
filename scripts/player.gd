@@ -32,6 +32,8 @@ func _ready():
 	health = max_health
 	weapon = "gun"
 	score = 0
+	accel=10.0
+	decel=8.0
 	cam_base_pos = %Camera3D.position
 
 func _unhandled_input(event):
@@ -93,11 +95,11 @@ func _physics_process(delta):
 	var direction = transform.basis * input_direction_3d
 
 	if direction.length() > 0.1:
-		velocity.x = lerp(velocity.x, direction.x * speed, 10.0 * delta)
-		velocity.z = lerp(velocity.z, direction.z * speed, 10.0 * delta)
+		velocity.x = lerp(velocity.x, direction.x * speed, accel * delta)
+		velocity.z = lerp(velocity.z, direction.z * speed, accel * delta)
 	else:
-		velocity.x = lerp(velocity.x, 0.0, 8.0 * delta)
-		velocity.z = lerp(velocity.z, 0.0, 8.0 * delta)
+		velocity.x = lerp(velocity.x, 0.0, decel * delta)
+		velocity.z = lerp(velocity.z, 0.0, decel * delta)
 
 	# gravity and jumping
 	velocity.y -= 35 * delta
@@ -143,16 +145,32 @@ func _physics_process(delta):
 
 	move_and_slide()
 
+var current_room = null
+
 func get_floor_properties():
 	if floor_cast.is_colliding():
 		var collider = floor_cast.get_collider()
+		
+		var x = null
+		for j in collider.get_children():
+			if j.is_in_group("rooms"):
+				if x:
+					x = j if position.distance_to(j.position) < position.distance_to(x.position) else x
+				else:
+					x = j
+		
+		if x == current_room:
+			return  
+		current_room = x
+		
 		var surface = "default"
-		if collider.is_in_group("ice"):
-			surface = "ice"
-		elif collider.is_in_group("mud"):
-			surface = "mud"
-		elif collider.is_in_group("wood"):
-			surface = "wood"
+		if x:
+			if x.is_in_group("ice"):
+				surface = "ice"
+			elif x.is_in_group("mud"):
+				surface = "mud"
+			elif x.is_in_group("wood"):
+				surface = "wood"
 		
 		match surface:
 			"ice":

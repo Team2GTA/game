@@ -115,7 +115,7 @@ collision_layer = 3
 collision_mask = 3
 script = ExtResource("2_sugp2")
 
-[node name="f1" type="CSGBox3D" parent="NavigationRegion3D/Rooms" unique_id=2036144963]
+[node name="f1" type="CSGBox3D" parent="NavigationRegion3D/Rooms" unique_id=2036144963 groups=["rooms"]]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.9, 0)
 layers = 3
@@ -177,7 +177,7 @@ distance_fade_begin = 10.0
 omni_range = 12.5
 omni_attenuation = 0.505
 
-[node name="f2" type="CSGBox3D" parent="NavigationRegion3D/Rooms" unique_id=557163517 groups=["ice"]]
+[node name="f2" type="CSGBox3D" parent="NavigationRegion3D/Rooms" unique_id=557163517 groups=["rooms"]]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 79.600006, -4.9, 0)
 layers = 3
@@ -240,7 +240,7 @@ distance_fade_begin = 10.0
 omni_range = 12.5
 omni_attenuation = 0.505
 
-[node name="f3" type="CSGBox3D" parent="NavigationRegion3D/Rooms" unique_id=689072060 groups=["ice"]]
+[node name="f3" type="CSGBox3D" parent="NavigationRegion3D/Rooms" unique_id=689072060 groups=["rooms"]]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80.2, -4.9, 46.9)
 layers = 3
@@ -300,7 +300,7 @@ distance_fade_begin = 10.0
 omni_range = 12.5
 omni_attenuation = 0.505
 
-[node name="f4" type="CSGBox3D" parent="NavigationRegion3D/Rooms" unique_id=1983261727 groups=["ice"]]
+[node name="f4" type="CSGBox3D" parent="NavigationRegion3D/Rooms" unique_id=1983261727 groups=["rooms"]]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.9, -78.7)
 layers = 3
@@ -363,7 +363,7 @@ distance_fade_begin = 10.0
 omni_range = 12.5
 omni_attenuation = 0.505
 
-[node name="f5" type="CSGBox3D" parent="NavigationRegion3D/Rooms" unique_id=461716861 groups=["ice"]]
+[node name="f5" type="CSGBox3D" parent="NavigationRegion3D/Rooms" unique_id=461716861 groups=["rooms"]]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.9, 47.9)
 layers = 3
@@ -423,7 +423,7 @@ distance_fade_begin = 10.0
 omni_range = 12.5
 omni_attenuation = 0.505
 
-[node name="f6" type="CSGBox3D" parent="NavigationRegion3D/Rooms" unique_id=170943997 groups=["ice"]]
+[node name="f6" type="CSGBox3D" parent="NavigationRegion3D/Rooms" unique_id=170943997 groups=["rooms"]]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 79.4, -4.9, -78)
 layers = 3
@@ -483,7 +483,7 @@ distance_fade_begin = 10.0
 omni_range = 12.5
 omni_attenuation = 0.505
 
-[node name="f7" type="CSGBox3D" parent="NavigationRegion3D/Rooms" unique_id=1914351522 groups=["ice"]]
+[node name="f7" type="CSGBox3D" parent="NavigationRegion3D/Rooms" unique_id=1914351522 groups=["rooms"]]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47.300003, -4.9, -78.6)
 layers = 3
@@ -543,7 +543,7 @@ distance_fade_begin = 10.0
 omni_range = 12.5
 omni_attenuation = 0.505
 
-[node name="f8" type="CSGBox3D" parent="NavigationRegion3D/Rooms" unique_id=532472063 groups=["ice"]]
+[node name="f8" type="CSGBox3D" parent="NavigationRegion3D/Rooms" unique_id=532472063 groups=["rooms"]]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43.1, -4.9, 0)
 layers = 3
@@ -603,7 +603,7 @@ distance_fade_begin = 10.0
 omni_range = 12.5
 omni_attenuation = 0.505
 
-[node name="f9" type="CSGBox3D" parent="NavigationRegion3D/Rooms" unique_id=914719525 groups=["ice"]]
+[node name="f9" type="CSGBox3D" parent="NavigationRegion3D/Rooms" unique_id=914719525 groups=["rooms"]]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43.3, -4.9, 47.8)
 layers = 3
@@ -1208,7 +1208,6 @@ offset_left = 1398.0
 offset_top = 18.0
 offset_right = 1900.0
 offset_bottom = 91.0
-text = "S"
 label_settings = SubResource("LabelSettings_85g3d")
 horizontal_alignment = 1
 

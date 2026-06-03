@@ -4,6 +4,22 @@ var counting_down = false
 var old_state
 var hide
 
+@onready var quit: Button = $Quit
+@onready var score: Label = $Score
+@onready var controls: Label = $Controls
+@onready var restart: Button = $Restart
+@onready var resume: Button = $Resume
+@onready var black: ColorRect = $black
+@onready var hp: Label = $HP
+@onready var hp_2: ProgressBar = $HP2
+@onready var hp_2_ghost: ProgressBar = $HP2_ghost
+@onready var check_box_2: CheckBox = $CheckBox2
+@onready var check_box: CheckBox = $CheckBox
+@onready var bullets: Label = $Bullets
+@onready var pixil_frame_0: Sprite2D = $PixilFrame0
+@onready var stamina: Label = $Stamina
+
+
 func _ready() -> void:
 	$CheckBox.button_pressed = true
 	%Player.bob_enabled = $CheckBox.button_pressed
@@ -18,19 +34,20 @@ func  _process(delta: float) -> void:
 			main.state = "paused" 
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 			get_tree().paused = true
-			$Quit.visible = true
-			$Score.position = Vector2(820.0,283.333)
-			$Controls.visible = true
-			$Restart.visible = true
-			$Resume.visible = true
-			$black.visible = true
-			$HP.visible = false
-			$HP2.visible = false
-			$CheckBox2.visible = true
-			$Bullets.visible = false
-			$HP2_ghost.visible = false
-			$PixilFrame0.visible = false
-			$CheckBox.visible = true
+			quit.visible = true
+			stamina.visible = false
+			score.position = Vector2(820.0,283.333)
+			controls.visible = true
+			restart.visible = true
+			resume.visible = true
+			black.visible = true
+			hp.visible = false
+			hp_2.visible = false
+			check_box_2.visible = true
+			bullets.visible = false
+			hp_2_ghost.visible = false
+			pixil_frame_0.visible = false
+			check_box.visible = true
 		elif main.state == "paused":
 			get_tree().paused = false
 			main.state = "play"

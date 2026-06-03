@@ -1,29 +1,13 @@
 [gd_scene format=3 uid="uid://5aawiakanqk2"]
 
-[ext_resource type="Script" uid="uid://d3dv38jtvnh5v" path="res://scripts/trap.gd" id="1_npg1n"]
-
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_ykdm6"]
-height = 0.06
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_ykdm6"]
-
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_npg1n"]
-
-[node name="Trap" type="RigidBody3D" unique_id=1953260811]
-collision_layer = 3
-collision_mask = 3
+[node name="Trap" type="RigidBody3D" unique_id=972431590]
 continuous_cd = true
-script = ExtResource("1_npg1n")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1668132248]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1261374863]
+transform = Transform3D(1, 0, 0, 0, 0.04311049, 0, 0, 0, 1, 0, 0, 0)
 shape = SubResource("CylinderShape3D_ykdm6")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=886016534]
-transform = Transform3D(1, 0, 0, 0, 0.057338867, 0, 0, 0, 1, 0, 0, 0)
-layers = 3
-mesh = SubResource("CylinderMesh_ykdm6")
-
-[node name="ShapeCast3D" type="ShapeCast3D" parent="." unique_id=1939344029]
-transform = Transform3D(1, 0, 0, 0, 0.099999964, 0, 0, 0, 1, 0, 0.06999987, 0)
-shape = SubResource("CylinderShape3D_npg1n")
-target_position = Vector3(0, 1, 0)
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="CollisionShape3D" unique_id=554513238]
+sides = 16

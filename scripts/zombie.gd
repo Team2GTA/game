@@ -3,6 +3,7 @@ var player = null
 var state_machine
 var health = 15
 var speed = 2
+var inv
 var flash_timer = false
 var persistance = false
 var knockback = Vector3.ZERO
@@ -16,6 +17,7 @@ signal zombie_dead(pos)
 
 func _ready():
 	add_to_group("enemy")
+	inv = 1
 	if player_path:
 		player = get_node(player_path)
 	state_machine = anim.get("parameters/playback")
@@ -56,7 +58,7 @@ func in_range() -> bool:
 
 func hit_finished():
 	if in_range():
-		player.hit(randi_range(2,6))
+		player.hit(randi_range(3,7))
 
 func _on_area_3d_body_part_hit(dam: Variant, weapon: String = "gun") -> void:
 	health -= dam
