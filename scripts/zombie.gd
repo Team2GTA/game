@@ -14,6 +14,8 @@ signal zombie_dead(pos)
 @export var player_path : NodePath
 @onready var nav_agent = $NavigationAgent3D
 @onready var anim = $AnimationTree
+@onready var floor_cast: RayCast3D = $CollisionShape3D/FloorCast
+
 
 func _ready():
 	add_to_group("enemy")
@@ -30,11 +32,25 @@ func _process(delta: float) -> void:
 	
 	match state_machine.get_current_node():
 		"run":
+			if floor_cast.get_material_properties():
+				if floor_cast.get_material_properties().is_in_group("traps") and inv:
+					got_hit(floor_cast.get_material_properties().trap_damage)
+					inv =0 
+					floor_cast.get_material_properties().hit +=1
+					await get_tree().create_timer(floor_cast.get_material_properties().timing).timeout
+					inv = 1
 			nav_agent.set_target_position(player.global_transform.origin)
 			var next_nav_point = nav_agent.get_next_path_position()
 			velocity = (next_nav_point - global_transform.origin).normalized() * speed
 			smooth_look_at(Vector3(global_position.x + velocity.x, global_position.y, global_position.z + velocity.z), delta)
 		"attack":
+			if floor_cast.get_material_properties():
+				if floor_cast.get_material_properties().is_in_group("traps") and inv:
+					got_hit(floor_cast.get_material_properties().trap_damage)
+					floor_cast.get_material_properties().hit +=1
+					inv =0 
+					await get_tree().create_timer(floor_cast.get_material_properties().timing).timeout
+					inv = 1
 			smooth_look_at(Vector3(player.global_position.x, global_position.y, player.global_position.z), delta)
 	
 	# apply knockback
@@ -61,14 +77,23 @@ func hit_finished():
 		player.hit(randi_range(3,7))
 
 func _on_area_3d_body_part_hit(dam: Variant, weapon: String = "gun") -> void:
-	health -= dam
-	flash_red()
-	var direction = (global_position - player.global_position).normalized()
-	knockback = direction * KNOCKBACK_FORCE if weapon == "axe" else Vector3.ZERO
+		got_hit(dam)
+		var direction = (global_position - player.global_position).normalized()
+		knockback = direction * KNOCKBACK_FORCE if weapon == "axe" else Vector3.ZERO
+
+func got_hit(dam):
+	if !anim["parameters/conditions/die"]:
+		health -= dam
+		flash_red()
+		die()
+
+func die():
 	if health <= 0:
-		var death_pos = global_position
-		call_deferred("queue_free")
-		emit_signal("zombie_dead", death_pos)
+			var death_pos = global_position
+			anim["parameters/conditions/die"]=true
+			await get_tree().create_timer(2.5).timeout
+			call_deferred("queue_free")
+			emit_signal("zombie_dead", death_pos)
 
 func flash_red():
 	if flash_timer:

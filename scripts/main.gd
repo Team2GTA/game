@@ -91,7 +91,10 @@ func spawn_zombie() -> void:
 	spawning = false
 
 func _on_area_3d_body_entered(body: Node3D) -> void:
-	%Player.die()
+	if body.is_in_group("player"):
+		%Player.die()
+	else:
+		body.queue_free()
 
 func _on_player_player_hit() -> void:
 	hit_rect.visible = true
@@ -112,12 +115,12 @@ func reduce(pos):
 		spawned -= 1
 
 func drop(pos):
-	if randi()%3 == 0:
+	if randi()%1 == 0:
 		var pickup = PICKUP.instantiate()
 		pickup.type = ["mag","heal","heal","heal","heal","heal"].pick_random() if $Player/Camera3D/Rifle.max_capacity > 20 else ["mag","heal","mag","mag","mag"].pick_random()
 		add_child(pickup)
-		pickup.position = pos + Vector3(0, 0.5, 0)
-		await get_tree().create_timer(0.5).timeout
+		pickup.global_position = pos + Vector3(0, 0.5, 0)
+		#await get_tree().create_timer(0.5).timeout
 
 func update_health():
 	hp.text = "HP: " + str(%Player.health)
@@ -164,8 +167,8 @@ func _on_wave_over() -> void:
 	resume_spawn()
 	spawn_zombie()
 
-func wave_handle():
-	if %Player.score >= (20*level+wave*5+10) and !wave_triggered and level<=3:
+func wave_handle():#20*level+wave*5+10
+	if %Player.score >= (5) and !wave_triggered and level<=3:
 		wave_triggered = true
 		state = "intermidiate"
 		pause_spawn()
@@ -260,7 +263,7 @@ func level_handle():
 		spawn_cap = 25
 		if wave > 3 and !wave_triggered:
 			wave_triggered = true
-			state = "win"
+			state = "level_transition"
 			pause_spawn()
 			clear_zombies()
 			label.visible = true
@@ -269,7 +272,6 @@ func level_handle():
 	elif level == 2:
 		spawn_markers.position = Vector3(0,37,6)
 		spawn_cap = 35
-
 
 func level_transition():
 	await get_tree().create_timer(2.0).timeout

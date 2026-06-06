@@ -17,12 +17,14 @@ var regen_timer = 0.0
 var accel
 var decel
 var inv 
+var can_interact = true
 
 signal update_score
 signal player_dead
 signal shot
 signal player_hit
 
+@onready var interact_ray: RayCast3D = $Camera3D/InteractRay
 @onready var floor_cast: RayCast3D = $FloorCast
 @onready var gun_anim = $Camera3D/Rifle/AnimationPlayer
 @onready var gun_cast = $Camera3D/Rifle/RayCast3D
@@ -65,7 +67,11 @@ func _physics_process(delta):
 	floor_cast.get_floor_properties()
 	var trap = floor_cast.get_material_properties()
 	
+	if Input.is_action_just_pressed("interact"):
+		throw()
+	
 	if trap and inv:
+		floor_cast.get_material_properties().hit +=1
 		match trap.trap_type:
 			"base":
 				hit(trap.trap_damage)
@@ -92,16 +98,17 @@ func _physics_process(delta):
 			_:
 				accel = 10.0
 				decel = 8.0
-	
+				
+	var is_moving = Vector2(velocity.x, velocity.z).length() > 0.5
 	# stamina drain
-	if Input.is_action_pressed("sprint") and stamina > 0:
+	if Input.is_action_pressed("sprint") and stamina > 0 and is_moving:
 		stamina_timer += delta
 		if stamina_timer >= 1.0:
 			stamina -= 2
 			stamina_timer = 0.0
-	
+
 	# stamina regen
-	if !Input.is_action_pressed("sprint"):
+	if !Input.is_action_pressed("sprint") or !is_moving:
 		regen_timer += delta
 		if regen_timer >= 0.5:
 			stamina = min(stamina + 2, 50)
@@ -181,6 +188,40 @@ func _on_tp_body_entered(body: Node3D) -> void:
 		body.position.z = 101.795
 	elif body.position.z > 0 and body == %Player:
 		body.position.z = -131.505
+
+func get_interactable(node: Node) -> Interactable:
+	if node is Interactable:
+		return node
+	if node.get_parent():
+		return get_interactable(node.get_parent())
+	return null
+
+func throw():
+	if !can_interact:
+		return
+	if interact_ray.is_colliding():
+		var collider = interact_ray.get_collider()
+		var interactable = get_interactable(collider)
+		if interactable and interactable.is_in_group("traps"):
+			interactable.interact(self)
+			can_interact = false
+			await get_tree().create_timer(0.2).timeout
+			can_interact = true
+			return
+	
+	if Inventory.trap_count() > 0:
+		var trap_data = Inventory.remove_trap()
+		var trap = preload("res://scenes/trap.tscn").instantiate()
+		trap.trap_type = trap_data["trap_type"]
+		trap.trap_damage = trap_data["trap_damage"]
+		trap.timing = trap_data["timing"]
+		trap.hit = trap_data["hit"]
+		get_parent().add_child(trap)
+		
+		if interact_ray.is_colliding():
+			trap.global_position = interact_ray.get_collision_point()
+		else:
+			trap.global_position = interact_ray.global_position + interact_ray.global_transform.basis.z * -interact_ray.target_position.length()
 
 func hit(dam):
 	health -= dam

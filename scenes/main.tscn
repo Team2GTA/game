@@ -4,20 +4,24 @@
 [ext_resource type="PackedScene" uid="uid://bnendg2va3g74" path="res://scenes/player.tscn" id="1_o5qli"]
 [ext_resource type="Script" uid="uid://cso8446o65ws1" path="res://scripts/main.gd" id="1_tbgi4"]
 [ext_resource type="Script" uid="uid://cns8gg6dx0n16" path="res://scripts/csg_combiner_3d.gd" id="2_sugp2"]
+[ext_resource type="Material" uid="uid://tud1dvir0lvb" path="res://resources/bullet_material.tres" id="4_85g3d"]
 [ext_resource type="PackedScene" uid="uid://cjbwt1hegmion" path="res://scenes/hitbox.tscn" id="4_jyhfs"]
 [ext_resource type="Script" uid="uid://cndixswnnqg2b" path="res://scripts/ui.gd" id="6_tefeu"]
 [ext_resource type="Texture2D" uid="uid://dfybody42ydnj" path="res://assests/pixil-frame-0.png" id="7_o6xl0"]
+[ext_resource type="PackedScene" uid="uid://5aawiakanqk2" path="res://scenes/trap.tscn" id="8_tipki"]
 
-[sub_resource type="Environment" id="Environment_tbgi4"]
+[sub_resource type="Environment" id="Environment_o6xl0"]
 background_mode = 1
 background_color = Color(0.57700837, 0.5770084, 0.57700837, 1)
 ambient_light_source = 2
 ambient_light_color = Color(0.6568497, 0.565106, 0.43639496, 1)
+ssao_enabled = true
 fog_enabled = true
 fog_light_color = Color(0.6082549, 0.41310585, 0.666932, 1)
 fog_density = 0.001
 fog_height = 0.5
 fog_height_density = 0.15
+adjustment_enabled = true
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_jyhfs"]
 
@@ -91,7 +95,7 @@ transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545
 shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1145708849]
-environment = SubResource("Environment_tbgi4")
+environment = SubResource("Environment_o6xl0")
 
 [node name="Player" parent="." unique_id=1781279471 instance=ExtResource("1_o5qli")]
 unique_name_in_owner = true
@@ -115,13 +119,13 @@ collision_layer = 3
 collision_mask = 3
 script = ExtResource("2_sugp2")
 
-[node name="f1" type="CSGBox3D" parent="NavigationRegion3D/Rooms" unique_id=2036144963 groups=["rooms", "traps"]]
+[node name="f1" type="CSGBox3D" parent="NavigationRegion3D/Rooms" unique_id=2036144963 groups=["rooms"]]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.9, 0)
 layers = 3
 use_collision = true
 size = Vector3(20, 10, 20)
-material = ExtResource("1_0wfyh")
+material = ExtResource("4_85g3d")
 
 [node name="f1r" type="CSGBox3D" parent="NavigationRegion3D/Rooms/f1" unique_id=1168504386]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.9, 0)
@@ -1141,6 +1145,7 @@ shape = SubResource("BoxShape3D_tbgi4")
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="NavigationRegion3D" unique_id=983962350]
 transform = Transform3D(200.76321, 0, 0, 0, 1, 0, 0, 0, 168.3, 0, 36.602432, 0)
+layers = 3
 use_collision = true
 collision_layer = 3
 collision_mask = 3
@@ -1315,6 +1320,9 @@ offset_right = 1266.0
 offset_bottom = 943.0
 theme_override_font_sizes/font_size = 83
 text = "QUIT"
+
+[node name="Trap" parent="." unique_id=972431590 instance=ExtResource("8_tipki")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.7, 0.8, 3.7)
 
 [connection signal="wave_over" from="." to="." method="_on_wave_over"]
 [connection signal="player_dead" from="Player" to="." method="_on_player_player_dead"]
