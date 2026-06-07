@@ -197,6 +197,8 @@ func state_machine():
 			get_tree().paused = true
 		"play":
 			$UI/Stamina.visible = true
+			$UI/Overlay.visible = false
+			$Controls.visible = false
 			$UI/Stamina.text = "STAMINA\n"+str(%Player.stamina)
 			$UI/CheckBox2.visible = false
 			$UI/CheckBox.visible = false
@@ -299,3 +301,7 @@ func pause_spawn():
 	
 func resume_spawn():
 	wait = false
+
+
+func _on_check_box_3_toggled(toggled_on: bool) -> void:
+	Inventory.set_value("overlay",toggled_on)

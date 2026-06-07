@@ -3,10 +3,11 @@ extends Control
 var counting_down = false
 var old_state
 var hide
+var controls_open = false
 
 @onready var quit: Button = $Quit
 @onready var score: Label = $Score
-@onready var controls: Label = $Controls
+@onready var controls: Button = $Controls
 @onready var restart: Button = $Restart
 @onready var resume: Button = $Resume
 @onready var black: ColorRect = $black
@@ -18,6 +19,7 @@ var hide
 @onready var bullets: Label = $Bullets
 @onready var pixil_frame_0: Sprite2D = $PixilFrame0
 @onready var stamina: Label = $Stamina
+@onready var overlay: CheckBox = $Overlay
 
 
 func _ready() -> void:
@@ -29,9 +31,15 @@ func _ready() -> void:
 
 func  _process(delta: float) -> void:
 	if Input.is_action_just_pressed("esc"):
-		if main.state == "play" or main.state == "intermidiate":
+		if controls_open:
+			controls_open = false
+			$".".visible = true
+			$"../Controls".visible = false
+			return
+		if (main.state == "play" or main.state == "intermidiate"):
 			old_state = main.state
 			main.state = "paused" 
+			overlay.visible = true
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 			get_tree().paused = true
 			quit.visible = true
@@ -97,3 +105,9 @@ func _on_check_box_2_toggled(toggled_on: bool) -> void:
 
 func _on_quit_pressed() -> void:
 	get_tree().quit()
+
+
+func _on_controls_pressed() -> void:
+	controls_open = true
+	$".".visible = false
+	$"../Controls".visible = true

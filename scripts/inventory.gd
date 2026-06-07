@@ -1,7 +1,8 @@
 extends Node
 
 var inventory = {
-	"traps": []
+	"traps": [],
+	"overlay":false
 }
 
 func get_value(key):
@@ -12,12 +13,13 @@ func get_value(key):
 func set_value(key, value):
 	inventory[key] = value
 
-func add_trap(trap_type: String, trap_damage: float, timing: float, hit):
+func add_trap(trap_type: String, trap_damage: float, timing: float, hit,max_hit):
 	inventory["traps"].append({
 		"trap_type": trap_type,
 		"trap_damage": trap_damage,
 		"timing": timing,
-		"hit":hit
+		"hit":hit,
+		"max_hit":max_hit
 	})
 
 func remove_trap(index: int = -1):

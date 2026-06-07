@@ -3,6 +3,7 @@ extends Interactable
 @export var trap_damage : float = 2.0
 @export var timing : float = 1.0
 @export var hit : float 
+@export var max_hit : float
 
 
 func _ready() -> void:
@@ -19,12 +20,12 @@ func _ready() -> void:
 var picked_up = false
 
 func _process(delta: float) -> void:
-	if hit > 4:
+	if hit >max_hit:
 		queue_free()
 
 func _on_interacted(body: Variant) -> void:
 	if picked_up:
 		return
 	picked_up = true
-	Inventory.add_trap(trap_type, trap_damage, timing, hit)
+	Inventory.add_trap(trap_type, trap_damage, timing, hit,max_hit)
 	queue_free()

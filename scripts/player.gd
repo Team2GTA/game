@@ -19,6 +19,8 @@ var decel
 var inv 
 var can_interact = true
 
+const TRAP = preload("res://scenes/trap.tscn")
+
 signal update_score
 signal player_dead
 signal shot
@@ -64,6 +66,8 @@ func _unhandled_input(event):
 			pass
 
 func _physics_process(delta):
+	
+	$Camera3D/Overlay.visible = Inventory.get_value("overlay")
 	floor_cast.get_floor_properties()
 	var trap = floor_cast.get_material_properties()
 	
@@ -197,25 +201,21 @@ func get_interactable(node: Node) -> Interactable:
 	return null
 
 func throw():
-	if !can_interact:
-		return
 	if interact_ray.is_colliding():
 		var collider = interact_ray.get_collider()
 		var interactable = get_interactable(collider)
 		if interactable and interactable.is_in_group("traps"):
 			interactable.interact(self)
-			can_interact = false
-			await get_tree().create_timer(0.2).timeout
-			can_interact = true
 			return
 	
 	if Inventory.trap_count() > 0:
 		var trap_data = Inventory.remove_trap()
-		var trap = preload("res://scenes/trap.tscn").instantiate()
+		var trap = TRAP.instantiate()
 		trap.trap_type = trap_data["trap_type"]
 		trap.trap_damage = trap_data["trap_damage"]
 		trap.timing = trap_data["timing"]
 		trap.hit = trap_data["hit"]
+		trap.max_hit = trap_data["max_hit"]
 		get_parent().add_child(trap)
 		
 		if interact_ray.is_colliding():

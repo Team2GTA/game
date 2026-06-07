@@ -10,6 +10,11 @@ albedo_color = Color(3.85046e-07, 0.5214313, 0.21414056, 1)
 [node name="Trap" type="RigidBody3D" unique_id=972431590 groups=["traps"]]
 continuous_cd = true
 script = ExtResource("1_npg1n")
+trap_type = null
+trap_damage = null
+timing = null
+hit = null
+max_hit = null
 prompt_message = "Pick"
 prompt_input = "interact"
 
