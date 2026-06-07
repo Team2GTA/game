@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://dfybody42ydnj" path="res://assests/pixil-frame-0.png" id="7_o6xl0"]
 [ext_resource type="Script" uid="uid://bp8idlu6atvtg" path="res://scripts/controls.gd" id="9_85g3d"]
 [ext_resource type="Script" uid="uid://ex7c0elg4urw" path="res://scripts/input_remap_button.gd" id="10_choun"]
+[ext_resource type="PackedScene" uid="uid://b8sx3k2qmn4y7" path="res://scenes/state_machine.tscn" id="11_smach"]
 
 [sub_resource type="Environment" id="Environment_o6xl0"]
 background_mode = 1
@@ -90,6 +91,8 @@ shadow_offset = Vector2(20, 20)
 
 [node name="main" type="Node3D" unique_id=1963971271]
 script = ExtResource("1_tbgi4")
+
+[node name="StateMachine" parent="." unique_id=498531002 instance=ExtResource("11_smach")]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1352099103]
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 99, 0)

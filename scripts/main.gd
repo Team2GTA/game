@@ -154,7 +154,7 @@ func _on_wave_over() -> void:
 		pickup.global_position = %Player.global_position + Vector3(sin(angle), 0, cos(angle)) * randf_range(1, 3)
 	await pickup.proceed
 
-	if level == 2 and wave == 4:
+	if level == 2 and wave == 3:
 		state = "win"
 		return
 	wave += 1
@@ -178,85 +178,7 @@ func wave_handle():#20*level+wave*5+10
 		emit_signal("wave_over")
 
 func state_machine():
-	match state:
-		"start":
-			$UI/CheckBox2.visible = true
-			hp_bar.visible = false
-			bullets.visible = false
-			$UI/CheckBox.visible = true
-			hp_ghost.visible = false
-			hp.visible = false
-			score_bar.visible = false
-			restart.visible = false
-			resume.visible = false
-			$UI/black.visible = true
-			$UI/Quit.visible = true
-			$UI/PixilFrame0.visible = false
-			$UI/Controls.visible = true
-			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-			get_tree().paused = true
-		"play":
-			$UI/Stamina.visible = true
-			$UI/Overlay.visible = false
-			$Controls.visible = false
-			$UI/Stamina.text = "STAMINA\n"+str(%Player.stamina)
-			$UI/CheckBox2.visible = false
-			$UI/CheckBox.visible = false
-			$UI/Controls.visible = false
-			$UI/Quit.visible = false
-			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED  
-			hp_bar.visible = $UI.hide
-			hp_ghost.visible = $UI.hide
-			hp.visible = $UI.hide
-			score_bar.visible = true
-			bullets.visible = true
-			restart.visible = false
-			resume.visible = false
-			$UI/black.visible = false
-			$UI/Start.visible = false
-			$UI/PixilFrame0.visible = $UI.hide
-			if $Player/Camera3D/Rifle.reloading:
-				bullets.text = "Reloading...."
-			else:
-				bullets.text = str($Player/Camera3D/Rifle.capacity) +"/"+str(Inventory.get_ammo("rifle"))+ " BULLETS"
-			score_bar.position = Vector2(0,0)
-			update_health()
-			level_handle()
-			wave_handle()
-		"dead":
-			$UI/Quit.visible = true
-			$UI/CheckBox2.visible = true
-			hp_bar.visible = false
-			bullets.visible = false
-			hp_ghost.visible = false
-			hp.visible = false
-			score_bar.position = Vector2(820.0,283.333)
-			restart.visible = true
-			$UI/black.visible = true
-			$UI/PixilFrame0.visible = false
-			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-			get_tree().paused = true
-		"win":
-			$UI/Quit.visible = true
-			$UI/CheckBox2.visible = true
-			hp_bar.visible = false
-			bullets.visible = false
-			hp_ghost.visible = false
-			hp.visible = false
-			$UI/PixilFrame0.visible = false
-			score_bar.position = Vector2(820.0,283.333)
-			score_bar.text = "YOU WIN"
-			restart.visible = true
-			$UI/black.visible = true
-			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-			get_tree().paused = true
-		"intermidiate":
-			update_health()
-			$UI/Stamina.text = "STAMINA\n"+str(%Player.stamina)
-			if $Player/Camera3D/Rifle.reloading:
-				bullets.text = "Reloading...."
-			else:
-				bullets.text = str($Player/Camera3D/Rifle.capacity) +"/"+str(Inventory.get_ammo("rifle"))+ " BULLETS"
+	$StateMachine.tick()
 
 #Handles Levels
 func level_handle():

@@ -14,7 +14,7 @@
 render_priority = 0
 shader = ExtResource("5_fjrip")
 shader_parameter/pixel_size = 2.0
-shader_parameter/levels = 70.0
+shader_parameter/levels = 50.0
 shader_parameter/gamma = Vector2(0.155, 7)
 
 [sub_resource type="QuadMesh" id="QuadMesh_smehm"]
@@ -49,6 +49,7 @@ visible = false
 [node name="InteractRay" parent="Camera3D" unique_id=964272804 instance=ExtResource("4_qlg0r")]
 
 [node name="Overlay" type="MeshInstance3D" parent="Camera3D" unique_id=771599323]
+visible = false
 extra_cull_margin = 16384.0
 mesh = SubResource("QuadMesh_smehm")
 
