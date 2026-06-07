@@ -37,12 +37,11 @@ func _on_detection_body_entered(body: Node3D) -> void:
 				main.update_health()
 				color_rect.color = Color(0x75a83a8e)
 			"mag":
-				body.get_child(1).get_child(0).max_capacity +=10 
-				body.get_child(1).get_child(0).capacity = body.get_child(1).get_child(0).max_capacity if body.get_child(1).get_child(0).max_capacity <15 else 15
+				Inventory.add_ammo("rifle", 10)
 				color_rect.color = Color(0xc777008e)
 			"heal_gain":
 				body.max_health +=10
-				body.get_child(1).get_child(0).max_capacity +=10 
+				#body.get_child(1).get_child(0).max_capacity +=10 
 				body.health = body.max_health
 				main.target_hp = body.health
 				main.update_health()

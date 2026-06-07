@@ -39,7 +39,7 @@ func _ready() -> void:
 	%Player.position = Vector3(2,0,-1)
 	state = "start"
 	hp.text = "HP: " + str(%Player.health)
-	bullets.text = str($Player/Camera3D/Rifle.capacity) +"/"+str($Player/Camera3D/Rifle.max_capacity)+ " BULLETS"
+	bullets.text = str($Player/Camera3D/Rifle.capacity) +"/"+str(Inventory.get_ammo("rifle"))+ " BULLETS"
 	hp_bar.max_value = 30
 	hp_bar.value = 30
 	hp_ghost.max_value = 30
@@ -117,7 +117,7 @@ func reduce(pos):
 func drop(pos):
 	if randi()%1 == 0:
 		var pickup = PICKUP.instantiate()
-		pickup.type = ["mag","heal","heal","heal","heal","heal"].pick_random() if $Player/Camera3D/Rifle.max_capacity > 20 else ["mag","heal","mag","mag","mag"].pick_random()
+		pickup.type = ["mag","heal","heal","heal","heal","heal"].pick_random() if Inventory.get_ammo("rifle") > 20 else ["mag","heal","mag","mag","mag"].pick_random()
 		add_child(pickup)
 		pickup.global_position = pos + Vector3(0, 0.5, 0)
 		#await get_tree().create_timer(0.5).timeout
@@ -218,7 +218,7 @@ func state_machine():
 			if $Player/Camera3D/Rifle.reloading:
 				bullets.text = "Reloading...."
 			else:
-				bullets.text = str($Player/Camera3D/Rifle.capacity) +"/"+str($Player/Camera3D/Rifle.max_capacity)+ " BULLETS"
+				bullets.text = str($Player/Camera3D/Rifle.capacity) +"/"+str(Inventory.get_ammo("rifle"))+ " BULLETS"
 			score_bar.position = Vector2(0,0)
 			update_health()
 			level_handle()
@@ -256,7 +256,7 @@ func state_machine():
 			if $Player/Camera3D/Rifle.reloading:
 				bullets.text = "Reloading...."
 			else:
-				bullets.text = str($Player/Camera3D/Rifle.capacity) +"/"+str($Player/Camera3D/Rifle.max_capacity)+ " BULLETS"
+				bullets.text = str($Player/Camera3D/Rifle.capacity) +"/"+str(Inventory.get_ammo("rifle"))+ " BULLETS"
 
 #Handles Levels
 func level_handle():

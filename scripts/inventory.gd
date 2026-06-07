@@ -2,8 +2,20 @@ extends Node
 
 var inventory = {
 	"traps": [],
-	"overlay":false
+	"overlay":false,
+	"ammo":{
+		"rifle":35
+	}
 }
+
+func reset():
+	inventory = {
+		"traps": [],
+		"overlay": false,
+		"ammo": {
+			"rifle": 35
+		}
+	}
 
 func get_value(key):
 	if inventory.has(key):
@@ -12,6 +24,28 @@ func get_value(key):
 
 func set_value(key, value):
 	inventory[key] = value
+
+
+func get_ammo(type: String):
+	if inventory["ammo"].has(type):
+		return inventory["ammo"][type]
+	return 0
+
+func add_ammo(type: String, amount: int):
+	if !inventory["ammo"].has(type):
+		inventory["ammo"][type] = 0
+	
+	inventory["ammo"][type] +=amount
+
+func consume_ammo(type: String, amount: int):
+	if !inventory["ammo"].has(type):
+		return false
+
+	if inventory["ammo"][type]<amount:
+		amount = inventory["ammo"][type]
+	
+	inventory["ammo"][type]-=amount
+	return true
 
 func add_trap(trap_type: String, trap_damage: float, timing: float, hit,max_hit):
 	inventory["traps"].append({
