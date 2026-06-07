@@ -64,6 +64,7 @@ func  _process(delta: float) -> void:
 
 func _on_restart_pressed() -> void:
 	main.state = "start"
+	Inventory.reset()
 	main.get_tree().paused = false
 	get_tree().reload_current_scene()
 
