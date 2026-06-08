@@ -10,11 +10,12 @@ const SPEED = 40.0
 func _process(delta: float) -> void:
 	position +=transform.basis * Vector3(0,0,-SPEED)*delta
 	if ray.is_colliding():
+		var collider = ray.get_collider()
 		mesh.visible = false
 		particles.emitting = true
 		ray.enabled = false
-		if ray.get_collider().is_in_group("enemy") and ray.get_collider():
-			ray.get_collider().hit()
+		if collider and collider.is_in_group("enemy"):
+			collider.hit()
 		await get_tree().create_timer(1.0).timeout
 		queue_free()
 

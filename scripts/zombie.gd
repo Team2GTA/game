@@ -1,66 +1,82 @@
 extends CharacterBody3D
 var player = null
 var state_machine
-var health = 15
-var speed = 2
+var enemy := Enemy.new()
+var health: float:
+	get: return enemy.stats["health"]
+	set(value): enemy.stats["health"] = value
+var speed: float:
+	get: return enemy.stats["speed"]
+	set(value): enemy.stats["speed"] = value
 var inv
 var flash_timer = false
 var persistance = false
 var knockback = Vector3.ZERO
+
 const ATTACK_RANGE = 2.2
 const KNOCKBACK_FORCE = 20.0
 const KNOCKBACK_DECAY = 10.0
+
 signal zombie_dead(pos)
+
 @export var player_path : NodePath
 @onready var nav_agent = $NavigationAgent3D
 @onready var anim = $AnimationTree
 @onready var floor_cast: RayCast3D = $CollisionShape3D/FloorCast
 
 
+var _states := {}
+
 func _ready():
 	add_to_group("enemy")
 	inv = 1
+	enemy.stats["type"] = "zombie"
 	if player_path:
 		player = get_node(player_path)
 	state_machine = anim.get("parameters/playback")
+	_states = {
+		"run": _state_run,
+		"attack": _state_attack,
+	}
 
 func _process(delta: float) -> void:
 	if player == null:
 		return
-	
+
 	velocity = Vector3.ZERO
-	
-	match state_machine.get_current_node():
-		"run":
-			if floor_cast.get_material_properties():
-				if floor_cast.get_material_properties().is_in_group("traps") and inv:
-					got_hit(floor_cast.get_material_properties().trap_damage)
-					inv =0 
-					floor_cast.get_material_properties().hit +=1
-					await get_tree().create_timer(floor_cast.get_material_properties().timing).timeout
-					inv = 1
-			nav_agent.set_target_position(player.global_transform.origin)
-			var next_nav_point = nav_agent.get_next_path_position()
-			velocity = (next_nav_point - global_transform.origin).normalized() * speed
-			smooth_look_at(Vector3(global_position.x + velocity.x, global_position.y, global_position.z + velocity.z), delta)
-		"attack":
-			if floor_cast.get_material_properties():
-				if floor_cast.get_material_properties().is_in_group("traps") and inv:
-					got_hit(floor_cast.get_material_properties().trap_damage)
-					floor_cast.get_material_properties().hit +=1
-					inv =0 
-					await get_tree().create_timer(floor_cast.get_material_properties().timing).timeout
-					inv = 1
-			smooth_look_at(Vector3(player.global_position.x, global_position.y, player.global_position.z), delta)
-	
+
+	var node = state_machine.get_current_node()
+	if _states.has(node):
+		_states[node].call(delta)
+
 	# apply knockback
 	velocity += knockback
 	knockback = knockback.lerp(Vector3.ZERO, KNOCKBACK_DECAY * delta)
-	
+
 	anim["parameters/conditions/attack"] = in_range()
 	anim["parameters/conditions/run"] = !in_range()
-	
+
 	move_and_slide()
+
+func _state_run(delta: float) -> void:
+	_check_trap()
+	nav_agent.set_target_position(player.global_transform.origin)
+	var next_nav_point = nav_agent.get_next_path_position()
+	velocity = (next_nav_point - global_transform.origin).normalized() * speed
+	smooth_look_at(Vector3(global_position.x + velocity.x, global_position.y, global_position.z + velocity.z), delta)
+
+func _state_attack(delta: float) -> void:
+	_check_trap()
+	smooth_look_at(Vector3(player.global_position.x, global_position.y, player.global_position.z), delta)
+
+func _check_trap() -> void:
+	var mat = floor_cast.get_material_properties()
+	if mat and mat.is_in_group("traps") and inv:
+		got_hit(mat.trap_damage)
+		inv = 0
+		mat.hit += 1
+		await get_tree().create_timer(mat.timing).timeout
+		inv = 1
 
 func smooth_look_at(target: Vector3, delta: float) -> void:
 	var direction = (target - global_position)
