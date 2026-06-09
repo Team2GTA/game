@@ -101,10 +101,6 @@ shadow_enabled = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1145708849]
 environment = SubResource("Environment_o6xl0")
 
-[node name="Player" parent="." unique_id=1781279471 instance=ExtResource("1_o5qli")]
-unique_name_in_owner = true
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 2, 0, -1)
-
 [node name="WorldBorder" type="Area3D" parent="." unique_id=474070666]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="WorldBorder" unique_id=2105238068]
@@ -1579,10 +1575,11 @@ script = ExtResource("10_choun")
 action = "interact"
 metadata/_custom_type_script = "uid://ex7c0elg4urw"
 
+[node name="Player" parent="." unique_id=1781279471 instance=ExtResource("1_o5qli")]
+unique_name_in_owner = true
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 2, 0, -1)
+
 [connection signal="wave_over" from="." to="." method="_on_wave_over"]
-[connection signal="player_dead" from="Player" to="." method="_on_player_player_dead"]
-[connection signal="player_hit" from="Player" to="." method="_on_player_player_hit"]
-[connection signal="update_score" from="Player" to="." method="_on_player_update_score"]
 [connection signal="body_entered" from="WorldBorder" to="." method="_on_area_3d_body_entered"]
 [connection signal="body_entered" from="NavigationRegion3D/Rooms/f1/hitbox" to="NavigationRegion3D/Rooms" method="_on_hitbox_body_entered"]
 [connection signal="body_exited" from="NavigationRegion3D/Rooms/f1/hitbox" to="." method="_on_f_10_body_exited"]
@@ -1619,3 +1616,6 @@ metadata/_custom_type_script = "uid://ex7c0elg4urw"
 [connection signal="pressed" from="UI/Controls" to="UI" method="_on_controls_pressed"]
 [connection signal="pressed" from="UI/Quit" to="UI" method="_on_quit_pressed"]
 [connection signal="pressed" from="Controls/Button" to="Controls" method="_on_button_pressed"]
+[connection signal="player_dead" from="Player" to="." method="_on_player_player_dead"]
+[connection signal="player_hit" from="Player" to="." method="_on_player_player_hit"]
+[connection signal="update_score" from="Player" to="." method="_on_player_update_score"]

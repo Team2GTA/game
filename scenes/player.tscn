@@ -8,8 +8,6 @@
 [ext_resource type="Shader" uid="uid://bbi1qo1jljl8n" path="res://resources/shader/overlay.gdshader" id="5_fjrip"]
 [ext_resource type="Script" uid="uid://cm2fl2ytvru6q" path="res://scripts/inventory.gd" id="6_tuyoq"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u8vuu"]
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fjrip"]
 render_priority = 0
 shader = ExtResource("5_fjrip")
@@ -22,6 +20,8 @@ material = SubResource("ShaderMaterial_fjrip")
 flip_faces = true
 size = Vector2(2, 2)
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u8vuu"]
+
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_u8vuu"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_u8vuu"]
@@ -30,13 +30,14 @@ size = Vector3(0.1, 0.1, 1)
 [node name="Player" type="CharacterBody3D" unique_id=574846217 groups=["player"]]
 script = ExtResource("1_g2els")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1752794869]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_u8vuu")
-
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1435273476]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.652628, -0.1)
+
+[node name="Overlay" type="MeshInstance3D" parent="Camera3D" unique_id=771599323]
+visible = false
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_smehm")
 
 [node name="Rifle" parent="Camera3D" unique_id=233691901 instance=ExtResource("2_g2els")]
 unique_name_in_owner = true
@@ -48,10 +49,9 @@ visible = false
 
 [node name="InteractRay" parent="Camera3D" unique_id=964272804 instance=ExtResource("4_qlg0r")]
 
-[node name="Overlay" type="MeshInstance3D" parent="Camera3D" unique_id=771599323]
-visible = false
-extra_cull_margin = 16384.0
-mesh = SubResource("QuadMesh_smehm")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1752794869]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_u8vuu")
 
 [node name="Body" type="MeshInstance3D" parent="." unique_id=1367750734]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

@@ -25,7 +25,9 @@ signal zombie_dead(pos)
 @onready var floor_cast: RayCast3D = $CollisionShape3D/FloorCast
 
 
-var _states := {}
+const ENEMY_STATE_MACHINE = preload("res://scripts/enemy_state_machine.gd")
+
+var enemy_sm
 
 func _ready():
 	add_to_group("enemy")
@@ -34,10 +36,9 @@ func _ready():
 	if player_path:
 		player = get_node(player_path)
 	state_machine = anim.get("parameters/playback")
-	_states = {
-		"run": _state_run,
-		"attack": _state_attack,
-	}
+	enemy_sm = ENEMY_STATE_MACHINE.new()
+	add_child(enemy_sm)
+	enemy_sm.setup(self)
 
 func _process(delta: float) -> void:
 	if player == null:
@@ -45,9 +46,7 @@ func _process(delta: float) -> void:
 
 	velocity = Vector3.ZERO
 
-	var node = state_machine.get_current_node()
-	if _states.has(node):
-		_states[node].call(delta)
+	enemy_sm.tick(delta)
 
 	# apply knockback
 	velocity += knockback
@@ -57,17 +56,6 @@ func _process(delta: float) -> void:
 	anim["parameters/conditions/run"] = !in_range()
 
 	move_and_slide()
-
-func _state_run(delta: float) -> void:
-	_check_trap()
-	nav_agent.set_target_position(player.global_transform.origin)
-	var next_nav_point = nav_agent.get_next_path_position()
-	velocity = (next_nav_point - global_transform.origin).normalized() * speed
-	smooth_look_at(Vector3(global_position.x + velocity.x, global_position.y, global_position.z + velocity.z), delta)
-
-func _state_attack(delta: float) -> void:
-	_check_trap()
-	smooth_look_at(Vector3(player.global_position.x, global_position.y, player.global_position.z), delta)
 
 func _check_trap() -> void:
 	var mat = floor_cast.get_material_properties()

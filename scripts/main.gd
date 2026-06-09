@@ -115,7 +115,7 @@ func reduce(pos):
 		spawned -= 1
 
 func drop(pos):
-	if randi()%1 == 0:
+	if randi()%3 == 0:
 		var pickup = PICKUP.instantiate()
 		pickup.type = ["mag","heal","heal","heal","heal","heal"].pick_random() if Inventory.get_ammo("rifle") > 20 else ["mag","heal","mag","mag","mag"].pick_random()
 		add_child(pickup)
