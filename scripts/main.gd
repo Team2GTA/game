@@ -47,14 +47,17 @@ func _ready() -> void:
 	score_bar.text = "SCORE: " + str(%Player.score)
 
 func _process(delta: float) -> void:
+	#Calculates difficulty and Spawn cap
 	dif=level*10+wave*2
 	spawn_cap = 2*dif
+	#Checks for level transition
 	if state == "level_transition" and !level_loading:
 		level_loading = true
 		level_transition()
 	delta_cache = delta
 	state_machine()
 
+#Handles Zombie Spawning
 func spawn_zombie() -> void:
 	if spawning:
 		return
@@ -64,6 +67,7 @@ func spawn_zombie() -> void:
 		while wait:
 			await get_tree().process_frame
 		
+		#Checks Valid positons within range
 		var markers = spawn_markers.get_children()
 		var valid_markers = markers.filter(func(m): 
 			return m.global_position.distance_to(%Player.global_position) < SPAWN_RANGE
@@ -90,12 +94,14 @@ func spawn_zombie() -> void:
 	
 	spawning = false
 
+#World Border
 func _on_area_3d_body_entered(body: Node3D) -> void:
 	if body.is_in_group("player"):
 		%Player.die()
 	else:
 		body.queue_free()
 
+#Red Flash on hit
 func _on_player_player_hit() -> void:
 	hit_rect.visible = true
 	await get_tree().create_timer(0.2).timeout
@@ -103,17 +109,21 @@ func _on_player_player_hit() -> void:
 	target_hp = %Player.health
 	hp.text = "HP: " + str(%Player.health)
 
+#Updates Score Of text
 func _on_player_update_score() -> void:
 	score_bar.text = "SCORE: " + str(%Player.score)
 
+#Sets state to dead
 func _on_player_player_dead() -> void:
 	state = "dead"
 
+#Adds score and deletes the zombie
 func reduce(pos):
 	%Player.points(2)
 	if spawned > 0:
 		spawned -= 1
 
+#Drops
 func drop(pos):
 	if randi()%3 == 0:
 		var pickup = PICKUP.instantiate()
@@ -122,6 +132,7 @@ func drop(pos):
 		pickup.global_position = pos + Vector3(0, 0.5, 0)
 		#await get_tree().create_timer(0.5).timeout
 
+#Updates Health
 func update_health():
 	hp.text = "HP: " + str(%Player.health)
 	hp_bar.value = lerp(hp_bar.value, float(target_hp), 8.0 * delta_cache)
@@ -129,17 +140,19 @@ func update_health():
 		hp_bar.value = target_hp
 		hp_ghost.value = target_hp
 
-
+#Eliminates 20% of enemy when crossing room
 func _on_hitbox_body_exited(body: Node3D) -> void:
 	if body.is_in_group("enemy") and !body.persistance:
 		if randi()%5 == 0:
 			body.queue_free()
 			spawned -=1
 		else:
+			#same zombie cannot be eliminated twice
 			body.persistance = true
 
 #Handles waves
 func _on_wave_over() -> void:
+	#Spawns The Pickup to proceed
 	await get_tree().create_timer(1.0).timeout
 	label.visible = false
 	var nearest = rooms.get_min_dist(rooms.poss,rooms.closest)
@@ -153,10 +166,13 @@ func _on_wave_over() -> void:
 		var angle = randf_range(0, TAU)
 		pickup.global_position = %Player.global_position + Vector3(sin(angle), 0, cos(angle)) * randf_range(1, 3)
 	await pickup.proceed
-
+	
+	#Win condition
 	if level == 2 and wave == 3:
 		state = "win"
 		return
+		
+	#Waves counter
 	wave += 1
 	if wave <=3:
 		$UI.start_countdown()
@@ -167,10 +183,11 @@ func _on_wave_over() -> void:
 	resume_spawn()
 	spawn_zombie()
 
-func wave_handle():#20*level+wave*5+10
-	if %Player.score >= (5) and !wave_triggered and level<=3:
+#Handles waves condition
+func wave_handle():
+	if %Player.score >= (10*level+wave*5+10) and !wave_triggered and level<=3:
 		wave_triggered = true
-		state = "intermidiate"
+		state = "win"
 		pause_spawn()
 		clear_zombies()
 		label.visible = true

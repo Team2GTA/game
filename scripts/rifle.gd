@@ -3,11 +3,13 @@ extends Node3D
 var mag_size = 15
 var capacity = mag_size
 var reloading =false
+@onready var shoot: AudioStreamPlayer3D = $Shoot
 
 var ammo_type = "rifle"
 
 func _on_player_shot() -> void:
 	if capacity > 0:
+		shoot.play()
 		capacity -=1
 
 func _process(delta: float) -> void:
