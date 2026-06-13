@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bw5j5i05ov0ir"]
 
-[ext_resource type="Script" uid="uid://ex7c0elg4urw" path="res://scripts/input_remap_button.gd" id="1_ekvnv"]
+[ext_resource type="Script" uid="uid://ex7c0elg4urw" path="res://scripts/UI/input_remap_button.gd" id="1_ekvnv"]
 
 [node name="InputRemapButton" type="Button" unique_id=629986705]
 process_mode = 3

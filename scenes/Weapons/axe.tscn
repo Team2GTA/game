@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://2pynoe8dirur"]
 
-[ext_resource type="Script" uid="uid://ducfwse37d1um" path="res://scripts/axe.gd" id="1_odgf8"]
+[ext_resource type="Script" uid="uid://ducfwse37d1um" path="res://scripts/Weapons/axe.gd" id="1_odgf8"]
 
 [sub_resource type="Animation" id="Animation_odgf8"]
 length = 0.001

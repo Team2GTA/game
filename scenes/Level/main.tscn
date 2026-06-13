@@ -1,15 +1,16 @@
 [gd_scene format=3 uid="uid://d3y508ivagkm3"]
 
 [ext_resource type="Material" uid="uid://dyj3olp740hx7" path="res://resources/main.tres" id="1_0wfyh"]
-[ext_resource type="PackedScene" uid="uid://bnendg2va3g74" path="res://scenes/player.tscn" id="1_o5qli"]
-[ext_resource type="Script" uid="uid://cso8446o65ws1" path="res://scripts/main.gd" id="1_tbgi4"]
-[ext_resource type="Script" uid="uid://cns8gg6dx0n16" path="res://scripts/csg_combiner_3d.gd" id="2_sugp2"]
+[ext_resource type="PackedScene" uid="uid://bnendg2va3g74" path="res://scenes/Player/player.tscn" id="1_o5qli"]
+[ext_resource type="Script" uid="uid://cso8446o65ws1" path="res://scripts/Level/main.gd" id="1_tbgi4"]
+[ext_resource type="Script" uid="uid://cns8gg6dx0n16" path="res://scripts/Level/csg_combiner_3d.gd" id="2_sugp2"]
 [ext_resource type="Material" uid="uid://tud1dvir0lvb" path="res://resources/bullet_material.tres" id="4_85g3d"]
-[ext_resource type="PackedScene" uid="uid://cjbwt1hegmion" path="res://scenes/hitbox.tscn" id="4_jyhfs"]
-[ext_resource type="Script" uid="uid://cndixswnnqg2b" path="res://scripts/ui.gd" id="6_tefeu"]
+[ext_resource type="PackedScene" uid="uid://cjbwt1hegmion" path="res://scenes/Level/hitbox.tscn" id="4_jyhfs"]
+[ext_resource type="Script" uid="uid://cndixswnnqg2b" path="res://scripts/UI/ui.gd" id="6_tefeu"]
 [ext_resource type="Texture2D" uid="uid://dfybody42ydnj" path="res://assests/pixil-frame-0.png" id="7_o6xl0"]
-[ext_resource type="Script" uid="uid://bp8idlu6atvtg" path="res://scripts/controls.gd" id="9_85g3d"]
-[ext_resource type="Script" uid="uid://ex7c0elg4urw" path="res://scripts/input_remap_button.gd" id="10_choun"]
+[ext_resource type="Script" uid="uid://bp8idlu6atvtg" path="res://scripts/UI/controls.gd" id="9_85g3d"]
+[ext_resource type="Script" uid="uid://ex7c0elg4urw" path="res://scripts/UI/input_remap_button.gd" id="10_choun"]
+[ext_resource type="PackedScene" uid="uid://b8sx3k2qmn4y7" path="res://scenes/Level/state_machine.tscn" id="11_smach"]
 
 [sub_resource type="Environment" id="Environment_o6xl0"]
 background_mode = 1
@@ -91,16 +92,14 @@ shadow_offset = Vector2(20, 20)
 [node name="main" type="Node3D" unique_id=1963971271]
 script = ExtResource("1_tbgi4")
 
+[node name="StateMachine" parent="." unique_id=498531002 instance=ExtResource("11_smach")]
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1352099103]
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 99, 0)
 shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1145708849]
 environment = SubResource("Environment_o6xl0")
-
-[node name="Player" parent="." unique_id=1781279471 instance=ExtResource("1_o5qli")]
-unique_name_in_owner = true
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 2, 0, -1)
 
 [node name="WorldBorder" type="Area3D" parent="." unique_id=474070666]
 
@@ -1323,6 +1322,7 @@ text = "QUIT"
 
 [node name="Controls" type="Control" parent="." unique_id=1101782410]
 process_mode = 3
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -1360,31 +1360,226 @@ theme_override_constants/outline_size = 8
 theme_override_font_sizes/font_size = 48
 text = "Back"
 
-[node name="Sprint" type="Label" parent="Controls" unique_id=1665558617]
+[node name="VBoxContainer" type="VBoxContainer" parent="Controls" unique_id=1989381343]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.36510417
+anchor_top = 0.5
+anchor_right = 0.36510417
+anchor_bottom = 0.5
+offset_left = -93.0
+offset_top = -228.0
+offset_right = 93.0
+offset_bottom = 228.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Up" type="HBoxContainer" parent="Controls/VBoxContainer" unique_id=1067839017]
+layout_mode = 2
+
+[node name="Up" type="Label" parent="Controls/VBoxContainer/Up" unique_id=1217743571]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 64
+text = "Forward"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InputRemapButton" type="Button" parent="Controls/VBoxContainer/Up/Up" unique_id=1828714901]
 layout_mode = 0
-offset_left = 367.25
-offset_top = 122.75
-offset_right = 544.0
-offset_bottom = 191.75
-theme_override_font_sizes/font_size = 50
+offset_left = 468.0
+offset_right = 848.0
+offset_bottom = 84.0
+script = ExtResource("10_choun")
+action = "up"
+metadata/_custom_type_script = "uid://ex7c0elg4urw"
+
+[node name="InputRemapButton2" type="Button" parent="Controls/VBoxContainer/Up/Up" unique_id=1141511773]
+layout_mode = 0
+offset_left = 870.0
+offset_right = 1250.0
+offset_bottom = 84.0
+script = ExtResource("10_choun")
+action = "up"
+action_event_index = 1
+metadata/_custom_type_script = "uid://ex7c0elg4urw"
+
+[node name="Left" type="HBoxContainer" parent="Controls/VBoxContainer" unique_id=1825439728]
+layout_mode = 2
+
+[node name="Left" type="Label" parent="Controls/VBoxContainer/Left" unique_id=322507929]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 64
+text = "Left"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InputRemapButton" type="Button" parent="Controls/VBoxContainer/Left/Left" unique_id=408113024]
+layout_mode = 0
+offset_left = 468.0
+offset_right = 848.0
+offset_bottom = 84.0
+script = ExtResource("10_choun")
+action = "left"
+metadata/_custom_type_script = "uid://ex7c0elg4urw"
+
+[node name="InputRemapButton2" type="Button" parent="Controls/VBoxContainer/Left/Left" unique_id=1887778822]
+layout_mode = 0
+offset_left = 870.0
+offset_right = 1250.0
+offset_bottom = 84.0
+script = ExtResource("10_choun")
+action = "left"
+action_event_index = 1
+metadata/_custom_type_script = "uid://ex7c0elg4urw"
+
+[node name="Down" type="HBoxContainer" parent="Controls/VBoxContainer" unique_id=1951494389]
+layout_mode = 2
+
+[node name="Down" type="Label" parent="Controls/VBoxContainer/Down" unique_id=970606926]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 64
+text = "Backward"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InputRemapButton" type="Button" parent="Controls/VBoxContainer/Down/Down" unique_id=789480495]
+layout_mode = 0
+offset_left = 468.0
+offset_right = 848.0
+offset_bottom = 84.0
+script = ExtResource("10_choun")
+action = "down"
+metadata/_custom_type_script = "uid://ex7c0elg4urw"
+
+[node name="InputRemapButton2" type="Button" parent="Controls/VBoxContainer/Down/Down" unique_id=1160357122]
+layout_mode = 0
+offset_left = 870.0
+offset_right = 1250.0
+offset_bottom = 84.0
+script = ExtResource("10_choun")
+action = "down"
+action_event_index = 1
+metadata/_custom_type_script = "uid://ex7c0elg4urw"
+
+[node name="Right" type="HBoxContainer" parent="Controls/VBoxContainer" unique_id=1980049430]
+layout_mode = 2
+
+[node name="Right" type="Label" parent="Controls/VBoxContainer/Right" unique_id=1217298195]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 64
+text = "Right"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InputRemapButton" type="Button" parent="Controls/VBoxContainer/Right/Right" unique_id=1936489135]
+layout_mode = 0
+offset_left = 468.0
+offset_right = 848.0
+offset_bottom = 84.0
+script = ExtResource("10_choun")
+action = "right"
+metadata/_custom_type_script = "uid://ex7c0elg4urw"
+
+[node name="InputRemapButton2" type="Button" parent="Controls/VBoxContainer/Right/Right" unique_id=1880031221]
+layout_mode = 0
+offset_left = 870.0
+offset_right = 1250.0
+offset_bottom = 84.0
+script = ExtResource("10_choun")
+action = "right"
+action_event_index = 1
+metadata/_custom_type_script = "uid://ex7c0elg4urw"
+
+[node name="Jump" type="HBoxContainer" parent="Controls/VBoxContainer" unique_id=2064904643]
+layout_mode = 2
+
+[node name="Jump" type="Label" parent="Controls/VBoxContainer/Jump" unique_id=815385823]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 64
+text = "Jump "
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InputRemapButton" type="Button" parent="Controls/VBoxContainer/Jump/Jump" unique_id=778827773]
+layout_mode = 0
+offset_left = 468.0
+offset_right = 848.0
+offset_bottom = 84.0
+script = ExtResource("10_choun")
+action = "jump"
+metadata/_custom_type_script = "uid://ex7c0elg4urw"
+
+[node name="Sprint" type="HBoxContainer" parent="Controls/VBoxContainer" unique_id=1747727455]
+layout_mode = 2
+
+[node name="Sprint" type="Label" parent="Controls/VBoxContainer/Sprint" unique_id=1665558617]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 64
 text = "Sprint"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="InputRemapButton" type="Button" parent="Controls/Sprint" unique_id=31879288]
+[node name="InputRemapButton" type="Button" parent="Controls/VBoxContainer/Sprint/Sprint" unique_id=31879288]
 layout_mode = 0
-offset_left = 207.75
-offset_top = 13.25
-offset_right = 445.75
-offset_bottom = 70.25
+offset_left = 468.0
+offset_right = 848.0
+offset_bottom = 84.0
 script = ExtResource("10_choun")
 action = "sprint"
 metadata/_custom_type_script = "uid://ex7c0elg4urw"
 
+[node name="Reload" type="HBoxContainer" parent="Controls/VBoxContainer" unique_id=1891996155]
+layout_mode = 2
+
+[node name="Reload" type="Label" parent="Controls/VBoxContainer/Reload" unique_id=2116370864]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 64
+text = "Reload"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InputRemapButton" type="Button" parent="Controls/VBoxContainer/Reload/Reload" unique_id=340720101]
+layout_mode = 0
+offset_left = 468.0
+offset_right = 848.0
+offset_bottom = 84.0
+script = ExtResource("10_choun")
+action = "reload"
+metadata/_custom_type_script = "uid://ex7c0elg4urw"
+
+[node name="Interact" type="HBoxContainer" parent="Controls/VBoxContainer" unique_id=1926159274]
+layout_mode = 2
+
+[node name="Interact" type="Label" parent="Controls/VBoxContainer/Interact" unique_id=335299128]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 64
+text = "Interact"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InputRemapButton" type="Button" parent="Controls/VBoxContainer/Interact/Interact" unique_id=1353866964]
+layout_mode = 0
+offset_left = 468.0
+offset_right = 848.0
+offset_bottom = 84.0
+script = ExtResource("10_choun")
+action = "interact"
+metadata/_custom_type_script = "uid://ex7c0elg4urw"
+
+[node name="Player" parent="." unique_id=1781279471 instance=ExtResource("1_o5qli")]
+unique_name_in_owner = true
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 2, 0, -1)
+
 [connection signal="wave_over" from="." to="." method="_on_wave_over"]
-[connection signal="player_dead" from="Player" to="." method="_on_player_player_dead"]
-[connection signal="player_hit" from="Player" to="." method="_on_player_player_hit"]
-[connection signal="update_score" from="Player" to="." method="_on_player_update_score"]
 [connection signal="body_entered" from="WorldBorder" to="." method="_on_area_3d_body_entered"]
 [connection signal="body_entered" from="NavigationRegion3D/Rooms/f1/hitbox" to="NavigationRegion3D/Rooms" method="_on_hitbox_body_entered"]
 [connection signal="body_exited" from="NavigationRegion3D/Rooms/f1/hitbox" to="." method="_on_f_10_body_exited"]
@@ -1421,3 +1616,6 @@ metadata/_custom_type_script = "uid://ex7c0elg4urw"
 [connection signal="pressed" from="UI/Controls" to="UI" method="_on_controls_pressed"]
 [connection signal="pressed" from="UI/Quit" to="UI" method="_on_quit_pressed"]
 [connection signal="pressed" from="Controls/Button" to="Controls" method="_on_button_pressed"]
+[connection signal="player_dead" from="Player" to="." method="_on_player_player_dead"]
+[connection signal="player_hit" from="Player" to="." method="_on_player_player_hit"]
+[connection signal="update_score" from="Player" to="." method="_on_player_update_score"]

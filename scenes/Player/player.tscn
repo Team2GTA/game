@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://bnendg2va3g74"]
 
-[ext_resource type="Script" uid="uid://dgwalcvrqs0kg" path="res://scripts/player.gd" id="1_g2els"]
-[ext_resource type="PackedScene" uid="uid://cjut3wpjao76r" path="res://scenes/rifle.tscn" id="2_g2els"]
-[ext_resource type="PackedScene" uid="uid://2pynoe8dirur" path="res://scenes/axe.tscn" id="3_qhqgy"]
+[ext_resource type="Script" uid="uid://dgwalcvrqs0kg" path="res://scripts/Player/player.gd" id="1_g2els"]
+[ext_resource type="PackedScene" uid="uid://cjut3wpjao76r" path="res://scenes/Weapons/rifle.tscn" id="2_g2els"]
+[ext_resource type="PackedScene" uid="uid://2pynoe8dirur" path="res://scenes/Weapons/axe.tscn" id="3_qhqgy"]
 [ext_resource type="PackedScene" uid="uid://chdcqgk15c6e0" path="res://scenes/floor_scanner.tscn" id="4_dqkch"]
-[ext_resource type="PackedScene" uid="uid://wnecbv20vec1" path="res://scenes/interact_ray.tscn" id="4_qlg0r"]
+[ext_resource type="PackedScene" uid="uid://wnecbv20vec1" path="res://scenes/Player/interact_ray.tscn" id="4_qlg0r"]
 [ext_resource type="Shader" uid="uid://bbi1qo1jljl8n" path="res://resources/shader/overlay.gdshader" id="5_fjrip"]
-[ext_resource type="Script" uid="uid://cm2fl2ytvru6q" path="res://scripts/inventory.gd" id="6_tuyoq"]
+[ext_resource type="Script" uid="uid://cm2fl2ytvru6q" path="res://scripts/Player/inventory.gd" id="6_tuyoq"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fjrip"]
 render_priority = 0

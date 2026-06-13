@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bytcy8c7jyr4g"]
 
-[ext_resource type="Script" uid="uid://db4yrmm7jpnej" path="res://scripts/bullet.gd" id="1_y25gk"]
+[ext_resource type="Script" uid="uid://db4yrmm7jpnej" path="res://scripts/Weapons/bullet.gd" id="1_y25gk"]
 [ext_resource type="Material" uid="uid://tud1dvir0lvb" path="res://resources/bullet_material.tres" id="2_y25gk"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_h1aey"]

@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-var bullet = load("res://scenes/bullet.tscn")
+var bullet = load("res://scenes/Weapons/bullet.tscn")
 var bullet_instance
 var max_health = 30
 var health 
@@ -19,7 +19,7 @@ var decel
 var inv 
 var can_interact = true
 
-const TRAP = preload("res://scenes/trap.tscn")
+const TRAP = preload("res://scenes/Level/trap.tscn")
 
 signal update_score
 signal player_dead

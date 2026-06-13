@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://fqydo8poe47s"]
 
-[ext_resource type="Script" uid="uid://c7m8ng8mx0h1q" path="res://scripts/pickup.gd" id="1_pg2rt"]
+[ext_resource type="Script" uid="uid://c7m8ng8mx0h1q" path="res://scripts/Level/pickup.gd" id="1_pg2rt"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_pg2rt"]
 viewport_path = NodePath("Display/SubViewport")

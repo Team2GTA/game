@@ -1,22 +1,24 @@
 extends CharacterBody3D
 var player = null
 var state_machine
-var enemy := Enemy.new()
+var inv
+var flash_timer = false
+var persistance = false
+var knockback = Vector3.ZERO
+var spawning = true
 
+var enemy := Enemy.new()
 var health: float:
 	get: return enemy.stats["health"]
 	set(value): enemy.stats["health"] = value
 var speed: float:
 	get: return enemy.stats["speed"]
 	set(value): enemy.stats["speed"] = value
-var inv
-var flash_timer = false
-var persistance = false
-var knockback = Vector3.ZERO
 
 const ATTACK_RANGE = 2.2
 const KNOCKBACK_FORCE = 20.0
 const KNOCKBACK_DECAY = 10.0
+const SPAWN_TIME = 3.2
 
 signal zombie_dead(pos)
 
@@ -24,11 +26,7 @@ signal zombie_dead(pos)
 @onready var nav_agent = $NavigationAgent3D
 @onready var anim = $AnimationTree
 @onready var floor_cast: RayCast3D = $CollisionShape3D/FloorCast
-
-
-const ENEMY_STATE_MACHINE = preload("res://scripts/enemy_state_machine.gd")
-
-var enemy_sm
+@onready var zombie_sm = $EnemyStateMachine
 
 func _ready():
 	add_to_group("enemy")
@@ -36,29 +34,41 @@ func _ready():
 	enemy.stats["type"] = "zombie"
 	if player_path:
 		player = get_node(player_path)
-	state_machine = anim.get("parameters/playback")
-	enemy_sm = ENEMY_STATE_MACHINE.new()
-	add_child(enemy_sm)
-	enemy_sm.setup(self)
+	finish_spawn()
+
+# Hold still until the "get up" spawn animation has played out
+func finish_spawn() -> void:
+	await get_tree().create_timer(SPAWN_TIME).timeout
+	spawning = false
+
+# True while the AnimationTree is still in its "attack" state
+func is_attacking() -> bool:
+	var playback = anim["parameters/playback"]
+	return playback and playback.get_current_node() == "attack"
 
 func _process(delta: float) -> void:
 	if player == null:
 		return
 
-	velocity = Vector3.ZERO
+	if spawning:
+		velocity = Vector3.ZERO
+		return
 
-	enemy_sm.tick(delta)
+	# stay rooted until the attack animation finishes, even after the
+	# player leaves range and the logic state machine flips back to Agro
+	if is_attacking():
+		velocity = Vector3.ZERO
 
-	# apply knockback
-	velocity += knockback
+	# Add knockback on top of this frame's locomotion only, then restore
+	# locomotion. Otherwise the impulse compounds every frame (worst on a
+	# corpse, whose locomotion is never reset) and flings the body too far.
+	var locomotion = velocity
+	velocity = locomotion + knockback
 	knockback = knockback.lerp(Vector3.ZERO, KNOCKBACK_DECAY * delta)
-
-	anim["parameters/conditions/attack"] = in_range()
-	anim["parameters/conditions/run"] = !in_range()
-
 	move_and_slide()
+	velocity = locomotion
 
-func _check_trap() -> void:
+func check_trap() -> void:
 	var mat = floor_cast.get_material_properties()
 	if mat and mat.is_in_group("traps") and inv:
 		got_hit(mat.trap_damage)
@@ -90,15 +100,8 @@ func got_hit(dam):
 	if !anim["parameters/conditions/die"]:
 		health -= dam
 		flash_red()
-		die()
-
-func die():
-	if health <= 0:
-			var death_pos = global_position
-			anim["parameters/conditions/die"]=true
-			await get_tree().create_timer(2.5).timeout
-			call_deferred("queue_free")
-			emit_signal("zombie_dead", death_pos)
+		if health<=0:
+			zombie_sm.transition("Die")
 
 func flash_red():
 	if flash_timer:

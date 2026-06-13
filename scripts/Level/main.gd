@@ -28,7 +28,7 @@ var spawning = false
 var spawned = 0
 
 const PICKUP = preload("res://scenes/pickup.tscn")
-const ZOMBIE = preload("res://scenes/Zombie.tscn")
+const ZOMBIE = preload("res://scenes/Enemy/Zombie.tscn")
 const SPAWN_RANGE = 30.0
 var target_hp = 30
 

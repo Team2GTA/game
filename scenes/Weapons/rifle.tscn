@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://cjut3wpjao76r"]
 
-[ext_resource type="Script" uid="uid://cdrt21fyrjtbh" path="res://scripts/rifle.gd" id="1_20e1h"]
+[ext_resource type="Script" uid="uid://cdrt21fyrjtbh" path="res://scripts/Weapons/rifle.gd" id="1_20e1h"]
 [ext_resource type="AudioStream" uid="uid://dhdhhurlpeunf" path="res://assests/audio/mixkit-short-laser-gun-shot-1670.wav" id="2_l7v2r"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p8d6e"]

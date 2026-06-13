@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://5aawiakanqk2"]
 
-[ext_resource type="Script" uid="uid://d3dv38jtvnh5v" path="res://scripts/trap.gd" id="1_npg1n"]
+[ext_resource type="Script" uid="uid://d3dv38jtvnh5v" path="res://scripts/Level/trap.gd" id="1_npg1n"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_ykdm6"]
 
