@@ -2,6 +2,7 @@ extends CharacterBody3D
 var player = null
 var state_machine
 var enemy := Enemy.new()
+
 var health: float:
 	get: return enemy.stats["health"]
 	set(value): enemy.stats["health"] = value
