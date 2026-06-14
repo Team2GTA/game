@@ -10,7 +10,6 @@ var wander_timer = 0.0
 func enter():
 	enemy.velocity = Vector3.ZERO
 	wander_timer = WANDER_CHANGE_TIME
-	pick_wander_target()
 	
 func pick_wander_target():
 	if !enemy or !enemy.nav_agent:
@@ -21,8 +20,8 @@ func pick_wander_target():
 	
 func update(delta):
 	var dist = enemy.global_position.distance_to(player.global_position)
-	#if dist<AGRO_RANGE and enemy.has_line_of_sight():
-		#enemy.skeleton_sm.transition("Agro")
+	if dist<AGRO_RANGE and enemy.has_line_of_sight():
+		enemy.skeleton_sm.transition("Agro")
 	
 func physics_update(delta):
 	if !enemy or !enemy.nav_agent:

@@ -49,7 +49,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	#Calculates difficulty and Spawn cap
 	dif=level*10+wave*2
-	spawn_cap = 2*dif
+	spawn_cap =0
 	#Checks for level transition
 	if state == "level_transition" and !level_loading:
 		level_loading = true
@@ -201,7 +201,6 @@ func state_machine():
 func level_handle():
 	if level == 1:
 		spawn_markers.position = Vector3(0,0,6)
-		spawn_cap = 25
 		if wave > 3 and !wave_triggered:
 			wave_triggered = true
 			state = "win"
@@ -212,7 +211,6 @@ func level_handle():
 			label.text = "Level 1 Complete"
 	elif level == 2:
 		spawn_markers.position = Vector3(0,37,6)
-		spawn_cap = 35
 
 func level_transition():
 	await get_tree().create_timer(2.0).timeout

@@ -92,6 +92,7 @@ shadow_offset = Vector2(20, 20)
 
 [node name="main" type="Node3D" unique_id=1963971271]
 script = ExtResource("1_tbgi4")
+spawn_cap = 0
 
 [node name="StateMachine" parent="." unique_id=498531002 instance=ExtResource("11_smach")]
 

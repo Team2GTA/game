@@ -112,6 +112,9 @@ func get_meshes_recursive(node):
 		meshes += get_meshes_recursive(child)
 	return meshes
 
+func shoot():
+	print("BANG")
+
 func has_line_of_sight() -> bool:
 	if player == null:
 		return false
