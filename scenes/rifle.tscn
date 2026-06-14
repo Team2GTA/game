@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://cjut3wpjao76r"]
 
 [ext_resource type="Script" uid="uid://cdrt21fyrjtbh" path="res://scripts/rifle.gd" id="1_20e1h"]
+[ext_resource type="AudioStream" uid="uid://dhdhhurlpeunf" path="res://assests/audio/mixkit-short-laser-gun-shot-1670.wav" id="2_l7v2r"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p8d6e"]
 resource_name = "mat23"
@@ -456,6 +457,12 @@ _data = {
 &"zoom": SubResource("Animation_u8gtw")
 }
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_l7v2r"]
+random_pitch = 1.0905077
+random_volume_offset_db = 1.5
+streams_count = 1
+stream_0/stream = ExtResource("2_l7v2r")
+
 [node name="Rifle" type="Node3D" unique_id=233691901]
 script = ExtResource("1_20e1h")
 
@@ -469,3 +476,8 @@ libraries/ = SubResource("AnimationLibrary_jrgtt")
 [node name="RayCast3D" type="RayCast3D" parent="." unique_id=1305415504]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
 target_position = Vector3(0, 0, -1)
+
+[node name="Shoot" type="AudioStreamPlayer3D" parent="." unique_id=1761092481]
+process_mode = 4
+visible = false
+stream = SubResource("AudioStreamRandomizer_l7v2r")

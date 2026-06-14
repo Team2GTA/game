@@ -16,21 +16,30 @@ var stamina_timer = 0.0
 var regen_timer = 0.0
 var accel
 var decel
+var inv 
+var can_interact = true
+
+const TRAP = preload("res://scenes/trap.tscn")
 
 signal update_score
 signal player_dead
 signal shot
 signal player_hit
 
+@onready var interact_ray: RayCast3D = $Camera3D/InteractRay
 @onready var floor_cast: RayCast3D = $FloorCast
 @onready var gun_anim = $Camera3D/Rifle/AnimationPlayer
 @onready var gun_cast = $Camera3D/Rifle/RayCast3D
 @onready var axe_anim = $Camera3D/Axe/AnimationPlayer
 
+
 func _ready():
 	health = max_health
+	inv = 1
 	weapon = "gun"
 	score = 0
+	accel=10.0
+	decel=8.0
 	cam_base_pos = %Camera3D.position
 
 func _unhandled_input(event):
@@ -57,17 +66,53 @@ func _unhandled_input(event):
 			pass
 
 func _physics_process(delta):
-	get_floor_properties()
 	
+	$Camera3D/Overlay.visible = Inventory.get_value("overlay")
+	floor_cast.get_floor_properties()
+	var trap = floor_cast.get_material_properties()
+	
+	if Input.is_action_just_pressed("interact"):
+		throw()
+	
+	if trap and inv:
+		floor_cast.get_material_properties().hit +=1
+		match trap.trap_type:
+			"base":
+				hit(trap.trap_damage)
+				inv = 0
+				await get_tree().create_timer(trap.timing).timeout
+				inv = 1
+
+			"fast":
+				hit(trap.trap_damage)
+				inv = 0
+				await get_tree().create_timer(trap.timing).timeout
+				inv = 1
+	
+	match floor_cast.surface:
+			"ice":
+				accel = 2.0
+				decel = 0.5
+			"mud":
+				accel = 4.0
+				decel = 15.0
+			"wood":
+				accel = 8.0
+				decel = 6.0
+			_:
+				accel = 10.0
+				decel = 8.0
+				
+	var is_moving = Vector2(velocity.x, velocity.z).length() > 0.5
 	# stamina drain
-	if Input.is_action_pressed("sprint") and stamina > 0:
+	if Input.is_action_pressed("sprint") and stamina > 0 and is_moving:
 		stamina_timer += delta
 		if stamina_timer >= 1.0:
 			stamina -= 2
 			stamina_timer = 0.0
-	
+
 	# stamina regen
-	if !Input.is_action_pressed("sprint"):
+	if !Input.is_action_pressed("sprint") or !is_moving:
 		regen_timer += delta
 		if regen_timer >= 0.5:
 			stamina = min(stamina + 2, 50)
@@ -92,11 +137,11 @@ func _physics_process(delta):
 	var direction = transform.basis * input_direction_3d
 
 	if direction.length() > 0.1:
-		velocity.x = lerp(velocity.x, direction.x * speed, 10.0 * delta)
-		velocity.z = lerp(velocity.z, direction.z * speed, 10.0 * delta)
+		velocity.x = lerp(velocity.x, direction.x * speed, accel * delta)
+		velocity.z = lerp(velocity.z, direction.z * speed, accel * delta)
 	else:
-		velocity.x = lerp(velocity.x, 0.0, 8.0 * delta)
-		velocity.z = lerp(velocity.z, 0.0, 8.0 * delta)
+		velocity.x = lerp(velocity.x, 0.0, decel * delta)
+		velocity.z = lerp(velocity.z, 0.0, decel * delta)
 
 	# gravity and jumping
 	velocity.y -= 35 * delta
@@ -142,41 +187,44 @@ func _physics_process(delta):
 
 	move_and_slide()
 
-func get_floor_properties():
-	if floor_cast.is_colliding():
-		var collider = floor_cast.get_collider()
-		print(collider)
-		var surface = "default"
-		if collider.is_in_group("ice"):
-			surface = "ice"
-		elif collider.is_in_group("mud"):
-			surface = "mud"
-		elif collider.is_in_group("wood"):
-			surface = "wood"
-		
-		match surface:
-			"ice":
-				accel = 2.0
-				decel = 0.5
-			"mud":
-				accel = 4.0
-				decel = 15.0
-			"wood":
-				accel = 8.0
-				decel = 6.0
-			_:
-				accel = 10.0
-				decel = 8.0
-
-
 func _on_tp_body_entered(body: Node3D) -> void:
 	if body.position.z < 0 and body == %Player:
 		body.position.z = 101.795
 	elif body.position.z > 0 and body == %Player:
 		body.position.z = -131.505
 
-func hit():
-	health -= randi_range(4, 8)
+func get_interactable(node: Node) -> Interactable:
+	if node is Interactable:
+		return node
+	if node.get_parent():
+		return get_interactable(node.get_parent())
+	return null
+
+func throw():
+	if interact_ray.is_colliding():
+		var collider = interact_ray.get_collider()
+		var interactable = get_interactable(collider)
+		if interactable and interactable.is_in_group("traps"):
+			interactable.interact(self)
+			return
+	
+	if Inventory.trap_count() > 0:
+		var trap_data = Inventory.remove_trap()
+		var trap = TRAP.instantiate()
+		trap.trap_type = trap_data["trap_type"]
+		trap.trap_damage = trap_data["trap_damage"]
+		trap.timing = trap_data["timing"]
+		trap.hit = trap_data["hit"]
+		trap.max_hit = trap_data["max_hit"]
+		get_parent().add_child(trap)
+		
+		if interact_ray.is_colliding():
+			trap.global_position = interact_ray.get_collision_point()
+		else:
+			trap.global_position = interact_ray.global_position + interact_ray.global_transform.basis.z * -interact_ray.target_position.length()
+
+func hit(dam):
+	health -= dam
 	emit_signal("player_hit")
 	if health <= 0:
 		die()

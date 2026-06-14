@@ -3,6 +3,24 @@ extends Control
 var counting_down = false
 var old_state
 var hide
+var controls_open = false
+
+@onready var quit: Button = $Quit
+@onready var score: Label = $Score
+@onready var controls: Button = $Controls
+@onready var restart: Button = $Restart
+@onready var resume: Button = $Resume
+@onready var black: ColorRect = $black
+@onready var hp: Label = $HP
+@onready var hp_2: ProgressBar = $HP2
+@onready var hp_2_ghost: ProgressBar = $HP2_ghost
+@onready var check_box_2: CheckBox = $CheckBox2
+@onready var check_box: CheckBox = $CheckBox
+@onready var bullets: Label = $Bullets
+@onready var pixil_frame_0: Sprite2D = $PixilFrame0
+@onready var stamina: Label = $Stamina
+@onready var overlay: CheckBox = $Overlay
+
 
 func _ready() -> void:
 	$CheckBox.button_pressed = true
@@ -13,24 +31,31 @@ func _ready() -> void:
 
 func  _process(delta: float) -> void:
 	if Input.is_action_just_pressed("esc"):
-		if main.state == "play" or main.state == "intermidiate":
+		if controls_open:
+			controls_open = false
+			$".".visible = true
+			$"../Controls".visible = false
+			return
+		if (main.state == "play" or main.state == "intermidiate"):
 			old_state = main.state
 			main.state = "paused" 
+			overlay.visible = true
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 			get_tree().paused = true
-			$Quit.visible = true
-			$Score.position = Vector2(820.0,283.333)
-			$Controls.visible = true
-			$Restart.visible = true
-			$Resume.visible = true
-			$black.visible = true
-			$HP.visible = false
-			$HP2.visible = false
-			$CheckBox2.visible = true
-			$Bullets.visible = false
-			$HP2_ghost.visible = false
-			$PixilFrame0.visible = false
-			$CheckBox.visible = true
+			quit.visible = true
+			stamina.visible = false
+			score.position = Vector2(820.0,283.333)
+			controls.visible = true
+			restart.visible = true
+			resume.visible = true
+			black.visible = true
+			hp.visible = false
+			hp_2.visible = false
+			check_box_2.visible = true
+			bullets.visible = false
+			hp_2_ghost.visible = false
+			pixil_frame_0.visible = false
+			check_box.visible = true
 		elif main.state == "paused":
 			get_tree().paused = false
 			main.state = "play"
@@ -39,6 +64,7 @@ func  _process(delta: float) -> void:
 
 func _on_restart_pressed() -> void:
 	main.state = "start"
+	Inventory.reset()
 	main.get_tree().paused = false
 	get_tree().reload_current_scene()
 
@@ -80,3 +106,9 @@ func _on_check_box_2_toggled(toggled_on: bool) -> void:
 
 func _on_quit_pressed() -> void:
 	get_tree().quit()
+
+
+func _on_controls_pressed() -> void:
+	controls_open = true
+	$".".visible = false
+	$"../Controls".visible = true

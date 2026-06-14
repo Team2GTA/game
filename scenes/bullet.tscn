@@ -7,13 +7,16 @@
 size = Vector3(0.05, 0.05, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y25gk"]
-albedo_color = Color(0.99, 0.45705, 0.14849998, 1)
-emission_enabled = true
+albedo_color = Color(0.8246134, 0, 0.116931, 1)
 emission = Color(0.17272827, 0.7782031, 7.70092e-07, 1)
 emission_energy_multiplier = 8.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_mkf8s"]
 material = SubResource("StandardMaterial3D_y25gk")
+size = Vector3(0.05, 0.05, 0.05)
+
+[sub_resource type="BoxMesh" id="BoxMesh_y25gk"]
+material = ExtResource("2_y25gk")
 size = Vector3(0.05, 0.05, 0.05)
 
 [node name="Bullet" type="Node3D" unique_id=1706465732]
@@ -29,12 +32,22 @@ target_position = Vector3(0, 0, -0.6)
 collision_mask = 2
 collide_with_areas = true
 
-[node name="CPUParticles3D" type="CPUParticles3D" parent="." unique_id=1684526939]
+[node name="Blood" type="CPUParticles3D" parent="." unique_id=1684526939]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.6)
 emitting = false
 one_shot = true
 explosiveness = 1.0
 mesh = SubResource("BoxMesh_mkf8s")
+direction = Vector3(0, 0, 1)
+initial_velocity_min = 3.0
+initial_velocity_max = 5.0
+
+[node name="Walls" type="CPUParticles3D" parent="." unique_id=1372853115]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.6)
+emitting = false
+one_shot = true
+explosiveness = 1.0
+mesh = SubResource("BoxMesh_y25gk")
 direction = Vector3(0, 0, 1)
 initial_velocity_min = 3.0
 initial_velocity_max = 5.0

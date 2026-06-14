@@ -1,23 +1,35 @@
 extends Node3D
 
-@export var max_capacity = 35
-var reload = 15
-var capacity = reload
-var reloading :bool
+var mag_size = 15
+var capacity = mag_size
+var reloading =false
+@onready var shoot: AudioStreamPlayer3D = $Shoot
+
+var ammo_type = "rifle"
 
 func _on_player_shot() -> void:
-	capacity -=1 if capacity else capacity
+	if capacity > 0:
+		shoot.play()
+		capacity -=1
 
 func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("reload") and !reloading and $"../..".weapon =="gun" and max_capacity:
+	if Input.is_action_just_pressed("reload") and !reloading and $"../..".weapon =="gun":
+		if capacity==mag_size:
+			return
+		
+		var reserve = Inventory.get_ammo(ammo_type)
+		if reserve<=0:
+			return
+		
 		reloading = true
 		$AnimationPlayer.play("reload")
+		
 		await get_tree().create_timer(1.5).timeout
-		reload = 15 -capacity
-		if capacity+max_capacity < 15:
-			capacity +=max_capacity
-		else:
-			capacity = 15
-		max_capacity -= reload
-		max_capacity = 0 if max_capacity <0 else max_capacity
+		
+		var needed = mag_size-capacity
+		var to_load = min(needed, reserve)
+		
+		Inventory.consume_ammo(ammo_type, to_load)
+		capacity += to_load
+		
 		reloading = false

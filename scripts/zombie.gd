@@ -1,48 +1,70 @@
 extends CharacterBody3D
 var player = null
 var state_machine
-var health = 15
-var speed = 2
+var enemy := Enemy.new()
+var health: float:
+	get: return enemy.stats["health"]
+	set(value): enemy.stats["health"] = value
+var speed: float:
+	get: return enemy.stats["speed"]
+	set(value): enemy.stats["speed"] = value
+var inv
 var flash_timer = false
 var persistance = false
 var knockback = Vector3.ZERO
+
 const ATTACK_RANGE = 2.2
 const KNOCKBACK_FORCE = 20.0
 const KNOCKBACK_DECAY = 10.0
+
 signal zombie_dead(pos)
+
 @export var player_path : NodePath
 @onready var nav_agent = $NavigationAgent3D
 @onready var anim = $AnimationTree
+@onready var floor_cast: RayCast3D = $CollisionShape3D/FloorCast
+
+
+const ENEMY_STATE_MACHINE = preload("res://scripts/enemy_state_machine.gd")
+
+var enemy_sm
 
 func _ready():
 	add_to_group("enemy")
+	inv = 1
+	enemy.stats["type"] = "zombie"
 	if player_path:
 		player = get_node(player_path)
 	state_machine = anim.get("parameters/playback")
+	enemy_sm = ENEMY_STATE_MACHINE.new()
+	add_child(enemy_sm)
+	enemy_sm.setup(self)
 
 func _process(delta: float) -> void:
 	if player == null:
 		return
-	
+
 	velocity = Vector3.ZERO
-	
-	match state_machine.get_current_node():
-		"run":
-			nav_agent.set_target_position(player.global_transform.origin)
-			var next_nav_point = nav_agent.get_next_path_position()
-			velocity = (next_nav_point - global_transform.origin).normalized() * speed
-			smooth_look_at(Vector3(global_position.x + velocity.x, global_position.y, global_position.z + velocity.z), delta)
-		"attack":
-			smooth_look_at(Vector3(player.global_position.x, global_position.y, player.global_position.z), delta)
-	
+
+	enemy_sm.tick(delta)
+
 	# apply knockback
 	velocity += knockback
 	knockback = knockback.lerp(Vector3.ZERO, KNOCKBACK_DECAY * delta)
-	
+
 	anim["parameters/conditions/attack"] = in_range()
 	anim["parameters/conditions/run"] = !in_range()
-	
+
 	move_and_slide()
+
+func _check_trap() -> void:
+	var mat = floor_cast.get_material_properties()
+	if mat and mat.is_in_group("traps") and inv:
+		got_hit(mat.trap_damage)
+		inv = 0
+		mat.hit += 1
+		await get_tree().create_timer(mat.timing).timeout
+		inv = 1
 
 func smooth_look_at(target: Vector3, delta: float) -> void:
 	var direction = (target - global_position)
@@ -56,17 +78,26 @@ func in_range() -> bool:
 
 func hit_finished():
 	if in_range():
-		player.hit()
+		player.hit(randi_range(3,7))
 
 func _on_area_3d_body_part_hit(dam: Variant, weapon: String = "gun") -> void:
-	health -= dam
-	flash_red()
-	var direction = (global_position - player.global_position).normalized()
-	knockback = direction * KNOCKBACK_FORCE if weapon == "axe" else Vector3.ZERO
+		got_hit(dam)
+		var direction = (global_position - player.global_position).normalized()
+		knockback = direction * KNOCKBACK_FORCE if weapon == "axe" else Vector3.ZERO
+
+func got_hit(dam):
+	if !anim["parameters/conditions/die"]:
+		health -= dam
+		flash_red()
+		die()
+
+func die():
 	if health <= 0:
-		var death_pos = global_position
-		call_deferred("queue_free")
-		emit_signal("zombie_dead", death_pos)
+			var death_pos = global_position
+			anim["parameters/conditions/die"]=true
+			await get_tree().create_timer(2.5).timeout
+			call_deferred("queue_free")
+			emit_signal("zombie_dead", death_pos)
 
 func flash_red():
 	if flash_timer:

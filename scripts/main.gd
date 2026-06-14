@@ -39,7 +39,7 @@ func _ready() -> void:
 	%Player.position = Vector3(2,0,-1)
 	state = "start"
 	hp.text = "HP: " + str(%Player.health)
-	bullets.text = str($Player/Camera3D/Rifle.capacity) +"/"+str($Player/Camera3D/Rifle.max_capacity)+ " BULLETS"
+	bullets.text = str($Player/Camera3D/Rifle.capacity) +"/"+str(Inventory.get_ammo("rifle"))+ " BULLETS"
 	hp_bar.max_value = 30
 	hp_bar.value = 30
 	hp_ghost.max_value = 30
@@ -47,16 +47,17 @@ func _ready() -> void:
 	score_bar.text = "SCORE: " + str(%Player.score)
 
 func _process(delta: float) -> void:
+	#Calculates difficulty and Spawn cap
 	dif=level*10+wave*2
 	spawn_cap = 2*dif
-	#if $Player/Camera3D/Rifle.max_capacity ==0:
-		#$Player/Camera3D/Rifle.max_capacity=15
+	#Checks for level transition
 	if state == "level_transition" and !level_loading:
 		level_loading = true
 		level_transition()
 	delta_cache = delta
 	state_machine()
 
+#Handles Zombie Spawning
 func spawn_zombie() -> void:
 	if spawning:
 		return
@@ -66,6 +67,7 @@ func spawn_zombie() -> void:
 		while wait:
 			await get_tree().process_frame
 		
+		#Checks Valid positons within range
 		var markers = spawn_markers.get_children()
 		var valid_markers = markers.filter(func(m): 
 			return m.global_position.distance_to(%Player.global_position) < SPAWN_RANGE
@@ -92,9 +94,14 @@ func spawn_zombie() -> void:
 	
 	spawning = false
 
+#World Border
 func _on_area_3d_body_entered(body: Node3D) -> void:
-	%Player.die()
+	if body.is_in_group("player"):
+		%Player.die()
+	else:
+		body.queue_free()
 
+#Red Flash on hit
 func _on_player_player_hit() -> void:
 	hit_rect.visible = true
 	await get_tree().create_timer(0.2).timeout
@@ -102,25 +109,30 @@ func _on_player_player_hit() -> void:
 	target_hp = %Player.health
 	hp.text = "HP: " + str(%Player.health)
 
+#Updates Score Of text
 func _on_player_update_score() -> void:
 	score_bar.text = "SCORE: " + str(%Player.score)
 
+#Sets state to dead
 func _on_player_player_dead() -> void:
 	state = "dead"
 
+#Adds score and deletes the zombie
 func reduce(pos):
 	%Player.points(2)
 	if spawned > 0:
 		spawned -= 1
 
+#Drops
 func drop(pos):
 	if randi()%3 == 0:
 		var pickup = PICKUP.instantiate()
-		pickup.type = ["mag","heal","heal","heal","heal","heal"].pick_random() if $Player/Camera3D/Rifle.max_capacity > 20 else ["mag","heal","mag","mag","mag"].pick_random()
+		pickup.type = ["mag","heal","heal","heal","heal","heal"].pick_random() if Inventory.get_ammo("rifle") > 20 else ["mag","heal","mag","mag","mag"].pick_random()
 		add_child(pickup)
-		pickup.position = pos + Vector3(0, 0.5, 0)
-		await get_tree().create_timer(0.5).timeout
+		pickup.global_position = pos + Vector3(0, 0.5, 0)
+		#await get_tree().create_timer(0.5).timeout
 
+#Updates Health
 func update_health():
 	hp.text = "HP: " + str(%Player.health)
 	hp_bar.value = lerp(hp_bar.value, float(target_hp), 8.0 * delta_cache)
@@ -128,17 +140,19 @@ func update_health():
 		hp_bar.value = target_hp
 		hp_ghost.value = target_hp
 
-
+#Eliminates 20% of enemy when crossing room
 func _on_hitbox_body_exited(body: Node3D) -> void:
 	if body.is_in_group("enemy") and !body.persistance:
 		if randi()%5 == 0:
 			body.queue_free()
 			spawned -=1
 		else:
+			#same zombie cannot be eliminated twice
 			body.persistance = true
 
 #Handles waves
 func _on_wave_over() -> void:
+	#Spawns The Pickup to proceed
 	await get_tree().create_timer(1.0).timeout
 	label.visible = false
 	var nearest = rooms.get_min_dist(rooms.poss,rooms.closest)
@@ -152,10 +166,13 @@ func _on_wave_over() -> void:
 		var angle = randf_range(0, TAU)
 		pickup.global_position = %Player.global_position + Vector3(sin(angle), 0, cos(angle)) * randf_range(1, 3)
 	await pickup.proceed
-
-	if level == 2 and wave == 4:
+	
+	#Win condition
+	if level == 2 and wave == 3:
 		state = "win"
 		return
+		
+	#Waves counter
 	wave += 1
 	if wave <=3:
 		$UI.start_countdown()
@@ -166,10 +183,11 @@ func _on_wave_over() -> void:
 	resume_spawn()
 	spawn_zombie()
 
+#Handles waves condition
 func wave_handle():
-	if %Player.score >= (20*level+wave*5+10) and !wave_triggered and level<=3:
+	if %Player.score >= (10*level+wave*5+10) and !wave_triggered and level<=3:
 		wave_triggered = true
-		state = "intermidiate"
+		state = "win"
 		pause_spawn()
 		clear_zombies()
 		label.visible = true
@@ -177,83 +195,7 @@ func wave_handle():
 		emit_signal("wave_over")
 
 func state_machine():
-	match state:
-		"start":
-			$UI/CheckBox2.visible = true
-			hp_bar.visible = false
-			bullets.visible = false
-			$UI/CheckBox.visible = true
-			hp_ghost.visible = false
-			hp.visible = false
-			score_bar.visible = false
-			restart.visible = false
-			resume.visible = false
-			$UI/black.visible = true
-			$UI/Quit.visible = true
-			$UI/PixilFrame0.visible = false
-			$UI/Controls.visible = true
-			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-			get_tree().paused = true
-		"play":
-			$UI/Stamina.visible = true
-			$UI/Stamina.text = "STAMINA\n"+str(%Player.stamina)
-			$UI/CheckBox2.visible = false
-			$UI/CheckBox.visible = false
-			$UI/Controls.visible = false
-			$UI/Quit.visible = false
-			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED  
-			hp_bar.visible = $UI.hide
-			hp_ghost.visible = $UI.hide
-			hp.visible = $UI.hide
-			score_bar.visible = true
-			bullets.visible = true
-			restart.visible = false
-			resume.visible = false
-			$UI/black.visible = false
-			$UI/Start.visible = false
-			$UI/PixilFrame0.visible = $UI.hide
-			if $Player/Camera3D/Rifle.reloading:
-				bullets.text = "Reloading...."
-			else:
-				bullets.text = str($Player/Camera3D/Rifle.capacity) +"/"+str($Player/Camera3D/Rifle.max_capacity)+ " BULLETS"
-			score_bar.position = Vector2(0,0)
-			update_health()
-			level_handle()
-			wave_handle()
-		"dead":
-			$UI/Quit.visible = true
-			$UI/CheckBox2.visible = true
-			hp_bar.visible = false
-			bullets.visible = false
-			hp_ghost.visible = false
-			hp.visible = false
-			score_bar.position = Vector2(820.0,283.333)
-			restart.visible = true
-			$UI/black.visible = true
-			$UI/PixilFrame0.visible = false
-			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-			get_tree().paused = true
-		"win":
-			$UI/Quit.visible = true
-			$UI/CheckBox2.visible = true
-			hp_bar.visible = false
-			bullets.visible = false
-			hp_ghost.visible = false
-			hp.visible = false
-			$UI/PixilFrame0.visible = false
-			score_bar.position = Vector2(820.0,283.333)
-			score_bar.text = "YOU WIN"
-			restart.visible = true
-			$UI/black.visible = true
-			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-			get_tree().paused = true
-		"intermidiate":
-			update_health()
-			$UI/Stamina.text = "STAMINA\n"+str(%Player.stamina)
-			if $Player/Camera3D/Rifle.reloading:
-				bullets.text = "Reloading...."
-			else:
-				bullets.text = str($Player/Camera3D/Rifle.capacity) +"/"+str($Player/Camera3D/Rifle.max_capacity)+ " BULLETS"
+	$StateMachine.tick()
 
 #Handles Levels
 func level_handle():
@@ -262,7 +204,7 @@ func level_handle():
 		spawn_cap = 25
 		if wave > 3 and !wave_triggered:
 			wave_triggered = true
-			state = "win"
+			state = "level_transition"
 			pause_spawn()
 			clear_zombies()
 			label.visible = true
@@ -271,7 +213,6 @@ func level_handle():
 	elif level == 2:
 		spawn_markers.position = Vector3(0,37,6)
 		spawn_cap = 35
-
 
 func level_transition():
 	await get_tree().create_timer(2.0).timeout
@@ -299,3 +240,7 @@ func pause_spawn():
 	
 func resume_spawn():
 	wait = false
+
+
+func _on_check_box_3_toggled(toggled_on: bool) -> void:
+	Inventory.set_value("overlay",toggled_on)
