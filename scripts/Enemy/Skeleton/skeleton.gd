@@ -113,7 +113,7 @@ func get_meshes_recursive(node):
 	return meshes
 
 func shoot():
-	print("BANG")
+	player.hit(2)
 
 func has_line_of_sight() -> bool:
 	if player == null:
