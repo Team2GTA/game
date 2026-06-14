@@ -187,7 +187,7 @@ func _on_wave_over() -> void:
 func wave_handle():
 	if %Player.score >= (10*level+wave*5+10) and !wave_triggered and level<=3:
 		wave_triggered = true
-		state = "win"
+		state = "intermidiate"
 		pause_spawn()
 		clear_zombies()
 		label.visible = true
@@ -204,7 +204,7 @@ func level_handle():
 		spawn_cap = 25
 		if wave > 3 and !wave_triggered:
 			wave_triggered = true
-			state = "level_transition"
+			state = "win"
 			pause_spawn()
 			clear_zombies()
 			label.visible = true

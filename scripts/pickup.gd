@@ -44,7 +44,7 @@ func _on_detection_body_entered(body: Node3D) -> void:
 				Inventory.add_ammo("rifle", 10)
 				color_rect.color = Color(0xc777008e)
 			"heal_gain":
-				body.max_health +=10
+				body.max_health +=5
 				Inventory.add_ammo("rifle",10) 
 				body.health = body.max_health
 				main.target_hp = body.health
