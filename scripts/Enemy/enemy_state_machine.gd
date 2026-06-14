@@ -2,8 +2,6 @@ extends Node
 class_name StateMachine
 
 var current_state: State
-#var host
-#var _states := {}
 
 func _ready() -> void:
 	call_deferred("initialize")

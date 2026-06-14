@@ -7,7 +7,7 @@ var persistance = false
 var knockback = Vector3.ZERO
 var spawning = true
 
-var enemy := Enemy.new()
+var enemy := Enemy.new("zombie")
 var health: float:
 	get: return enemy.stats["health"]
 	set(value): enemy.stats["health"] = value
@@ -31,17 +31,14 @@ signal zombie_dead(pos)
 func _ready():
 	add_to_group("enemy")
 	inv = 1
-	enemy.stats["type"] = "zombie"
 	if player_path:
 		player = get_node(player_path)
 	finish_spawn()
 
-# Hold still until the "get up" spawn animation has played out
 func finish_spawn() -> void:
 	await get_tree().create_timer(SPAWN_TIME).timeout
 	spawning = false
 
-# True while the AnimationTree is still in its "attack" state
 func is_attacking() -> bool:
 	var playback = anim["parameters/playback"]
 	return playback and playback.get_current_node() == "attack"
@@ -54,14 +51,9 @@ func _process(delta: float) -> void:
 		velocity = Vector3.ZERO
 		return
 
-	# stay rooted until the attack animation finishes, even after the
-	# player leaves range and the logic state machine flips back to Agro
 	if is_attacking():
 		velocity = Vector3.ZERO
-
-	# Add knockback on top of this frame's locomotion only, then restore
-	# locomotion. Otherwise the impulse compounds every frame (worst on a
-	# corpse, whose locomotion is never reset) and flings the body too far.
+		
 	var locomotion = velocity
 	velocity = locomotion + knockback
 	knockback = knockback.lerp(Vector3.ZERO, KNOCKBACK_DECAY * delta)

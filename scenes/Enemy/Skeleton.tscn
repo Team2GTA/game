@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://ce5m0kvsbinro"]
+
+[ext_resource type="Script" uid="uid://dgmivv1gcu10w" path="res://scripts/Enemy/Skeleton/skeleton.gd" id="1_wfh33"]
+[ext_resource type="PackedScene" uid="uid://chdcqgk15c6e0" path="res://scenes/floor_scanner.tscn" id="2_mihig"]
+[ext_resource type="Script" uid="uid://b7n2q4esm8x3k" path="res://scripts/Enemy/enemy_state_machine.gd" id="2_uq513"]
+[ext_resource type="Script" uid="uid://cgj1v4itlebp3" path="res://scripts/Enemy/Skeleton/idle.gd" id="4_ccqnx"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mihig"]
+albedo_color = Color(0.9882353, 0.14117648, 0.019607844, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ibwgf"]
+material = SubResource("StandardMaterial3D_mihig")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_48mbm"]
+
+[node name="Skeleton" type="CharacterBody3D" unique_id=2067468513]
+script = ExtResource("1_wfh33")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1468540324]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+mesh = SubResource("CapsuleMesh_ibwgf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=116268264]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+shape = SubResource("CapsuleShape3D_48mbm")
+
+[node name="FloorCast" parent="CollisionShape3D" unique_id=1467298939 instance=ExtResource("2_mihig")]
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1628096524]
+
+[node name="StateMachine" type="Node" parent="." unique_id=1825016934]
+script = ExtResource("2_uq513")
+metadata/_custom_type_script = "uid://b7n2q4esm8x3k"
+
+[node name="Idle" type="Node" parent="StateMachine" unique_id=1784373958]
+script = ExtResource("4_ccqnx")
+
+[node name="RayCast3D" type="RayCast3D" parent="." unique_id=967305571]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 1.3000001, 0.4)
