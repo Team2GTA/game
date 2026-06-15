@@ -7,7 +7,6 @@
 [ext_resource type="Material" uid="uid://tud1dvir0lvb" path="res://resources/bullet_material.tres" id="4_85g3d"]
 [ext_resource type="PackedScene" uid="uid://cjbwt1hegmion" path="res://scenes/Level/hitbox.tscn" id="4_jyhfs"]
 [ext_resource type="Script" uid="uid://cndixswnnqg2b" path="res://scripts/UI/ui.gd" id="6_tefeu"]
-[ext_resource type="PackedScene" uid="uid://ce5m0kvsbinro" path="res://scenes/Enemy/Skeleton.tscn" id="6_w00wy"]
 [ext_resource type="Texture2D" uid="uid://dfybody42ydnj" path="res://assests/pixil-frame-0.png" id="7_o6xl0"]
 [ext_resource type="Script" uid="uid://bp8idlu6atvtg" path="res://scripts/UI/controls.gd" id="9_85g3d"]
 [ext_resource type="Script" uid="uid://ex7c0elg4urw" path="res://scripts/UI/input_remap_button.gd" id="10_choun"]
@@ -92,7 +91,6 @@ shadow_offset = Vector2(20, 20)
 
 [node name="main" type="Node3D" unique_id=1963971271]
 script = ExtResource("1_tbgi4")
-spawn_cap = 0
 
 [node name="StateMachine" parent="." unique_id=498531002 instance=ExtResource("11_smach")]
 
@@ -779,18 +777,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50.57751, 0, 49)
 
 [node name="f9_4" type="Marker3D" parent="NavigationRegion3D/Rooms/SpawnMarkers" unique_id=2077637777]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.377472, 0, 33.6)
-
-[node name="Skeleton" parent="NavigationRegion3D/Rooms" unique_id=2067468513 instance=ExtResource("6_w00wy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.3369207, 0, 0)
-player_path = NodePath("../../../Player")
-
-[node name="Skeleton2" parent="NavigationRegion3D/Rooms" unique_id=1939464037 instance=ExtResource("6_w00wy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.3369207, 0, -4.5143156)
-player_path = NodePath("../../../Player")
-
-[node name="Skeleton3" parent="NavigationRegion3D/Rooms" unique_id=616375374 instance=ExtResource("6_w00wy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.3369207, 0, 2.5363226)
-player_path = NodePath("../../../Player")
 
 [node name="Corridors" type="CSGCombiner3D" parent="NavigationRegion3D" unique_id=1865471026]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47.300003, -4.9, -78.6)

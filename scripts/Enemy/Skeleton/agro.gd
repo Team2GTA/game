@@ -24,7 +24,7 @@ func update(delta):
 		enemy.skeleton_sm.transition("Retreat")
 		
 	shoot_timer+=delta
-	if shoot_timer > 2.0 and enemy.has_line_of_sight():
+	if shoot_timer > randf_range(1.5,3) and enemy.has_line_of_sight():
 		enemy.shoot()
 		shoot_timer = 0.0
 
@@ -34,7 +34,7 @@ func physics_update(delta):
 		strafe_dir*=-1
 		strafe_timer = 0.0
 		strafe_change_time = randf_range(1.5, 3.5)
-		strafe_speed = randf_range(2.0, 4.5)
+		strafe_speed = randf_range(0.5, 1.5)
 	
 	enemy.smooth_look_at(Vector3(player.global_position.x, enemy.global_position.y, player.global_position.z),delta)
 	

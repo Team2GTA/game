@@ -20,11 +20,11 @@ func transition(new_state_name: String):
 	current_state.enter()
 
 func _process(delta: float) -> void:
-	if current_state == null:
+	if current_state == null or current_state.player == null:
 		return
 	current_state.update(delta)
-	
+
 func _physics_process(delta: float) -> void:
-	if current_state == null:
+	if current_state == null or current_state.player == null:
 		return
 	current_state.physics_update(delta)

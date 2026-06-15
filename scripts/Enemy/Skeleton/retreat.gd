@@ -2,7 +2,7 @@ extends State
 
 const TOO_CLOSE_RANGE = 5.0
 const IDEAL_RANGE = 10.0 
-const RETREAT_SPEED = 4.0
+const RETREAT_SPEED = 2.5
 var shoot_timer = 0.0
 var retreat_target = Vector3.ZERO
 

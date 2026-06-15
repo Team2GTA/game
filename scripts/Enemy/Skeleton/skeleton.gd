@@ -21,7 +21,9 @@ signal skeleton_dead(pos)
 @onready var skeleton_sm: StateMachine = $StateMachine
 @onready var floor_cast: RayCast3D = $CollisionShape3D/FloorCast
 @onready var ray: RayCast3D = $RayCast3D
+@onready var muzzle: Marker3D = $Muzzle
 
+const SPEAR = preload("res://scenes/Enemy/Skeleton/skeleton_spear.tscn")
 const KNOCKBACK_DECAY = 10.0
 const KNOCKBACK_FORCE = 20.0
 const SPAWN_TIME = 3.2
@@ -30,8 +32,11 @@ const ATTACK_RANGE = 2.2
 func _ready():
 	add_to_group("enemy")
 	inv = 1
-	if player_path:
-		player = get_node(player_path)
+	if player == null:
+		if player_path:
+			player = get_node(player_path)
+		else:
+			player = get_tree().get_first_node_in_group("player")
 	finish_spawn()
 
 func _process(delta: float) -> void:
@@ -113,7 +118,11 @@ func get_meshes_recursive(node):
 	return meshes
 
 func shoot():
-	player.hit(2)
+	if player == null:
+		return
+	var spear = SPEAR.instantiate()
+	get_parent().add_child(spear)
+	spear.launch(muzzle.global_position, player.global_position, enemy.stats["attack"], self)
 
 func has_line_of_sight() -> bool:
 	if player == null:

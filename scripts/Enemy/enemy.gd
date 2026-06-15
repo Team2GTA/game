@@ -8,7 +8,7 @@ const STATS = {
 	},
 	"skeleton": {
 		"health": 8.0,
-		"attack": 5.0,
+		"attack": 1.5,
 		"speed": 3.5,
 	},
 }

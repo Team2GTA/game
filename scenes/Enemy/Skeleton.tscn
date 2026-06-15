@@ -7,9 +7,10 @@
 [ext_resource type="Script" uid="uid://dn80u74c8fges" path="res://scripts/Enemy/Skeleton/agro.gd" id="5_5ic3t"]
 [ext_resource type="Script" uid="uid://5vwvd7ttelnu" path="res://scripts/Enemy/Skeleton/lost.gd" id="6_6gqog"]
 [ext_resource type="Script" uid="uid://bsmgkqgd06unt" path="res://scripts/Enemy/Skeleton/retreat.gd" id="7_inhk1"]
+[ext_resource type="Script" uid="uid://fjo8wv58b617" path="res://scripts/Enemy/Zombie/hurtbox_zombie.gd" id="8_hurt"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mihig"]
-albedo_color = Color(0.9882353, 0.14117648, 0.019607844, 1)
+albedo_color = Color(0.64014924, 0.35009813, 1, 1)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_ibwgf"]
 material = SubResource("StandardMaterial3D_mihig")
@@ -19,7 +20,7 @@ material = SubResource("StandardMaterial3D_mihig")
 [node name="Skeleton" type="CharacterBody3D" unique_id=2067468513]
 script = ExtResource("1_wfh33")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1468540324]
+[node name="Body" type="MeshInstance3D" parent="." unique_id=1468540324]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 mesh = SubResource("CapsuleMesh_ibwgf")
 
@@ -49,3 +50,17 @@ script = ExtResource("7_inhk1")
 
 [node name="RayCast3D" type="RayCast3D" parent="." unique_id=967305571]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 1.3000001, 0.4)
+
+[node name="Muzzle" type="Marker3D" parent="." unique_id=22590015]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3000001, -0.4000001)
+
+[node name="Area3D" type="Area3D" parent="." unique_id=22590016 groups=["enemy"]]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("8_hurt")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=22590017]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+shape = SubResource("CapsuleShape3D_48mbm")
+
+[connection signal="body_part_hit" from="Area3D" to="." method="_on_area_3d_body_part_hit"]

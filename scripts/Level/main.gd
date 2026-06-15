@@ -29,6 +29,7 @@ var spawned = 0
 
 const PICKUP = preload("res://scenes/pickup.tscn")
 const ZOMBIE = preload("res://scenes/Enemy/Zombie.tscn")
+const SKELETON = preload("res://scenes/Enemy/Skeleton.tscn")
 const SPAWN_RANGE = 30.0
 var target_hp = 30
 
@@ -49,7 +50,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	#Calculates difficulty and Spawn cap
 	dif=level*10+wave*2
-	spawn_cap =0
+	spawn_cap = dif*2
 	#Checks for level transition
 	if state == "level_transition" and !level_loading:
 		level_loading = true
@@ -66,8 +67,7 @@ func spawn_zombie() -> void:
 	while state == "play":
 		while wait:
 			await get_tree().process_frame
-		
-		#Checks Valid positons within range
+
 		var markers = spawn_markers.get_children()
 		var valid_markers = markers.filter(func(m): 
 			return m.global_position.distance_to(%Player.global_position) < SPAWN_RANGE
@@ -75,19 +75,28 @@ func spawn_zombie() -> void:
 		
 		if valid_markers.size() > 0 and spawned < spawn_cap:
 			var random_marker = valid_markers[randi() % valid_markers.size()]
-			var zombie = ZOMBIE.instantiate()
-			zombie.zombie_dead.connect(reduce)
-			zombie.zombie_dead.connect(drop)
-			add_child(zombie)
-			spawned += 1
 			var random_angle = randf() * TAU
 			var random_offset = Vector3(cos(random_angle), 0, sin(random_angle)) * randf_range(0.0, 2.5)
-			zombie.global_position = random_marker.global_position + random_offset
-			zombie.rotation.y = random_angle
-			zombie.speed = randf_range(0.1, 0.4) * dif
-			zombie.scale = Vector3(1,1,1)*randf_range(0.9,1.2)
-			zombie.player = %Player
-			zombie.health = level * 10 + 10
+
+			var foe
+			if randi() % 4 == 0:
+				foe = SKELETON.instantiate()
+				foe.skeleton_dead.connect(reduce)
+				foe.skeleton_dead.connect(drop)
+			else:
+				foe = ZOMBIE.instantiate()
+				foe.zombie_dead.connect(reduce)
+				foe.zombie_dead.connect(drop)
+
+			add_child(foe)
+			spawned += 1
+			foe.global_position = random_marker.global_position + random_offset
+			foe.rotation.y = random_angle
+			foe.speed = randf_range(0.1, 0.4) * dif
+			foe.scale = Vector3(1,1,1)*randf_range(0.9,1.2)
+			foe.player = %Player
+			var base_hp = foe.health
+			foe.health = (level * 10 + 10) * base_hp / Enemy.STATS["zombie"]["health"]
 		
 		var wait_time = randf_range(4, 8) / dif
 		await get_tree().create_timer(wait_time).timeout
