@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://bytcy8c7jyr4g"]
+
+[ext_resource type="Script" uid="uid://db4yrmm7jpnej" path="res://scripts/Weapons/bullet.gd" id="1_y25gk"]
+[ext_resource type="Material" uid="uid://tud1dvir0lvb" path="res://resources/bullet_material.tres" id="2_y25gk"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_h1aey"]
+size = Vector3(0.05, 0.05, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y25gk"]
+albedo_color = Color(0.8246134, 0, 0.116931, 1)
+emission = Color(0.17272827, 0.7782031, 7.70092e-07, 1)
+emission_energy_multiplier = 8.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_mkf8s"]
+material = SubResource("StandardMaterial3D_y25gk")
+size = Vector3(0.05, 0.05, 0.05)
+
+[sub_resource type="BoxMesh" id="BoxMesh_y25gk"]
+material = ExtResource("2_y25gk")
+size = Vector3(0.05, 0.05, 0.05)
+
+[node name="Bullet" type="Node3D" unique_id=1706465732]
+script = ExtResource("1_y25gk")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1057636463]
+mesh = SubResource("BoxMesh_h1aey")
+surface_material_override/0 = ExtResource("2_y25gk")
+
+[node name="RayCast3D" type="RayCast3D" parent="." unique_id=1071258501]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.2351742e-08)
+target_position = Vector3(0, 0, -0.6)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="Blood" type="CPUParticles3D" parent="." unique_id=1684526939]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.6)
+emitting = false
+one_shot = true
+explosiveness = 1.0
+mesh = SubResource("BoxMesh_mkf8s")
+direction = Vector3(0, 0, 1)
+initial_velocity_min = 3.0
+initial_velocity_max = 5.0
+
+[node name="Walls" type="CPUParticles3D" parent="." unique_id=1372853115]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.6)
+emitting = false
+one_shot = true
+explosiveness = 1.0
+mesh = SubResource("BoxMesh_y25gk")
+direction = Vector3(0, 0, 1)
+initial_velocity_min = 3.0
+initial_velocity_max = 5.0
+
+[node name="Life" type="Timer" parent="." unique_id=1103584637]
+wait_time = 10.0
+autostart = true
+
+[connection signal="timeout" from="Life" to="." method="_on_life_timeout"]

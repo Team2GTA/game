@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://dsojb6yh5j6hj"]
+
+[ext_resource type="Script" uid="uid://cmpik2hkg70o8" path="res://scripts/Enemy/Skeleton/skeleton_spear.gd" id="1_spear"]
+[ext_resource type="Material" uid="uid://c5f3rbgnu6dsj" path="res://resources/new_standard_material_3d.tres" id="3_vjfn2"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_shaft"]
+material = ExtResource("3_vjfn2")
+size = Vector3(0.05, 0.05, 1.5)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_tip"]
+material = ExtResource("3_vjfn2")
+top_radius = 0.0
+bottom_radius = 0.09
+height = 0.3
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_col"]
+size = Vector3(0.12, 0.12, 1.7)
+
+[node name="Spear" type="RigidBody3D" unique_id=1519690707]
+collision_layer = 4
+collision_mask = 1
+gravity_scale = 0.5
+continuous_cd = true
+contact_monitor = true
+max_contacts_reported = 4
+script = ExtResource("1_spear")
+
+[node name="Shaft" type="MeshInstance3D" parent="." unique_id=1688489547]
+mesh = SubResource("BoxMesh_shaft")
+
+[node name="Tip" type="MeshInstance3D" parent="." unique_id=1240843397]
+transform = Transform3D(1, 0, 0, 0, -8.742278e-08, 1, 0, -1, -8.742278e-08, 0, 0, -0.9)
+mesh = SubResource("CylinderMesh_tip")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1666082412]
+shape = SubResource("BoxShape3D_col")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
