@@ -7,8 +7,8 @@
 [ext_resource type="Material" uid="uid://tud1dvir0lvb" path="res://resources/bullet_material.tres" id="4_85g3d"]
 [ext_resource type="PackedScene" uid="uid://cjbwt1hegmion" path="res://scenes/Level/hitbox.tscn" id="4_jyhfs"]
 [ext_resource type="Script" uid="uid://cndixswnnqg2b" path="res://scripts/UI/ui.gd" id="6_tefeu"]
+[ext_resource type="Theme" uid="uid://dvcq150v77f7n" path="res://resources/themes/NewUI.tres" id="7_ltlnq"]
 [ext_resource type="Texture2D" uid="uid://dfybody42ydnj" path="res://assests/pixil-frame-0.png" id="7_o6xl0"]
-[ext_resource type="StyleBox" uid="uid://br4afupp3031v" path="res://resources/button.tres" id="8_w00wy"]
 [ext_resource type="Script" uid="uid://bp8idlu6atvtg" path="res://scripts/UI/controls.gd" id="9_85g3d"]
 [ext_resource type="Script" uid="uid://ex7c0elg4urw" path="res://scripts/UI/input_remap_button.gd" id="10_choun"]
 [ext_resource type="PackedScene" uid="uid://b8sx3k2qmn4y7" path="res://scenes/Level/state_machine.tscn" id="11_smach"]
@@ -76,31 +76,6 @@ font_size = 53
 
 [sub_resource type="LabelSettings" id="LabelSettings_85g3d"]
 font_size = 53
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w00wy"]
-bg_color = Color(0, 0.18034002, 0.17242074, 1)
-border_width_left = 20
-border_width_top = 10
-border_width_right = 20
-border_width_bottom = 10
-border_color = Color(0.3753233, 0, 0.10756198, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ltlnq"]
-bg_color = Color(0, 0, 0, 1)
-border_width_left = 20
-border_width_top = 10
-border_width_right = 20
-border_width_bottom = 10
-border_color = Color(0.3764706, 0.6666667, 0.7647059, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-shadow_size = 5
 
 [sub_resource type="LabelSettings" id="LabelSettings_o6xl0"]
 font_size = 70
@@ -1180,10 +1155,63 @@ material = ExtResource("1_0wfyh")
 [node name="UI" type="Control" parent="." unique_id=488969940]
 process_mode = 3
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("6_tefeu")
+
+[node name="Panel" type="Panel" parent="UI" unique_id=834833636]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("7_ltlnq")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Panel" unique_id=505078490]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -270.0
+offset_top = -61.0
+offset_right = 270.0
+offset_bottom = 61.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 35
+
+[node name="Resume" type="Button" parent="UI/Panel/VBoxContainer" unique_id=1465569539]
+layout_mode = 2
+text = "Resume"
+
+[node name="Start" type="Button" parent="UI/Panel/VBoxContainer" unique_id=2117065156]
+layout_mode = 2
+text = "Start"
+
+[node name="Restart" type="Button" parent="UI/Panel/VBoxContainer" unique_id=1167172121]
+layout_mode = 2
+text = "Restart"
+
+[node name="Quit" type="Button" parent="UI/Panel/VBoxContainer" unique_id=408255739]
+layout_mode = 2
+text = "QUIT"
+
+[node name="Controls" type="Button" parent="UI/Panel" unique_id=326771768]
+visible = false
+layout_mode = 0
+offset_left = 1494.0
+offset_top = 563.0
+offset_right = 1775.0
+offset_bottom = 673.0
+theme_override_font_sizes/font_size = 40
+text = "CONTROLS"
 
 [node name="ColorRect" type="ColorRect" parent="UI" unique_id=1628088539]
 visible = false
@@ -1194,14 +1222,8 @@ scale = Vector2(1.667, 1.667)
 mouse_filter = 2
 color = Color(1, 0, 0, 0.5568628)
 
-[node name="black" type="ColorRect" parent="UI" unique_id=493976881]
-layout_mode = 0
-offset_right = 1156.0
-offset_bottom = 649.0
-scale = Vector2(1.667, 1.667)
-color = Color(0.4, 0.4, 0.4, 0.72156864)
-
 [node name="HP2" type="ProgressBar" parent="UI" unique_id=429559827]
+visible = false
 self_modulate = Color(18.892157, 0, 0, 1)
 layout_mode = 0
 offset_top = 75.0
@@ -1211,6 +1233,7 @@ scale = Vector2(1.667, 1.667)
 show_percentage = false
 
 [node name="HP2_ghost" type="ProgressBar" parent="UI" unique_id=1914762907]
+visible = false
 z_index = -1
 layout_mode = 0
 offset_top = 75.0
@@ -1220,6 +1243,7 @@ scale = Vector2(1.667, 1.667)
 show_percentage = false
 
 [node name="HP" type="Label" parent="UI" unique_id=1159572759]
+visible = false
 layout_mode = 0
 offset_top = 73.333
 offset_right = 550.0
@@ -1235,6 +1259,7 @@ text = "Score : "
 label_settings = SubResource("LabelSettings_tbgi4")
 
 [node name="Stamina" type="Label" parent="UI" unique_id=810476558]
+visible = false
 layout_mode = 0
 offset_left = 1398.0
 offset_top = 18.0
@@ -1243,19 +1268,8 @@ offset_bottom = 91.0
 label_settings = SubResource("LabelSettings_85g3d")
 horizontal_alignment = 1
 
-[node name="Restart" type="Button" parent="UI" unique_id=1167172121]
-layout_mode = 0
-offset_left = 700.0
-offset_top = 450.0
-offset_right = 1270.0
-offset_bottom = 572.0
-theme_override_font_sizes/font_size = 83
-theme_override_styles/normal = ExtResource("8_w00wy")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_w00wy")
-theme_override_styles/hover = SubResource("StyleBoxFlat_ltlnq")
-text = "Restart"
-
 [node name="Bullets" type="Label" parent="UI" unique_id=1116244056]
+visible = false
 layout_mode = 0
 offset_left = 25.0
 offset_top = 963.333
@@ -1265,15 +1279,6 @@ text = "0/10 Bullets"
 label_settings = SubResource("LabelSettings_o6xl0")
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="Resume" type="Button" parent="UI" unique_id=1465569539]
-layout_mode = 0
-offset_left = 700.0
-offset_top = 650.0
-offset_right = 1266.667
-offset_bottom = 778.333
-theme_override_font_sizes/font_size = 83
-text = "Resume"
 
 [node name="Label" type="Label" parent="UI" unique_id=2139249105]
 process_mode = 1
@@ -1288,36 +1293,27 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="PixilFrame0" type="Sprite2D" parent="UI" unique_id=1442381237]
+visible = false
 texture_filter = 1
 position = Vector2(960, 540)
 scale = Vector2(5, 5)
 texture = ExtResource("7_o6xl0")
 
-[node name="Start" type="Button" parent="UI" unique_id=2117065156]
-layout_mode = 0
-offset_left = 700.0
-offset_top = 432.0
-offset_right = 1270.0
-offset_bottom = 554.0
-pivot_offset = Vector2(285, 61)
-theme_override_font_sizes/font_size = 83
-text = "Start"
-
 [node name="CheckBox" type="CheckBox" parent="UI" unique_id=1096858677]
 layout_mode = 0
-offset_left = 137.0
-offset_top = 461.0
-offset_right = 492.0
-offset_bottom = 538.0
+offset_left = 138.0
+offset_top = 413.0
+offset_right = 517.0
+offset_bottom = 514.0
 theme_override_font_sizes/font_size = 50
 text = "View Bobbing"
 
 [node name="Overlay" type="CheckBox" parent="UI" unique_id=962241863]
 layout_mode = 0
 offset_left = 137.0
-offset_top = 401.0
+offset_top = 297.0
 offset_right = 492.0
-offset_bottom = 478.0
+offset_bottom = 398.0
 theme_override_font_sizes/font_size = 50
 text = "Overlay"
 
@@ -1331,24 +1327,6 @@ theme_override_font_sizes/font_size = 50
 text = "HUD
 "
 
-[node name="Controls" type="Button" parent="UI" unique_id=326771768]
-layout_mode = 0
-offset_left = 1494.0
-offset_top = 563.0
-offset_right = 1775.0
-offset_bottom = 673.0
-theme_override_font_sizes/font_size = 40
-text = "CONTROLS"
-
-[node name="Quit" type="Button" parent="UI" unique_id=408255739]
-layout_mode = 0
-offset_left = 696.0
-offset_top = 821.0
-offset_right = 1266.0
-offset_bottom = 943.0
-theme_override_font_sizes/font_size = 83
-text = "QUIT"
-
 [node name="Controls" type="Control" parent="." unique_id=1101782410]
 process_mode = 3
 visible = false
@@ -1358,6 +1336,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("7_ltlnq")
 script = ExtResource("9_85g3d")
 
 [node name="black" type="ColorRect" parent="Controls" unique_id=1334747894]
@@ -1365,7 +1344,7 @@ layout_mode = 0
 offset_right = 1156.0
 offset_bottom = 649.0
 scale = Vector2(1.667, 1.667)
-color = Color(0.4, 0.4, 0.4, 0.72156864)
+color = Color(0.13333334, 0.13333334, 0.13333334, 0.72156864)
 
 [node name="Button" type="Button" parent="Controls" unique_id=2098579078]
 texture_filter = 1
@@ -1374,10 +1353,10 @@ anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = 5.0
-offset_top = -535.0
-offset_right = -1701.0
-offset_bottom = -455.0
+offset_left = 1601.0
+offset_top = 385.0
+offset_right = -105.0
+offset_bottom = 465.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_focus_color = Color(0.941471, 1, 0.4177662, 1)
@@ -1392,16 +1371,15 @@ text = "Back"
 [node name="VBoxContainer" type="VBoxContainer" parent="Controls" unique_id=1989381343]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.36510417
-anchor_top = 0.5
-anchor_right = 0.36510417
-anchor_bottom = 0.5
+anchor_left = 0.2296875
+anchor_top = 0.24166666
+anchor_right = 0.29166666
+anchor_bottom = 0.6657407
 offset_left = -93.0
 offset_top = -228.0
 offset_right = 93.0
 offset_bottom = 228.0
-grow_horizontal = 2
-grow_vertical = 2
+theme_override_constants/separation = 20
 metadata/_edit_use_anchors_ = true
 
 [node name="Up" type="HBoxContainer" parent="Controls/VBoxContainer" unique_id=1067839017]
@@ -1410,7 +1388,6 @@ layout_mode = 2
 [node name="Up" type="Label" parent="Controls/VBoxContainer/Up" unique_id=1217743571]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 64
 text = "Forward"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -1426,8 +1403,8 @@ metadata/_custom_type_script = "uid://ex7c0elg4urw"
 
 [node name="InputRemapButton2" type="Button" parent="Controls/VBoxContainer/Up/Up" unique_id=1141511773]
 layout_mode = 0
-offset_left = 870.0
-offset_right = 1250.0
+offset_left = 950.0
+offset_right = 1330.0
 offset_bottom = 84.0
 script = ExtResource("10_choun")
 action = "up"
@@ -1440,7 +1417,6 @@ layout_mode = 2
 [node name="Left" type="Label" parent="Controls/VBoxContainer/Left" unique_id=322507929]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 64
 text = "Left"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -1456,8 +1432,8 @@ metadata/_custom_type_script = "uid://ex7c0elg4urw"
 
 [node name="InputRemapButton2" type="Button" parent="Controls/VBoxContainer/Left/Left" unique_id=1887778822]
 layout_mode = 0
-offset_left = 870.0
-offset_right = 1250.0
+offset_left = 950.0
+offset_right = 1330.0
 offset_bottom = 84.0
 script = ExtResource("10_choun")
 action = "left"
@@ -1470,7 +1446,6 @@ layout_mode = 2
 [node name="Down" type="Label" parent="Controls/VBoxContainer/Down" unique_id=970606926]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 64
 text = "Backward"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -1486,8 +1461,8 @@ metadata/_custom_type_script = "uid://ex7c0elg4urw"
 
 [node name="InputRemapButton2" type="Button" parent="Controls/VBoxContainer/Down/Down" unique_id=1160357122]
 layout_mode = 0
-offset_left = 870.0
-offset_right = 1250.0
+offset_left = 950.0
+offset_right = 1330.0
 offset_bottom = 84.0
 script = ExtResource("10_choun")
 action = "down"
@@ -1500,7 +1475,6 @@ layout_mode = 2
 [node name="Right" type="Label" parent="Controls/VBoxContainer/Right" unique_id=1217298195]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 64
 text = "Right"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -1516,8 +1490,8 @@ metadata/_custom_type_script = "uid://ex7c0elg4urw"
 
 [node name="InputRemapButton2" type="Button" parent="Controls/VBoxContainer/Right/Right" unique_id=1880031221]
 layout_mode = 0
-offset_left = 870.0
-offset_right = 1250.0
+offset_left = 950.0
+offset_right = 1330.0
 offset_bottom = 84.0
 script = ExtResource("10_choun")
 action = "right"
@@ -1530,7 +1504,6 @@ layout_mode = 2
 [node name="Jump" type="Label" parent="Controls/VBoxContainer/Jump" unique_id=815385823]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 64
 text = "Jump "
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -1550,7 +1523,6 @@ layout_mode = 2
 [node name="Sprint" type="Label" parent="Controls/VBoxContainer/Sprint" unique_id=1665558617]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 64
 text = "Sprint"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -1570,7 +1542,6 @@ layout_mode = 2
 [node name="Reload" type="Label" parent="Controls/VBoxContainer/Reload" unique_id=2116370864]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 64
 text = "Reload"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -1590,7 +1561,6 @@ layout_mode = 2
 [node name="Interact" type="Label" parent="Controls/VBoxContainer/Interact" unique_id=335299128]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 64
 text = "Interact"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -1611,8 +1581,8 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 2, 0
 [connection signal="wave_over" from="." to="." method="_on_wave_over"]
 [connection signal="body_entered" from="WorldBorder" to="." method="_on_area_3d_body_entered"]
 [connection signal="body_entered" from="NavigationRegion3D/Rooms/f1/hitbox" to="NavigationRegion3D/Rooms" method="_on_hitbox_body_entered"]
-[connection signal="body_exited" from="NavigationRegion3D/Rooms/f1/hitbox" to="." method="_on_hitbox_body_exited"]
 [connection signal="body_exited" from="NavigationRegion3D/Rooms/f1/hitbox" to="." method="_on_f_10_body_exited"]
+[connection signal="body_exited" from="NavigationRegion3D/Rooms/f1/hitbox" to="." method="_on_hitbox_body_exited"]
 [connection signal="body_entered" from="NavigationRegion3D/Rooms/f2/hitbox" to="NavigationRegion3D/Rooms" method="_on_hitbox_body_entered"]
 [connection signal="body_exited" from="NavigationRegion3D/Rooms/f2/hitbox" to="." method="_on_hitbox_body_exited"]
 [connection signal="body_entered" from="NavigationRegion3D/Rooms/f3/hitbox" to="NavigationRegion3D/Rooms" method="_on_hitbox_body_entered"]
@@ -1628,22 +1598,22 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 2, 0
 [connection signal="body_entered" from="NavigationRegion3D/Rooms/f8/hitbox" to="NavigationRegion3D/Rooms" method="_on_hitbox_body_entered"]
 [connection signal="body_exited" from="NavigationRegion3D/Rooms/f8/hitbox" to="." method="_on_hitbox_body_exited"]
 [connection signal="body_entered" from="NavigationRegion3D/Rooms/f9/hitbox" to="NavigationRegion3D/Rooms" method="_on_hitbox_body_entered"]
-[connection signal="body_exited" from="NavigationRegion3D/Rooms/f9/hitbox" to="." method="_on_hitbox_body_exited"]
 [connection signal="body_exited" from="NavigationRegion3D/Rooms/f9/hitbox" to="." method="_on_hitbox_8_body_exited"]
+[connection signal="body_exited" from="NavigationRegion3D/Rooms/f9/hitbox" to="." method="_on_hitbox_body_exited"]
 [connection signal="body_entered" from="NavigationRegion3D/TP/CSGBox3D/tp" to="Player" method="_on_tp_body_entered"]
 [connection signal="body_entered" from="NavigationRegion3D/TP/CSGBox3D4/tp" to="Player" method="_on_tp_body_entered"]
 [connection signal="body_entered" from="NavigationRegion3D/TP/CSGBox3D3/tp" to="Player" method="_on_tp_body_entered"]
 [connection signal="body_entered" from="NavigationRegion3D/TP/CSGBox3D2/tp" to="Player" method="_on_tp_body_entered"]
 [connection signal="body_entered" from="NavigationRegion3D/TP/CSGBox3D6/tp" to="Player" method="_on_tp_body_entered"]
 [connection signal="body_entered" from="NavigationRegion3D/TP/CSGBox3D5/tp" to="Player" method="_on_tp_body_entered"]
-[connection signal="pressed" from="UI/Restart" to="UI" method="_on_restart_pressed"]
-[connection signal="pressed" from="UI/Resume" to="UI" method="_on_resume_pressed"]
-[connection signal="pressed" from="UI/Start" to="UI" method="_on_start_pressed"]
+[connection signal="pressed" from="UI/Panel/VBoxContainer/Resume" to="UI" method="_on_resume_pressed"]
+[connection signal="pressed" from="UI/Panel/VBoxContainer/Start" to="UI" method="_on_start_pressed"]
+[connection signal="pressed" from="UI/Panel/VBoxContainer/Restart" to="UI" method="_on_restart_pressed"]
+[connection signal="pressed" from="UI/Panel/VBoxContainer/Quit" to="UI" method="_on_quit_pressed"]
+[connection signal="pressed" from="UI/Panel/Controls" to="UI" method="_on_controls_pressed"]
 [connection signal="toggled" from="UI/CheckBox" to="UI" method="_on_check_box_toggled"]
 [connection signal="toggled" from="UI/Overlay" to="." method="_on_check_box_3_toggled"]
 [connection signal="toggled" from="UI/CheckBox2" to="UI" method="_on_check_box_2_toggled"]
-[connection signal="pressed" from="UI/Controls" to="UI" method="_on_controls_pressed"]
-[connection signal="pressed" from="UI/Quit" to="UI" method="_on_quit_pressed"]
 [connection signal="pressed" from="Controls/Button" to="Controls" method="_on_button_pressed"]
 [connection signal="player_dead" from="Player" to="." method="_on_player_player_dead"]
 [connection signal="player_hit" from="Player" to="." method="_on_player_player_hit"]

@@ -5,12 +5,13 @@ var old_state
 var hide
 var controls_open = false
 
-@onready var quit: Button = $Quit
+@onready var resume: Button = $Panel/VBoxContainer/Resume
+@onready var start: Button = $Panel/VBoxContainer/Start
+@onready var restart: Button = $Panel/VBoxContainer/Restart
+@onready var quit: Button = $Panel/VBoxContainer/Quit
+
 @onready var score: Label = $Score
 @onready var controls: Button = $Controls
-@onready var restart: Button = $Restart
-@onready var resume: Button = $Resume
-@onready var black: ColorRect = $black
 @onready var hp: Label = $HP
 @onready var hp_2: ProgressBar = $HP2
 @onready var hp_2_ghost: ProgressBar = $HP2_ghost
@@ -20,6 +21,7 @@ var controls_open = false
 @onready var pixil_frame_0: Sprite2D = $PixilFrame0
 @onready var stamina: Label = $Stamina
 @onready var overlay: CheckBox = $Overlay
+
 
 
 func _ready() -> void:
@@ -42,13 +44,13 @@ func  _process(delta: float) -> void:
 			overlay.visible = true
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 			get_tree().paused = true
+			$Panel.visible = true
 			quit.visible = true
 			stamina.visible = false
-			score.position = Vector2(820.0,283.333)
+			score.position = Vector2(800,100)
 			controls.visible = true
 			restart.visible = true
 			resume.visible = true
-			black.visible = true
 			hp.visible = false
 			hp_2.visible = false
 			check_box_2.visible = true

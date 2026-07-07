@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://fqydo8poe47s"]
 
 [ext_resource type="Script" uid="uid://c7m8ng8mx0h1q" path="res://scripts/Level/pickup.gd" id="1_pg2rt"]
+[ext_resource type="Theme" uid="uid://dvcq150v77f7n" path="res://resources/themes/NewUI.tres" id="2_7cqbe"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_pg2rt"]
 viewport_path = NodePath("Display/SubViewport")
@@ -208,10 +209,7 @@ offset_right = 71.5
 offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(1, 0.44746035, 0.5982767, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
-theme_override_font_sizes/font_size = 64
+theme = ExtResource("2_7cqbe")
 text = "Collect To Proceed"
 horizontal_alignment = 1
 vertical_alignment = 1

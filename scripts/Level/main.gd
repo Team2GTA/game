@@ -4,9 +4,9 @@ extends Node3D
 @onready var hp_bar = $UI/HP2
 @onready var hp_ghost = $UI/HP2_ghost
 @onready var score_bar = $UI/Score
-@onready var restart = $UI/Restart
+@onready var restart: Button = $UI/Panel/VBoxContainer/Restart
 @onready var bullets = $UI/Bullets
-@onready var resume = $UI/Resume
+@onready var resume: Button = $UI/Panel/VBoxContainer/Resume
 @onready var label: Label = $UI/Label
 @onready var rooms: CSGCombiner3D = $NavigationRegion3D/Rooms
 @onready var spawn_markers: Node3D = $NavigationRegion3D/Rooms/SpawnMarkers
