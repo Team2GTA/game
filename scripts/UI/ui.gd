@@ -11,25 +11,25 @@ var controls_open = false
 @onready var quit: Button = $Panel/VBoxContainer/Quit
 
 @onready var score: Label = $Score
-@onready var controls: Button = $Controls
+@onready var controls: Button = $Panel/Controls
 @onready var hp: Label = $HP
 @onready var hp_2: ProgressBar = $HP2
 @onready var hp_2_ghost: ProgressBar = $HP2_ghost
-@onready var check_box_2: CheckBox = $CheckBox2
-@onready var check_box: CheckBox = $CheckBox
+@onready var check_box_2: CheckBox = $Side/VBoxContainer/CheckBox2
+@onready var check_box: CheckBox = $Side/VBoxContainer/CheckBox
 @onready var bullets: Label = $Bullets
 @onready var pixil_frame_0: Sprite2D = $PixilFrame0
 @onready var stamina: Label = $Stamina
-@onready var overlay: CheckBox = $Overlay
+@onready var overlay: CheckBox = $Side/VBoxContainer/Overlay
 
 
 
 func _ready() -> void:
-	$CheckBox.button_pressed = true
-	%Player.bob_enabled = $CheckBox.button_pressed
+	check_box.button_pressed = true
+	%Player.bob_enabled = check_box.button_pressed
 	
-	$CheckBox2.button_pressed = true
-	hide = $CheckBox2.button_pressed
+	check_box_2.button_pressed = true
+	hide = check_box_2.button_pressed
 
 func  _process(delta: float) -> void:
 	if Input.is_action_just_pressed("esc"):
@@ -53,7 +53,7 @@ func  _process(delta: float) -> void:
 			resume.visible = true
 			hp.visible = false
 			hp_2.visible = false
-			check_box_2.visible = true
+			$Side.visible = true
 			bullets.visible = false
 			hp_2_ghost.visible = false
 			pixil_frame_0.visible = false

@@ -21,10 +21,9 @@ func tick() -> void:
 		_handlers[main.state].call()
 
 func _state_start() -> void:
-	ui.get_node("CheckBox2").visible = true
+	ui.get_node("Side").visible = true
 	main.hp_bar.visible = false
 	main.bullets.visible = false
-	ui.get_node("CheckBox").visible = true
 	main.hp_ghost.visible = false
 	main.hp.visible = false
 	main.score_bar.visible = false
@@ -39,12 +38,10 @@ func _state_start() -> void:
 
 func _state_play() -> void:
 	ui.get_node("Stamina").visible = true
-	ui.get_node("Overlay").visible = false
 	main.get_node("Controls").visible = false
 	ui.get_node("Stamina").text = "STAMINA\n"+str(player.stamina)
-	ui.get_node("CheckBox2").visible = false
-	ui.get_node("CheckBox").visible = false
-	ui.get_node("Controls").visible = false
+	ui.get_node("Side").visible = false
+	ui.get_node("Panel/Controls").visible = false
 	ui.get_node("Panel/VBoxContainer/Quit").visible = false
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	main.hp_bar.visible = ui.hide
@@ -69,7 +66,7 @@ func _state_play() -> void:
 func _state_dead() -> void:
 	ui.get_node("Panel").visible = true
 	ui.get_node("Panel/VBoxContainer/Quit").visible = true
-	ui.get_node("CheckBox2").visible = true
+	ui.get_node("Side").visible = true
 	main.hp_bar.visible = false
 	main.bullets.visible = false
 	main.hp_ghost.visible = false
@@ -83,7 +80,7 @@ func _state_dead() -> void:
 func _state_win() -> void:
 	ui.get_node("Panel").visible = true
 	ui.get_node("Panel/VBoxContainer/Quit").visible = true
-	ui.get_node("CheckBox2").visible = true
+	ui.get_node("Side").visible = true
 	main.hp_bar.visible = false
 	main.bullets.visible = false
 	main.hp_ghost.visible = false

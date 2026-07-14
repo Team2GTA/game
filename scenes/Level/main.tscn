@@ -7,10 +7,11 @@
 [ext_resource type="Material" uid="uid://tud1dvir0lvb" path="res://resources/bullet_material.tres" id="4_85g3d"]
 [ext_resource type="PackedScene" uid="uid://cjbwt1hegmion" path="res://scenes/Level/hitbox.tscn" id="4_jyhfs"]
 [ext_resource type="Script" uid="uid://cndixswnnqg2b" path="res://scripts/UI/ui.gd" id="6_tefeu"]
-[ext_resource type="Theme" uid="uid://dvcq150v77f7n" path="res://resources/themes/NewUI.tres" id="7_ltlnq"]
 [ext_resource type="Texture2D" uid="uid://dfybody42ydnj" path="res://assests/pixil-frame-0.png" id="7_o6xl0"]
+[ext_resource type="Theme" uid="uid://dvcq150v77f7n" path="res://resources/themes/NewUI.tres" id="8_w00wy"]
 [ext_resource type="Script" uid="uid://bp8idlu6atvtg" path="res://scripts/UI/controls.gd" id="9_85g3d"]
 [ext_resource type="Script" uid="uid://ex7c0elg4urw" path="res://scripts/UI/input_remap_button.gd" id="10_choun"]
+[ext_resource type="Script" uid="uid://bkmsrk5j0xnsk" path="res://scenes/Level/option_button.gd" id="10_ltlnq"]
 [ext_resource type="PackedScene" uid="uid://b8sx3k2qmn4y7" path="res://scenes/Level/state_machine.tscn" id="11_smach"]
 
 [sub_resource type="Environment" id="Environment_o6xl0"]
@@ -89,6 +90,25 @@ outline_color = Color(0.6827547, 0.5050481, 0.07709538, 1)
 shadow_size = 100
 shadow_color = Color(0, 0, 0, 1)
 shadow_offset = Vector2(20, 20)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hty3f"]
+bg_color = Color(0.42821166, 0.37847382, 0.34868166, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.2509804, 0.1882353, 0.105882354, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_left = 15.0
+expand_margin_top = 15.0
+expand_margin_right = 15.0
+expand_margin_bottom = 15.0
+shadow_color = Color(0.54901963, 0.41568628, 0.21176471, 0.20392157)
+shadow_size = 4
+shadow_offset = Vector2(5, 2)
 
 [node name="main" type="Node3D" unique_id=1963971271]
 script = ExtResource("1_tbgi4")
@@ -1170,7 +1190,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("7_ltlnq")
+theme = ExtResource("8_w00wy")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/Panel" unique_id=505078490]
 layout_mode = 1
@@ -1299,33 +1319,66 @@ position = Vector2(960, 540)
 scale = Vector2(5, 5)
 texture = ExtResource("7_o6xl0")
 
-[node name="CheckBox" type="CheckBox" parent="UI" unique_id=1096858677]
-layout_mode = 0
-offset_left = 138.0
-offset_top = 413.0
-offset_right = 517.0
-offset_bottom = 514.0
+[node name="Side" type="Panel" parent="UI" unique_id=1733265210]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 149.0
+offset_top = -134.0
+offset_right = 513.0
+offset_bottom = 139.0
+grow_vertical = 2
+scale = Vector2(1, 1.56)
+theme_override_styles/panel = SubResource("StyleBoxFlat_hty3f")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Side" unique_id=1246545968]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.012
+anchor_right = 0.98800004
+anchor_bottom = 1.0
+offset_left = 0.13199997
+offset_right = -0.13201904
+offset_bottom = 170.0
+grow_horizontal = 2
+scale = Vector2(1, 0.6122489)
+theme_override_constants/separation = 36
+alignment = 1
+
+[node name="CheckBox" type="CheckBox" parent="UI/Side/VBoxContainer" unique_id=1096858677]
+layout_mode = 2
 theme_override_font_sizes/font_size = 50
 text = "View Bobbing"
 
-[node name="Overlay" type="CheckBox" parent="UI" unique_id=962241863]
-layout_mode = 0
-offset_left = 137.0
-offset_top = 297.0
-offset_right = 492.0
-offset_bottom = 398.0
+[node name="Overlay" type="CheckBox" parent="UI/Side/VBoxContainer" unique_id=962241863]
+layout_mode = 2
 theme_override_font_sizes/font_size = 50
 text = "Overlay"
 
-[node name="CheckBox2" type="CheckBox" parent="UI" unique_id=191901669]
-layout_mode = 0
-offset_left = 137.0
-offset_top = 527.0
-offset_right = 492.0
-offset_bottom = 604.0
+[node name="CheckBox2" type="CheckBox" parent="UI/Side/VBoxContainer" unique_id=191901669]
+layout_mode = 2
 theme_override_font_sizes/font_size = 50
 text = "HUD
 "
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Side/VBoxContainer" unique_id=146965358]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/Side/VBoxContainer/VBoxContainer" unique_id=1304965069]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Theme"
+
+[node name="OptionButton" type="OptionButton" parent="UI/Side/VBoxContainer/VBoxContainer" unique_id=667262402]
+layout_mode = 2
+selected = 1
+item_count = 2
+popup/item_0/text = "Theme 1"
+popup/item_0/id = 0
+popup/item_1/text = "Theme 2"
+popup/item_1/id = 1
+script = ExtResource("10_ltlnq")
 
 [node name="Controls" type="Control" parent="." unique_id=1101782410]
 process_mode = 3
@@ -1336,7 +1389,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("7_ltlnq")
+theme = ExtResource("8_w00wy")
 script = ExtResource("9_85g3d")
 
 [node name="black" type="ColorRect" parent="Controls" unique_id=1334747894]
@@ -1611,9 +1664,10 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 2, 0
 [connection signal="pressed" from="UI/Panel/VBoxContainer/Restart" to="UI" method="_on_restart_pressed"]
 [connection signal="pressed" from="UI/Panel/VBoxContainer/Quit" to="UI" method="_on_quit_pressed"]
 [connection signal="pressed" from="UI/Panel/Controls" to="UI" method="_on_controls_pressed"]
-[connection signal="toggled" from="UI/CheckBox" to="UI" method="_on_check_box_toggled"]
-[connection signal="toggled" from="UI/Overlay" to="." method="_on_check_box_3_toggled"]
-[connection signal="toggled" from="UI/CheckBox2" to="UI" method="_on_check_box_2_toggled"]
+[connection signal="toggled" from="UI/Side/VBoxContainer/CheckBox" to="UI" method="_on_check_box_toggled"]
+[connection signal="toggled" from="UI/Side/VBoxContainer/Overlay" to="." method="_on_check_box_3_toggled"]
+[connection signal="toggled" from="UI/Side/VBoxContainer/CheckBox2" to="UI" method="_on_check_box_2_toggled"]
+[connection signal="item_selected" from="UI/Side/VBoxContainer/VBoxContainer/OptionButton" to="UI/Side/VBoxContainer/VBoxContainer/OptionButton" method="_on_item_selected"]
 [connection signal="pressed" from="Controls/Button" to="Controls" method="_on_button_pressed"]
 [connection signal="player_dead" from="Player" to="." method="_on_player_player_dead"]
 [connection signal="player_hit" from="Player" to="." method="_on_player_player_hit"]
