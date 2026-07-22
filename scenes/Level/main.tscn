@@ -13,6 +13,7 @@
 [ext_resource type="Script" uid="uid://ex7c0elg4urw" path="res://scripts/UI/input_remap_button.gd" id="10_choun"]
 [ext_resource type="Script" uid="uid://bkmsrk5j0xnsk" path="res://scenes/Level/option_button.gd" id="10_ltlnq"]
 [ext_resource type="PackedScene" uid="uid://b8sx3k2qmn4y7" path="res://scenes/Level/state_machine.tscn" id="11_smach"]
+[ext_resource type="PackedScene" uid="uid://5aawiakanqk2" path="res://scenes/Level/trap.tscn" id="14_hty3f"]
 
 [sub_resource type="Environment" id="Environment_o6xl0"]
 background_mode = 1
@@ -1630,6 +1631,34 @@ metadata/_custom_type_script = "uid://ex7c0elg4urw"
 [node name="Player" parent="." unique_id=1781279471 instance=ExtResource("1_o5qli")]
 unique_name_in_owner = true
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 2, 0, -1)
+
+[node name="Trap" parent="." unique_id=972431590 instance=ExtResource("14_hty3f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.270446, 0.14311182, 0.40219593)
+trap_type = "base"
+trap_damage = 1.2
+timing = 1.0
+max_hit = 5.0
+
+[node name="Trap2" parent="." unique_id=246136949 instance=ExtResource("14_hty3f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.129555, 0.14311182, 0.40219593)
+trap_type = "fast"
+trap_damage = 0.3
+timing = 0.2
+max_hit = 11.0
+
+[node name="Trap3" parent="." unique_id=1823377732 instance=ExtResource("14_hty3f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.270446, 0.14311182, 6.002196)
+trap_type = "fast"
+trap_damage = 1.2
+timing = 1.0
+max_hit = 5.0
+
+[node name="Trap4" parent="." unique_id=1036408284 instance=ExtResource("14_hty3f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.170446, 0.14311182, 0.40219593)
+trap_type = "base"
+trap_damage = 5.0
+timing = 3.0
+max_hit = 2.0
 
 [connection signal="wave_over" from="." to="." method="_on_wave_over"]
 [connection signal="body_entered" from="WorldBorder" to="." method="_on_area_3d_body_entered"]
