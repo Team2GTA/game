@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://d4jjc7g24kuq5"]
+
+[ext_resource type="PackedScene" uid="uid://bmkaxqwi7j72e" path="res://assests/models/ceiling props/torch.glb" id="1_ltbiu"]
+[ext_resource type="Material" uid="uid://b12x4l8nory1r" path="res://resources/flame.tres" id="2_i10sv"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_56a4c"]
+material = ExtResource("2_i10sv")
+size = Vector2(0.1, 0.1)
+orientation = 2
+
+[node name="torch" unique_id=1967237697 instance=ExtResource("1_ltbiu")]
+
+[node name="Cylinder_010" parent="." index="0" unique_id=1283321988]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
+layers = 2
+
+[node name="torch" type="OmniLight3D" parent="Cylinder_010" index="0" unique_id=170734910]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0.3478973, 0)
+light_color = Color(0.97, 0.63858336, 0.1746, 1)
+light_energy = 5.0
+light_bake_mode = 1
+shadow_enabled = true
+shadow_caster_mask = 4294967293
+distance_fade_begin = 10.0
+omni_range = 4.887094
+omni_attenuation = 0.505
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="Cylinder_010" index="1" unique_id=1219914470]
+amount = 12
+lifetime = 1.5
+explosiveness = 0.2
+randomness = 1.0
+mesh = SubResource("PlaneMesh_56a4c")
+direction = Vector3(0, 1, 0)
+gravity = Vector3(0, 0.8, 0)
+initial_velocity_max = 0.4
+damping_max = 0.2

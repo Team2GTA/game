@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://k68u33yfi01e"]
+
+[ext_resource type="PackedScene" uid="uid://vh4ho838a8n5" path="res://assests/models/pillars/pillar1.glb" id="1_00esj"]
+
+[node name="Node3D" type="Node3D" unique_id=106405753]
+
+[node name="pillar1" parent="." unique_id=1565927761 instance=ExtResource("1_00esj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.167978, 1.1920929e-07, 14.41665)
