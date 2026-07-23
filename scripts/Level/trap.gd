@@ -17,7 +17,7 @@ func _ready() -> void:
 			$fast.visible = true
 			$base.visible = false
 
-var picked_up = false
+var picked_up: bool = false
 
 func _process(delta: float) -> void:
 	if hit >max_hit:

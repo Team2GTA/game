@@ -8,7 +8,7 @@ extends Node3D
 @onready var bullets = $UI/Bullets
 @onready var resume: Button = $UI/Panel/VBoxContainer/Resume
 @onready var label: Label = $UI/Label
-@onready var rooms: CSGCombiner3D = $NavigationRegion3D/Rooms
+@onready var rooms = $NavigationRegion3D/Rooms
 @onready var spawn_markers: Node3D = $NavigationRegion3D/Rooms/SpawnMarkers
 
 
@@ -48,6 +48,7 @@ func _ready() -> void:
 	score_bar.text = "SCORE: " + str(%Player.score)
 
 func _process(delta: float) -> void:
+	hp_bar.value = lerp(hp_bar.value, float(target_hp), 8.0 * delta_cache)
 	#Calculates difficulty and Spawn cap
 	dif=level*10+wave*2
 	spawn_cap = dif*2
@@ -164,12 +165,11 @@ func _on_wave_over() -> void:
 	#Spawns The Pickup to proceed
 	await get_tree().create_timer(1.0).timeout
 	label.visible = false
-	var nearest = rooms.get_min_dist(rooms.poss,rooms.closest)
 	var pickup = PICKUP.instantiate()
 	pickup.type = "heal_gain"
 	add_child(pickup)
 	if level == 1:
-		var pos = rooms.poss[nearest]
+		var pos: Vector3 = rooms.get_current_room_position()
 		pickup.global_position = Vector3(pos.x, 0.5, pos.z)
 	else:
 		var angle = randf_range(0, TAU)
@@ -225,7 +225,9 @@ func level_transition():
 	await get_tree().create_timer(2.0).timeout
 	level = 2
 	wave = 1
-	%Player.health = 30
+	%Player.health = %Player.max_health
+	target_hp = %Player.health
+	update_health()
 	%Player.score = 0
 	spawned = 0
 	%Player.position = Vector3(2,40,-1)

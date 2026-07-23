@@ -9,8 +9,10 @@ var strafe_dir =1.0
 var strafe_timer = 0.0
 var strafe_change_time =2.0
 var shoot_timer = 0.0
+var shoot_delay
 
 func enter():
+	shoot_delay = randf_range(1.5,3)
 	strafe_dir = [-1.0,1.0].pick_random()
 	strafe_timer = 0.0
 	shoot_timer = 0.0
@@ -24,9 +26,10 @@ func update(delta):
 		enemy.skeleton_sm.transition("Retreat")
 		
 	shoot_timer+=delta
-	if shoot_timer > randf_range(1.5,3) and enemy.has_line_of_sight():
+	if shoot_timer > shoot_delay and enemy.has_line_of_sight():
 		enemy.shoot()
-		shoot_timer = 0.0
+		shoot_timer = 0
+		shoot_delay = randf_range(1.5,3)
 
 func physics_update(delta):
 	strafe_timer +=delta

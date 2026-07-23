@@ -1,8 +1,14 @@
 [gd_resource type="StandardMaterial3D" format=3 uid="uid://c5f3rbgnu6dsj"]
 
+[ext_resource type="Texture2D" uid="uid://cupcdkxi21580" path="res://assests/models/walls/opening_DungeonGateway01_Albedo.png" id="1_vhup6"]
+[ext_resource type="Texture2D" uid="uid://bl4yhbnaxil83" path="res://assests/models/walls/opening_DungeonGateway01_Metallic.png" id="2_5ihlw"]
+[ext_resource type="Texture2D" uid="uid://1uor7dkpbejm" path="res://assests/models/walls/opening_DungeonGateway01_Normal.png" id="3_5s7rm"]
+
 [resource]
-albedo_color = Color(0.2620228, 0.27726007, 0.07567199, 1)
-metallic = 1.0
-metallic_specular = 0.19
-emission = Color(0.17272827, 0.7782031, 7.70092e-07, 1)
-emission_energy_multiplier = 5.0
+albedo_texture = ExtResource("1_vhup6")
+metallic_texture = ExtResource("2_5ihlw")
+roughness_texture = ExtResource("2_5ihlw")
+normal_enabled = true
+normal_texture = ExtResource("3_5s7rm")
+uv1_triplanar_sharpness = 0.101531655
+uv2_triplanar = true

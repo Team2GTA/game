@@ -14,9 +14,14 @@ func initialize() -> void:
 	current_state = get_child(0)
 	current_state.enter()
 
-func transition(new_state_name: String):
+func transition(new_state_name: String) -> void:
+	var next_state := get_node_or_null(new_state_name)
+	if next_state == null:
+		push_error("State '%s' not found." % new_state_name)
+		return
+
 	current_state.exit()
-	current_state = get_node(new_state_name)
+	current_state = next_state
 	current_state.enter()
 
 func _process(delta: float) -> void:

@@ -17,10 +17,8 @@ func reset():
 		}
 	}
 
-func get_value(key):
-	if inventory.has(key):
-		return inventory[key]
-	printerr("Key not present: ", key)
+func get_value(key: String) -> Variant:
+	return inventory.get(key, null)
 
 func set_value(key, value):
 	inventory[key] = value

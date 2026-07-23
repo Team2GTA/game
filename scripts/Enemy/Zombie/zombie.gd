@@ -43,7 +43,7 @@ func is_attacking() -> bool:
 	var playback = anim["parameters/playback"]
 	return playback and playback.get_current_node() == "attack"
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if player == null:
 		return
 

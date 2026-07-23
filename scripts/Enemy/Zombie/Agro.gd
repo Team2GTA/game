@@ -10,9 +10,11 @@ func update(delta):
 
 func physics_update(delta):
 	enemy.check_trap()
-	enemy.nav_agent.set_target_position(enemy.player.global_transform.origin)
+	enemy.nav_agent.set_target_position(enemy.player.global_position)
 	var next_nav_point = enemy.nav_agent.get_next_path_position()
-	enemy.velocity = (next_nav_point - enemy.global_transform.origin).normalized() * enemy.speed
+	enemy.velocity = (
+		next_nav_point - enemy.global_position
+	).normalized() * enemy.speed
 	enemy.smooth_look_at(Vector3(
 		enemy.global_position.x + enemy.velocity.x,
 		enemy.global_position.y,

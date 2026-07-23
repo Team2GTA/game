@@ -31,12 +31,11 @@ func _ready() -> void:
 			
 func _on_detection_body_entered(body: Node3D) -> void:
 	if body.is_in_group("player"):
-		var main = $".."
-		var color_rect = $"../UI/ColorRect"
+		var main: Node3D = $".."
+		var color_rect: ColorRect = $"../UI/ColorRect"
 		match type:
 			"heal":
-				body.health += 10
-				body.health = body.max_health if body.health > body.max_health else body.health
+				body.health = min(body.health + 10, body.max_health)
 				main.target_hp = body.health
 				main.update_health()
 				color_rect.color = Color(0x75a83a8e)
@@ -50,9 +49,13 @@ func _on_detection_body_entered(body: Node3D) -> void:
 				main.target_hp = body.health
 				main.update_health()
 				color_rect.color = Color(0x548ed18e)
+				main.hp_bar.max_value = body.max_health
+				main.hp_ghost.max_value = body.max_health
 				emit_signal("proceed")
 			"mag_gain":
-				body.get_child(1).get_child(0).capacity = 20
+				var rifle = body.get_node("Camera3D/Rifle")
+				rifle.mag_size = 20
+				rifle.capacity = 20
 				emit_signal("proceed")
 		color_rect.visible = true
 		await get_tree().create_timer(0.2).timeout

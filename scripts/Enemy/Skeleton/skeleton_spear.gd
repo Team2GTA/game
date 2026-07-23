@@ -63,6 +63,7 @@ func _on_body_entered(body: Node) -> void:
 func fade_and_free() -> void:
 	var tween = create_tween().set_parallel(true)
 	for mesh in [$Shaft, $Tip]:
-		tween.tween_property(mesh, "transparency", 1.0, FADE_TIME)
+		if mesh:
+			tween.tween_property(mesh, "transparency", 1.0, FADE_TIME)
 	await tween.finished
 	queue_free()
