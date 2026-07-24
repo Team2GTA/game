@@ -1,0 +1,95 @@
+[gd_scene format=3 uid="uid://b6d2llc67fcw8"]
+
+[ext_resource type="PackedScene" uid="uid://cq7pw6xlmmra6" path="res://assests/models/ceiling props/pot_1.glb" id="1_th1aw"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_th1aw"]
+blend_mode = 3
+albedo_color = Color(0.99999994, 0.68836576, 0.093099736, 1)
+emission_enabled = true
+emission = Color(0.9618686, 0.69419426, 0.28336513, 1)
+emission_energy_multiplier = 8.54
+billboard_mode = 1
+grow_amount = 0.576
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_pswoo"]
+material = SubResource("StandardMaterial3D_th1aw")
+size = Vector2(0.05, 0.05)
+orientation = 2
+
+[node name="pot_1" unique_id=1300841126 instance=ExtResource("1_th1aw")]
+
+[node name="Censer03" parent="." index="0" unique_id=1316351558]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.144051, 0)
+layers = 2
+
+[node name="torch" type="OmniLight3D" parent="Censer03" index="0" unique_id=1738843510]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0.43596983, -3.0829506, -0.2687818)
+light_color = Color(0.48132372, 0.38413468, 1.92523e-07, 1)
+light_energy = 5.0
+light_bake_mode = 1
+shadow_enabled = true
+shadow_caster_mask = 4294967293
+distance_fade_begin = 10.0
+omni_range = 4.887094
+omni_attenuation = 0.505
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="Censer03/torch" index="0" unique_id=90262122]
+amount = 12
+lifetime = 1.5
+explosiveness = 0.2
+randomness = 1.0
+mesh = SubResource("PlaneMesh_pswoo")
+direction = Vector3(0, 1, 0)
+gravity = Vector3(0, 0.8, 0)
+initial_velocity_max = 0.4
+linear_accel_min = -0.5
+linear_accel_max = 0.2
+damping_max = 0.2
+
+[node name="torch2" type="OmniLight3D" parent="Censer03" index="1" unique_id=1049957574]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0.0011302531, -3.0850902, 0.49816316)
+light_color = Color(0.7209143, 0.533255, 1.92523e-07, 1)
+light_energy = 5.0
+light_bake_mode = 1
+shadow_enabled = true
+shadow_caster_mask = 4294967293
+distance_fade_begin = 10.0
+omni_range = 4.887094
+omni_attenuation = 0.505
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="Censer03/torch2" index="0" unique_id=797320149]
+amount = 12
+lifetime = 1.5
+explosiveness = 0.2
+randomness = 1.0
+mesh = SubResource("PlaneMesh_pswoo")
+direction = Vector3(0, 1, 0)
+gravity = Vector3(0, 0.8, 0)
+initial_velocity_max = 0.4
+linear_accel_min = -0.5
+linear_accel_max = 0.2
+damping_max = 0.2
+
+[node name="torch3" type="OmniLight3D" parent="Censer03" index="2" unique_id=225821736]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, -0.4328308, -3.0982194, -0.26526552)
+light_color = Color(0.7209143, 0.533255, 1.92523e-07, 1)
+light_energy = 5.0
+light_bake_mode = 1
+shadow_enabled = true
+shadow_caster_mask = 4294967293
+distance_fade_begin = 10.0
+omni_range = 4.887094
+omni_attenuation = 0.505
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="Censer03/torch3" index="0" unique_id=605600578]
+amount = 12
+lifetime = 1.5
+explosiveness = 0.2
+randomness = 1.0
+mesh = SubResource("PlaneMesh_pswoo")
+direction = Vector3(0, 1, 0)
+gravity = Vector3(0, 0.8, 0)
+initial_velocity_max = 0.4
+linear_accel_min = -0.5
+linear_accel_max = 0.2
+damping_max = 0.2

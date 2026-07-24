@@ -1,0 +1,15 @@
+[gd_resource type="ORMMaterial3D" format=3 uid="uid://bmvngyl6dgtws"]
+
+[ext_resource type="Texture2D" uid="uid://cfgcmk7ynks41" path="res://assests/models/floor_MI_FloorTiles01_SM_FloorTiles5_BaseColor.png" id="1_3gnff"]
+[ext_resource type="Texture2D" uid="uid://d1f8n4dlqrd26" path="res://assests/models/floor_MI_FloorTiles01_SM_FloorTiles5_Normal.png" id="2_7ab1k"]
+[ext_resource type="Texture2D" uid="uid://cvkmr3mal3f0a" path="res://assests/models/floor_MI_FloorTiles01_SM_FloorTiles5_Occlusion-MI_FloorTiles01_SM_FloorTiles5_MetallicRoughness.png" id="3_g256i"]
+
+[resource]
+albedo_color = Color(0.802191, 0.8021911, 0.802191, 1)
+albedo_texture = ExtResource("1_3gnff")
+orm_texture = ExtResource("3_g256i")
+normal_enabled = true
+normal_texture = ExtResource("2_7ab1k")
+heightmap_enabled = true
+heightmap_texture = ExtResource("2_7ab1k")
+uv1_scale = Vector3(7, 7, 7)

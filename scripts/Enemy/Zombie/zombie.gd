@@ -104,10 +104,10 @@ func flash_red():
 		var mat = mesh.get_active_material(0)
 		if mat:
 			var new_mat = mat.duplicate()
-			new_mat.albedo_color = Color(2, 0, 0)
+			new_mat.albedo_color = Color(1, 0.15, 0.15)
 			new_mat.emission_enabled = true
-			new_mat.emission = Color(5, 0, 0)
-			new_mat.emission_energy_multiplier = 3.0
+			new_mat.emission = Color(1, 0, 0)
+			new_mat.emission_energy_multiplier = 1
 			mesh.set_surface_override_material(0, new_mat)
 	await get_tree().create_timer(0.1).timeout
 	for mesh in meshes:

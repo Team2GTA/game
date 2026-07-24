@@ -1,10 +1,15 @@
 [gd_resource type="StandardMaterial3D" format=3 uid="uid://b12x4l8nory1r"]
 
+[sub_resource type="Gradient" id="Gradient_56a4c"]
+colors = PackedColorArray(0.9999997, 0.7952275, 0.4854172, 1, 0.882982, 0.56674963, 5.7756904e-07, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_pswoo"]
+gradient = SubResource("Gradient_56a4c")
+
 [resource]
 blend_mode = 3
 cull_mode = 2
-vertex_color_use_as_albedo = true
-albedo_color = Color(0.85601187, 0.6450194, 0, 1)
+albedo_texture = SubResource("GradientTexture1D_pswoo")
 emission_enabled = true
 emission = Color(0.9618686, 0.69419426, 0.28336513, 1)
 emission_energy_multiplier = 8.54

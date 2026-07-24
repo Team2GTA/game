@@ -1,0 +1,45 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://cvkmr3mal3f0a"
+path.s3tc="res://.godot/imported/floor_MI_FloorTiles01_SM_FloorTiles5_Occlusion-MI_FloorTiles01_SM_FloorTiles5_MetallicRoughness.png-2de5e6d61c9fe020dce78ad91c2c8026.s3tc.ctex"
+path.etc2="res://.godot/imported/floor_MI_FloorTiles01_SM_FloorTiles5_Occlusion-MI_FloorTiles01_SM_FloorTiles5_MetallicRoughness.png-2de5e6d61c9fe020dce78ad91c2c8026.etc2.ctex"
+metadata={
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"vram_texture": true
+}
+generator_parameters={
+"md5": "3d59d99df5af361f755a01959257d3e9"
+}
+
+[deps]
+
+source_file="res://assests/models/floor_MI_FloorTiles01_SM_FloorTiles5_Occlusion-MI_FloorTiles01_SM_FloorTiles5_MetallicRoughness.png"
+dest_files=["res://.godot/imported/floor_MI_FloorTiles01_SM_FloorTiles5_Occlusion-MI_FloorTiles01_SM_FloorTiles5_MetallicRoughness.png-2de5e6d61c9fe020dce78ad91c2c8026.s3tc.ctex", "res://.godot/imported/floor_MI_FloorTiles01_SM_FloorTiles5_Occlusion-MI_FloorTiles01_SM_FloorTiles5_MetallicRoughness.png-2de5e6d61c9fe020dce78ad91c2c8026.etc2.ctex"]
+
+[params]
+
+compress/mode=2
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/uastc_level=0
+compress/rdo_quality_loss=0.0
+compress/hdr_compression=1
+compress/normal_map=0
+compress/channel_pack=0
+mipmaps/generate=true
+mipmaps/limit=-1
+roughness/mode=8
+roughness/src_normal="res://assests/models/floor_MI_FloorTiles01_SM_FloorTiles5_Normal.png"
+process/channel_remap/red=0
+process/channel_remap/green=1
+process/channel_remap/blue=2
+process/channel_remap/alpha=3
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=0

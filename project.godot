@@ -45,6 +45,7 @@ rooms=""
 mud=""
 wood=""
 traps=""
+props=""
 
 [input]
 

@@ -48,6 +48,7 @@ func _ready() -> void:
 	score_bar.text = "SCORE: " + str(%Player.score)
 
 func _process(delta: float) -> void:
+	#print(Engine.get_frames_per_second())
 	hp_bar.value = lerp(hp_bar.value, float(target_hp), 8.0 * delta_cache)
 	#Calculates difficulty and Spawn cap
 	dif=level*10+wave*2

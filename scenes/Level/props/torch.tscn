@@ -8,6 +8,11 @@ material = ExtResource("2_i10sv")
 size = Vector2(0.1, 0.1)
 orientation = 2
 
+[sub_resource type="SphereMesh" id="SphereMesh_spdd7"]
+material = ExtResource("2_i10sv")
+radius = 0.15
+height = 0.3
+
 [node name="torch" unique_id=1967237697 instance=ExtResource("1_ltbiu")]
 
 [node name="Cylinder_010" parent="." index="0" unique_id=1283321988]
@@ -16,7 +21,7 @@ layers = 2
 
 [node name="torch" type="OmniLight3D" parent="Cylinder_010" index="0" unique_id=170734910]
 transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0.3478973, 0)
-light_color = Color(0.97, 0.63858336, 0.1746, 1)
+light_color = Color(0.96862745, 0.6392157, 0.1764706, 1)
 light_energy = 5.0
 light_bake_mode = 1
 shadow_enabled = true
@@ -35,3 +40,8 @@ direction = Vector3(0, 1, 0)
 gravity = Vector3(0, 0.8, 0)
 initial_velocity_max = 0.4
 damping_max = 0.2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Cylinder_010" index="2" unique_id=1701659777]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3149104, 0)
+layers = 2
+mesh = SubResource("SphereMesh_spdd7")

@@ -116,6 +116,7 @@ func _physics_process(delta):
 	update_weapon(delta)
 
 	move_and_slide()
+	push_rigid_bodies()
 
 func _on_tp_body_entered(body: Node3D) -> void:
 	if body != self:
@@ -189,7 +190,7 @@ func update_movement(delta: float, speed: float) -> void:
 
 	velocity.y -= GRAVITY * delta
 
-	if Input.is_action_just_pressed("jump") and is_on_floor():
+	if Input.is_action_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_FORCE
 
 	if Input.is_action_just_released("jump") and velocity.y > 0:
@@ -369,3 +370,14 @@ func shake_camera(intensity: float) -> void:
 		cam_base_pos,
 		0.12
 	)
+
+func push_rigid_bodies():
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		var body = collision.get_collider()
+
+		if body.is_in_group("props"):
+			var push_dir = Vector3(velocity.x, 0.0, velocity.z).normalized()
+
+			if push_dir.length() > 0.0:
+				body.apply_central_impulse(push_dir * 0.4)
