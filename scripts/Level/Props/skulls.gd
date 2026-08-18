@@ -1,11 +1,9 @@
-extends Node3D
-
-@onready var body = $RigidBody3D
+extends RigidBody3D
 
 func _ready():
 	var skulls: Array[MeshInstance3D] = []
 
-	for child in body.get_children():
+	for child in get_children():
 		if child is MeshInstance3D:
 			skulls.append(child)
 

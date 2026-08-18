@@ -16,7 +16,7 @@ func _ready() -> void:
 		"fast":
 			$fast.visible = true
 			$base.visible = false
-
+	
 var picked_up: bool = false
 
 func _process(delta: float) -> void:

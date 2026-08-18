@@ -427,58 +427,60 @@ transform = Transform3D(-4.3711385e-08, 0, 1, 0, 0.9090909, 0, -1, 0, -4.3711385
 [node name="hitbox" parent="NavigationRegion3D/Rooms/f1" unique_id=2094235572 instance=ExtResource("4_jyhfs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.9, 0)
 
-[node name="Trap" parent="NavigationRegion3D/Rooms/f1" unique_id=972431590 instance=ExtResource("14_hty3f")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.270446, 5.043112, 0.40219593)
+[node name="Skulls" type="Node" parent="NavigationRegion3D/Rooms/f1" unique_id=72407445]
+
+[node name="Skulls" parent="NavigationRegion3D/Rooms/f1/Skulls" unique_id=1312916829 instance=ExtResource("18_g8r1e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.52663, 2.8143792, 6.5095215)
+
+[node name="Skulls9" parent="NavigationRegion3D/Rooms/f1/Skulls" unique_id=1118548404 instance=ExtResource("18_g8r1e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1190867, 2.4962738, 4.200075)
+
+[node name="Skulls2" parent="NavigationRegion3D/Rooms/f1/Skulls" unique_id=1588950860 instance=ExtResource("18_g8r1e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.119063, 2.8143792, 6.5095215)
+
+[node name="Skulls3" parent="NavigationRegion3D/Rooms/f1/Skulls" unique_id=1329499034 instance=ExtResource("18_g8r1e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.763602, 2.8143792, 6.5095215)
+
+[node name="Skulls4" parent="NavigationRegion3D/Rooms/f1/Skulls" unique_id=517061257 instance=ExtResource("18_g8r1e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.763602, 2.8143792, 6.997938)
+
+[node name="Skulls5" parent="NavigationRegion3D/Rooms/f1/Skulls" unique_id=184356407 instance=ExtResource("18_g8r1e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.536366, 2.8143792, 6.997938)
+
+[node name="Skulls6" parent="NavigationRegion3D/Rooms/f1/Skulls" unique_id=805044094 instance=ExtResource("18_g8r1e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.536366, 2.8143792, 6.705056)
+
+[node name="Skulls7" parent="NavigationRegion3D/Rooms/f1/Skulls" unique_id=102677813 instance=ExtResource("18_g8r1e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.233129, 2.8143792, 6.705056)
+
+[node name="Skulls8" parent="NavigationRegion3D/Rooms/f1/Skulls" unique_id=1345084807 instance=ExtResource("18_g8r1e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.233129, 2.8143792, 6.302346)
+
+[node name="Traps" type="Node" parent="NavigationRegion3D/Rooms/f1" unique_id=1172095567]
+
+[node name="Trap" parent="NavigationRegion3D/Rooms/f1/Traps" unique_id=972431590 instance=ExtResource("14_hty3f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.270446, 0.1431117, 0.40219593)
 trap_damage = 1.2
 max_hit = 5.0
 
-[node name="Trap2" parent="NavigationRegion3D/Rooms/f1" unique_id=246136949 instance=ExtResource("14_hty3f")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.129555, 5.043112, 0.40219593)
+[node name="Trap2" parent="NavigationRegion3D/Rooms/f1/Traps" unique_id=246136949 instance=ExtResource("14_hty3f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.129555, 0.1431117, 0.40219593)
 trap_type = "fast"
 trap_damage = 0.3
 timing = 0.2
 max_hit = 11.0
 
-[node name="Trap3" parent="NavigationRegion3D/Rooms/f1" unique_id=1823377732 instance=ExtResource("14_hty3f")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.270446, 5.043112, 6.002196)
+[node name="Trap3" parent="NavigationRegion3D/Rooms/f1/Traps" unique_id=1823377732 instance=ExtResource("14_hty3f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.270446, 0.1431117, 6.002196)
 trap_type = "fast"
 trap_damage = 1.2
 max_hit = 5.0
 
-[node name="Trap4" parent="NavigationRegion3D/Rooms/f1" unique_id=1036408284 instance=ExtResource("14_hty3f")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.170446, 5.043112, 0.40219593)
+[node name="Trap4" parent="NavigationRegion3D/Rooms/f1/Traps" unique_id=1036408284 instance=ExtResource("14_hty3f")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.170446, 0.1431117, 0.40219593)
 trap_damage = 5.0
 timing = 3.0
 max_hit = 2.0
-
-[node name="Skulls" type="Node" parent="NavigationRegion3D/Rooms/f1" unique_id=72407445]
-
-[node name="Skulls" parent="NavigationRegion3D/Rooms/f1/Skulls" unique_id=1312916829 instance=ExtResource("18_g8r1e")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.52663, 0.18570638, 6.5095215)
-
-[node name="Skulls9" parent="NavigationRegion3D/Rooms/f1/Skulls" unique_id=1118548404 instance=ExtResource("18_g8r1e")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1190867, -0.13239908, 4.200075)
-
-[node name="Skulls2" parent="NavigationRegion3D/Rooms/f1/Skulls" unique_id=1588950860 instance=ExtResource("18_g8r1e")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.119063, 0.18570638, 6.5095215)
-
-[node name="Skulls3" parent="NavigationRegion3D/Rooms/f1/Skulls" unique_id=1329499034 instance=ExtResource("18_g8r1e")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.763602, 0.18570638, 6.5095215)
-
-[node name="Skulls4" parent="NavigationRegion3D/Rooms/f1/Skulls" unique_id=517061257 instance=ExtResource("18_g8r1e")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.763602, 0.18570638, 6.997938)
-
-[node name="Skulls5" parent="NavigationRegion3D/Rooms/f1/Skulls" unique_id=184356407 instance=ExtResource("18_g8r1e")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.536366, 0.18570638, 6.997938)
-
-[node name="Skulls6" parent="NavigationRegion3D/Rooms/f1/Skulls" unique_id=805044094 instance=ExtResource("18_g8r1e")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.536366, 0.18570638, 6.705056)
-
-[node name="Skulls7" parent="NavigationRegion3D/Rooms/f1/Skulls" unique_id=102677813 instance=ExtResource("18_g8r1e")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.233129, 0.18570638, 6.705056)
-
-[node name="Skulls8" parent="NavigationRegion3D/Rooms/f1/Skulls" unique_id=1345084807 instance=ExtResource("18_g8r1e")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.233129, 0.18570638, 6.302346)
 
 [node name="f2" type="CSGBox3D" parent="NavigationRegion3D/Rooms" unique_id=557163517 groups=["rooms"]]
 unique_name_in_owner = true
@@ -1791,11 +1793,13 @@ label_settings = SubResource("LabelSettings_tbgi4")
 
 [node name="Stamina" type="Label" parent="UI" unique_id=810476558]
 visible = false
-layout_mode = 0
-offset_left = 1398.0
-offset_top = 18.0
-offset_right = 1900.0
-offset_bottom = 91.0
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -502.0
+offset_bottom = 73.0
+grow_horizontal = 0
 label_settings = SubResource("LabelSettings_85g3d")
 horizontal_alignment = 1
 

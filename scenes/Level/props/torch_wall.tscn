@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://v2w0rr2e2gkk" path="res://assests/models/ceiling props/torch_wall_MI_Torches_Occlusion-MI_Torches_MetallicRoughness.png" id="2_lpq67"]
 [ext_resource type="Texture2D" uid="uid://betj7253xmiqb" path="res://assests/models/ceiling props/torch_wall_MI_Torches_Normal.png" id="3_d7f6x"]
 [ext_resource type="Material" uid="uid://b12x4l8nory1r" path="res://resources/flame.tres" id="4_lpq67"]
+[ext_resource type="LightmapGIData" uid="uid://bme4anveqjiim" path="res://scenes/Level/props/torch_wall.lmbake" id="5_d7f6x"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g0yxj"]
 resource_name = "MI_Torches"
@@ -74,7 +75,9 @@ size = Vector2(0.04, 0.04)
 orientation = 2
 
 [sub_resource type="SphereMesh" id="SphereMesh_lpq67"]
+lightmap_size_hint = Vector2i(5, 3)
 material = ExtResource("4_lpq67")
+add_uv2 = true
 radius = 0.1
 height = 0.2
 
@@ -88,6 +91,7 @@ skeleton = NodePath("")
 
 [node name="torch" type="OmniLight3D" parent="Env_PropTorch_1" unique_id=1811046557]
 transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 0.56781614, 0.053443074)
+visible = false
 light_color = Color(0.96862745, 0.6392157, 0.1764706, 1)
 light_energy = 3.0
 light_bake_mode = 1
@@ -115,3 +119,6 @@ damping_max = 0.2
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.0012579709, 0.21985862, 0.065848224)
 layers = 2
 mesh = SubResource("SphereMesh_lpq67")
+
+[node name="LightmapGI" type="LightmapGI" parent="." unique_id=1320529080]
+light_data = ExtResource("5_d7f6x")

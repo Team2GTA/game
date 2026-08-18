@@ -1,8 +1,12 @@
 [gd_scene format=4 uid="uid://duvp1g6hp2dye"]
 
 [ext_resource type="Texture2D" uid="uid://bvqapkh3j0ykt" path="res://assests/models/skuls/Skulls_MI_Skull_BaseColor.png" id="1_4fn83"]
+[ext_resource type="Script" uid="uid://bv8f11y16ynf7" path="res://scripts/Level/Props/skulls.gd" id="1_yblv6"]
 [ext_resource type="Texture2D" uid="uid://2ba483aega8f" path="res://assests/models/skuls/Skulls_MI_Skull_MetallicRoughness.png" id="2_yblv6"]
 [ext_resource type="Texture2D" uid="uid://cr0evndkpk0d4" path="res://assests/models/skuls/Skulls_MI_Skull_Normal.png" id="3_us41m"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_spdd7"]
+radius = 0.1649961
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ehvn7"]
 resource_name = "MI_Skull"
@@ -84,7 +88,12 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_1snhd")
 
-[node name="Skulls" type="Node3D" unique_id=1312916829]
+[node name="Skulls" type="RigidBody3D" unique_id=742146192]
+script = ExtResource("1_yblv6")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=924203914 groups=["props"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.035870194, 0.014454916, 0)
+shape = SubResource("SphereShape3D_spdd7")
 
 [node name="Skull_1" type="MeshInstance3D" parent="." unique_id=1544786985]
 transform = Transform3D(-1.1920929e-07, 0, -0.99999994, 0, 1, 0, 0.99999994, 0, -1.1920929e-07, 0, 0, 0)

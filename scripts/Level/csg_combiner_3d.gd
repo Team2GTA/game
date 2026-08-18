@@ -57,35 +57,39 @@ func get_current_room() -> int:
 func shuffle_rooms(fixed_index: int) -> void:
 	shuffling = true
 
-	# Duplicate the current layout
+	# Freeze physics
+	for room in room_nodes:
+		set_room_physics(room, true)
+
 	var shuffled := positions.duplicate()
 
-	# Keep the player's room fixed
-	var fixed_position: Vector3 = shuffled[fixed_index]
+	var fixed_position = shuffled[fixed_index]
 	shuffled.remove_at(fixed_index)
 	shuffled.shuffle()
 	shuffled.insert(fixed_index, fixed_position)
 
-	# Animate every room simultaneously
-	var tween := create_tween()
-	tween.set_parallel(true)
-	tween.set_trans(Tween.TRANS_CUBIC)
-	tween.set_ease(Tween.EASE_IN_OUT)
-
 	for i in range(room_nodes.size()):
-		tween.tween_property(
-			room_nodes[i],
-			"position",
-			shuffled[i],
-			shuffle_time
-		)
+		var room = room_nodes[i]
 
-	await tween.finished
+		var old_pos = room.global_position
+		
+		room.position = shuffled[i]
 
-	# Save the new layout
+		var offset = room.global_position - old_pos
+
+		# Move rigid bodies with the room
+		for body in room.find_children("*", "RigidBody3D"):
+			body.global_position += offset
+
 	positions = shuffled
-	shuffling = false
 
+	await get_tree().physics_frame
+
+	# Unfreeze
+	for room in room_nodes:
+		set_room_physics(room, false)
+
+	shuffling = false
 
 func get_current_room_position() -> Vector3:
 	return positions[current_room]
@@ -93,3 +97,7 @@ func get_current_room_position() -> Vector3:
 
 func get_current_room_index() -> int:
 	return current_room
+
+func set_room_physics(room: Node3D, frozen: bool):
+	for body in room.find_children("*", "RigidBody3D"):
+		body.freeze = frozen
