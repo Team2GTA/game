@@ -15,7 +15,7 @@ height = 0.3
 
 [node name="torch" unique_id=1967237697 instance=ExtResource("1_ltbiu")]
 
-[node name="Cylinder_010" parent="." index="0" unique_id=1283321988]
+[node name="Cylinder_010" parent="." index="0" unique_id=1039797366]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
 layers = 2
 

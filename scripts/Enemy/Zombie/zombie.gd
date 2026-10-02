@@ -1,8 +1,10 @@
 extends CharacterBody3D
+signal combat_feedback(kind: String, message: String)
 var player = null
 var state_machine
 var inv
 var flash_timer = false
+var flash_surfaces: Array[Dictionary] = []
 var persistance = false
 var knockback = Vector3.ZERO
 var spawning = true
@@ -29,6 +31,7 @@ signal zombie_dead(pos)
 @onready var zombie_sm = $EnemyStateMachine
 
 func _ready():
+	cache_flash_materials()
 	add_to_group("enemy")
 	inv = 1
 	if player_path:
@@ -36,7 +39,7 @@ func _ready():
 	finish_spawn()
 
 func finish_spawn() -> void:
-	await get_tree().create_timer(SPAWN_TIME).timeout
+	await get_tree().create_timer(SPAWN_TIME, false).timeout
 	spawning = false
 
 func is_attacking() -> bool:
@@ -53,7 +56,7 @@ func _physics_process(delta: float) -> void:
 
 	if is_attacking():
 		velocity = Vector3.ZERO
-		
+
 	var locomotion = velocity
 	velocity = locomotion + knockback
 	knockback = knockback.lerp(Vector3.ZERO, KNOCKBACK_DECAY * delta)
@@ -66,7 +69,7 @@ func check_trap() -> void:
 		got_hit(mat.trap_damage)
 		inv = 0
 		mat.hit += 1
-		await get_tree().create_timer(mat.timing).timeout
+		await get_tree().create_timer(mat.timing, false).timeout
 		inv = 1
 
 func smooth_look_at(target: Vector3, delta: float) -> void:
@@ -93,25 +96,31 @@ func got_hit(dam):
 		health -= dam
 		flash_red()
 		if health<=0:
+			combat_feedback.emit("kill", "")
 			zombie_sm.transition("Die")
+
+func cache_flash_materials() -> void:
+	for mesh in get_meshes_recursive(self):
+		for surface in range(mesh.mesh.get_surface_count()):
+			var material = mesh.get_active_material(surface)
+			if material is BaseMaterial3D:
+				var flash = material.duplicate()
+				flash.albedo_color = Color(1, 0.15, 0.15)
+				flash.emission_enabled = true
+				flash.emission = Color(1, 0, 0)
+				flash_surfaces.append({"mesh": mesh, "surface": surface,
+					"original": mesh.get_surface_override_material(surface), "flash": flash})
 
 func flash_red():
 	if flash_timer:
 		return
 	flash_timer = true
-	var meshes = get_meshes_recursive(self)
-	for mesh in meshes:
-		var mat = mesh.get_active_material(0)
-		if mat:
-			var new_mat = mat.duplicate()
-			new_mat.albedo_color = Color(1, 0.15, 0.15)
-			new_mat.emission_enabled = true
-			new_mat.emission = Color(1, 0, 0)
-			new_mat.emission_energy_multiplier = 1
-			mesh.set_surface_override_material(0, new_mat)
-	await get_tree().create_timer(0.1).timeout
-	for mesh in meshes:
-		mesh.set_surface_override_material(0, null)
+	for entry in flash_surfaces:
+		entry.mesh.set_surface_override_material(entry.surface, entry.flash)
+	await get_tree().create_timer(0.1, false).timeout
+	for entry in flash_surfaces:
+		if is_instance_valid(entry.mesh):
+			entry.mesh.set_surface_override_material(entry.surface, entry.original)
 	flash_timer = false
 
 func get_meshes_recursive(node):

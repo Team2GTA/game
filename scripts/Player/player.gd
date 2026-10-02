@@ -5,9 +5,9 @@ const TRAP = preload("res://scenes/Level/trap.tscn")
 
 const MAX_STAMINA := 50.0
 const WALK_SPEED := 5.5
-const SPRINT_SPEED := 10.0
+const SPRINT_SPEED := 8.0
 const AIR_SPEED := 2.0
-const AIR_SPRINT_SPEED := 7.0
+const AIR_SPRINT_SPEED := 5.5
 const GRAVITY := 35.0
 const JUMP_FORCE := 10.0
 
@@ -40,6 +40,16 @@ var decel := 8.0
 
 var invincible := false
 var can_interact := true
+var exhausted := false
+var jump_buffer := 0.0
+var coyote_time := 0.0
+var jump_consumed := false
+var look_pitch := 0.0
+var recoil := 0.0
+var damage_shake := 0.0
+var shake_time := 0.0
+var dead := false
+signal feedback(kind: String, message: String)
 
 signal update_score
 signal player_dead
@@ -65,44 +75,60 @@ func _ready() -> void:
 	invincible = false
 
 	cam_base_pos = %Camera3D.position
+	look_pitch = %Camera3D.rotation.x
+	$Camera3D/Axe.confirmed_hit.connect(func(): feedback.emit("hit", ""))
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion:
-		rotation_degrees.y -= event.relative.x * 0.2
-
-		%Camera3D.rotation_degrees.x -= event.relative.y * 0.3
-		%Camera3D.rotation_degrees.x = clamp(
-			%Camera3D.rotation_degrees.x,
-			-60.0,
-			80.0
-		)
-
-	if Input.is_action_just_pressed("1"):
-		weapon = Weapon.GUN
-
-	elif Input.is_action_just_pressed("2"):
-		weapon = Weapon.AXE
-
+	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		var sensitivity := Settings.sensitivity * (0.45 if zoomed else 1.0)
+		rotation_degrees.y -= event.relative.x * sensitivity
+		look_pitch = clampf(look_pitch - deg_to_rad(event.relative.y * sensitivity), deg_to_rad(-60), deg_to_rad(80))
+	if event.is_action_pressed("jump") and not event.is_echo():
+		jump_buffer = 0.1
+	if event.is_action_pressed("1"):
+		switch_weapon(Weapon.GUN)
+	elif event.is_action_pressed("2"):
+		switch_weapon(Weapon.AXE)
 	if weapon == Weapon.GUN:
-		if event.is_action_pressed("zoom") and !gun_anim.is_playing():
-			zoomed = !zoomed
-			target_fov = 30.0 if zoomed else 75.0
-
+		if event.is_action_pressed("reload"):
+			if %Rifle.start_reload():
+				reset_zoom()
+				feedback.emit("reload", "Reloading")
+		if event.is_action_pressed("zoom") and not %Rifle.is_busy():
+			zoomed = not zoomed
 			if zoomed:
 				gun_anim.play("zoom")
 			else:
 				gun_anim.play_backwards("zoom")
 
+func switch_weapon(next_weapon: Weapon) -> bool:
+	if next_weapon == weapon or %Rifle.is_busy() or $Camera3D/Axe.is_busy():
+		return false
+	reset_zoom()
+	gun_anim.play("RESET")
+	weapon = next_weapon
+	return true
+
+func reset_zoom() -> void:
+	zoomed = false
+	target_fov = Settings.fov
+
 func _physics_process(delta):
-	
+
 	update_environment()
 
 	if Input.is_action_just_pressed("interact"):
 		throw()
 
-	await update_traps()
+	update_traps()
 
 	update_stamina(delta)
+	jump_buffer = maxf(jump_buffer - delta, 0.0)
+	if is_on_floor() and velocity.y <= 0.0:
+		coyote_time = 0.08
+		jump_consumed = false
+	else:
+		coyote_time = maxf(coyote_time - delta, 0.0)
 
 	# speed
 	var speed := get_speed()
@@ -125,38 +151,30 @@ func _on_tp_body_entered(body: Node3D) -> void:
 	body.position.z = 101.795 if body.position.z < 0 else -131.505
 
 func get_interactable(node: Node) -> Interactable:
-	if node is Interactable:
-		return node
-	if node.get_parent():
-		return get_interactable(node.get_parent())
+	# A cached raycast hit can outlive a collected or removed collider.
+	while is_instance_valid(node):
+		if node is Interactable:
+			return node
+		node = node.get_parent()
 	return null
 
 func update_camera(delta: float) -> void:
-	var horizontal_speed := Vector2(velocity.x, velocity.z).length()
-
-	if is_on_floor() and horizontal_speed > 0.1 and bob_enabled:
-		var bob_speed := 10.0 if horizontal_speed < 8.0 else 16.0
-		var bob_amount := 0.075 if horizontal_speed < 8.0 else 0.15
-
-		bob_time += delta * bob_speed
-
-		%Camera3D.position.x = cam_base_pos.x + sin(bob_time * 0.5) * bob_amount
-		%Camera3D.position.y = cam_base_pos.y + sin(bob_time) * bob_amount
-
+	var speed := Vector2(velocity.x, velocity.z).length()
+	var bob := Vector3.ZERO
+	if is_on_floor() and speed > 0.1 and bob_enabled:
+		bob_time += delta * (12.0 if speed > WALK_SPEED else 8.0)
+		var amount := 0.045 if speed > WALK_SPEED else 0.025
+		bob = Vector3(sin(bob_time * 0.5), sin(bob_time), 0) * amount
 	else:
 		bob_time = 0.0
-
-		%Camera3D.position.x = lerp(
-			%Camera3D.position.x,
-			cam_base_pos.x,
-			10.0 * delta
-		)
-
-		%Camera3D.position.y = lerp(
-			%Camera3D.position.y,
-			cam_base_pos.y,
-			10.0 * delta
-		)
+	recoil = move_toward(recoil, 0.0, delta * 0.09)
+	damage_shake = move_toward(damage_shake, 0.0, delta * 0.35)
+	shake_time += delta
+	var shake := Vector3(sin(shake_time * 95), cos(shake_time * 83), 0) * damage_shake if Settings.camera_shake else Vector3.ZERO
+	%Camera3D.position = cam_base_pos + bob + shake
+	%Camera3D.rotation.x = look_pitch + (recoil if Settings.camera_shake else 0.0)
+	target_fov = 30.0 if zoomed else Settings.fov
+	%Camera3D.fov = lerpf(%Camera3D.fov, target_fov, 1.0 - exp(-10.0 * delta))
 
 func update_movement(delta: float, speed: float) -> void:
 	var input := Input.get_vector("left", "right", "up", "down")
@@ -190,37 +208,46 @@ func update_movement(delta: float, speed: float) -> void:
 
 	velocity.y -= GRAVITY * delta
 
-	if Input.is_action_pressed("jump") and is_on_floor():
-		velocity.y = JUMP_FORCE
+	try_buffered_jump()
 
 	if Input.is_action_just_released("jump") and velocity.y > 0:
 		velocity.y = 0
 
-func get_speed() -> float:
-	if Input.is_action_pressed("sprint") and stamina > 0:
-		return SPRINT_SPEED if is_on_floor() else AIR_SPRINT_SPEED
+func try_buffered_jump() -> bool:
+	if jump_buffer <= 0.0 or coyote_time <= 0.0 or jump_consumed:
+		return false
+	jump_buffer = 0.0
+	if stamina < 8.0:
+		feedback.emit("stamina", "Not enough stamina to jump")
+		return false
+	stamina -= 8.0
+	regen_timer = 0.0
+	velocity.y = JUMP_FORCE
+	coyote_time = 0.0
+	jump_consumed = true
+	return true
 
+func get_speed() -> float:
+	if Input.is_action_pressed("sprint") and stamina > 0 and not exhausted:
+		return SPRINT_SPEED if is_on_floor() else AIR_SPRINT_SPEED
 	return WALK_SPEED if is_on_floor() else AIR_SPEED
 
 func update_stamina(delta: float) -> void:
-	var moving := Vector2(velocity.x, velocity.z).length() > 0.5
-	var sprinting := Input.is_action_pressed("sprint") and moving
-
-	if sprinting and stamina > 0:
-		stamina_timer += delta
+	var moving := Vector2(velocity.x, velocity.z).length() > 0.5 and Input.get_vector("left", "right", "up", "down").length() > 0.1
+	var sprinting := Input.is_action_pressed("sprint") and moving and not exhausted and stamina > 0.0
+	if sprinting:
+		stamina = maxf(stamina - 12.0 * delta, 0.0)
 		regen_timer = 0.0
-
-		if stamina_timer >= 1.0:
-			stamina = max(stamina - 2, 0)
-			stamina_timer = 0.0
-
+		if stamina <= 0.0:
+			exhausted = true
+			feedback.emit("stamina", "Exhausted - catch your breath")
 	else:
-		stamina_timer = 0.0
+		var previous := regen_timer
 		regen_timer += delta
-
-		if regen_timer >= 0.5:
-			stamina = min(stamina + 2, MAX_STAMINA)
-			regen_timer = 0.0
+		var regen_delta := maxf(regen_timer - 1.25, 0.0) - maxf(previous - 1.25, 0.0)
+		stamina = minf(stamina + 9.0 * regen_delta, MAX_STAMINA)
+		if exhausted and stamina >= 15.0:
+			exhausted = false
 
 func update_weapon(delta: float) -> void:
 	match weapon:
@@ -230,48 +257,30 @@ func update_weapon(delta: float) -> void:
 		Weapon.AXE:
 			update_axe(delta)
 
-func update_gun(delta: float) -> void:
+func update_gun(_delta: float) -> void:
 	%Rifle.visible = true
 	$Camera3D/Axe.visible = false
-
-	%Camera3D.fov = lerp(
-		%Camera3D.fov,
-		target_fov,
-		10.0 * delta
-	)
-
-	if !Input.is_action_pressed("shoot"):
+	if not Input.is_action_pressed("shoot"):
 		return
-
-	if gun_anim.is_playing():
+	if %Rifle.capacity <= 0 and not %Rifle.is_busy():
+		if Input.is_action_just_pressed("shoot"):
+			feedback.emit("empty", "Empty magazine - " + Settings.binding_label("reload") + " to reload")
 		return
-
-	gun_anim.play("shoot_zoomed" if zoomed else "shoot")
-
-	if %Rifle.capacity <= 0:
+	if not %Rifle.try_fire(zoomed):
 		return
-
 	var projectile := BULLET.instantiate()
-
-	emit_signal("shot")
-
-	projectile.position = gun_cast.global_position
-	projectile.transform.basis = gun_cast.global_transform.basis
-
+	projectile.confirmed_hit.connect(func(): feedback.emit("hit", ""))
 	get_parent().add_child(projectile)
+	projectile.global_transform = gun_cast.global_transform
+	shot.emit()
+	if Settings.camera_shake:
+		recoil = minf(recoil + 0.012, 0.024)
 
-func update_axe(delta: float) -> void:
+func update_axe(_delta: float) -> void:
 	%Rifle.visible = false
 	$Camera3D/Axe.visible = true
-
-	%Camera3D.fov = lerp(
-		%Camera3D.fov,
-		75.0,
-		10.0 * delta
-	)
-
-	if Input.is_action_just_pressed("shoot") and !axe_anim.is_playing():
-		axe_anim.play("swing")
+	if Input.is_action_just_pressed("shoot"):
+		$Camera3D/Axe.start_swing()
 
 func throw():
 	if interact_ray.is_colliding():
@@ -280,7 +289,7 @@ func throw():
 		if interactable and interactable.is_in_group("traps"):
 			interactable.interact(self)
 			return
-	
+
 	if Inventory.trap_count() > 0:
 		var trap_data: Dictionary = Inventory.remove_trap()
 		var trap: Node3D = TRAP.instantiate()
@@ -290,7 +299,7 @@ func throw():
 		trap.hit = trap_data["hit"]
 		trap.max_hit = trap_data["max_hit"]
 		get_parent().add_child(trap)
-		
+
 		if interact_ray.is_colliding():
 			trap.global_position = interact_ray.get_collision_point()
 		else:
@@ -329,11 +338,11 @@ func update_traps() -> void:
 	hit(trap.trap_damage)
 
 	invincible = true
-	await get_tree().create_timer(trap.timing).timeout
+	await get_tree().create_timer(trap.timing, false).timeout
 	invincible = false
 
 func hit(damage: int) -> void:
-	if invincible:
+	if invincible or dead:
 		return
 
 	health = max(health - damage, 0)
@@ -348,28 +357,18 @@ func points(amount: int) -> void:
 	update_score.emit()
 
 func die() -> void:
+	if dead:
+		return
+	dead = true
 	player_dead.emit()
 
 	set_physics_process(false)
 	set_process_input(false)
+	set_process_unhandled_input(false)
 
 func shake_camera(intensity: float) -> void:
-	var tween := create_tween()
-
-	var offset := Vector3(
-		randf_range(-intensity, intensity),
-		randf_range(-intensity, intensity),
-		0.0
-	)
-
-	%Camera3D.position += offset
-
-	tween.tween_property(
-		%Camera3D,
-		"position",
-		cam_base_pos,
-		0.12
-	)
+	if Settings.camera_shake:
+		damage_shake = minf(maxf(damage_shake, intensity * 0.2), 0.08)
 
 func push_rigid_bodies():
 	for i in get_slide_collision_count():

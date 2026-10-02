@@ -1,0 +1,236 @@
+{
+  "backup": "C:\\Users\\chekm\\.codex\\visualizations\\2026\\09\\25\\01a0d8a6-bf87-7151-91eb-97d5237974b2\\Bonk-original-assets.zip",
+  "source_bytes_before": 588208304,
+  "cache_bytes_before": 1119039983,
+  "models": [
+    {
+      "path": "assests/models/ceiling props/pot_1.glb",
+      "before": 13888380,
+      "after": 271548,
+      "shared_images": [
+        "assests/models/ceiling props/pot_2_MI_Censer01_Normal.png",
+        "assests/models/ceiling props/pot_2_MI_Censer01_Occlusion-MI_Censer01_MetallicRoughness.png",
+        "assests/models/ceiling props/pot_2_MI_Censer01_BaseColor.png"
+      ]
+    },
+    {
+      "path": "assests/models/ceiling props/torch.glb",
+      "before": 3147720,
+      "after": 232436,
+      "shared_images": [
+        "assests/models/ceiling props/torch_texture_torch_metal_Normal.jpg",
+        "assests/models/ceiling props/torch_texture_torch_metal_BaseColor.jpg",
+        "assests/models/ceiling props/torch_texture_torch_metal_Metallic.jpg-texture_torch_metal_Roughness.png",
+        "assests/models/ceiling props/torch_texture_torch_wood_Normal.jpg",
+        "assests/models/ceiling props/torch_texture_torch_wood_BaseColor.jpg",
+        "assests/models/ceiling props/torch_texture_torch_wood_Metallic.jpg-texture_torch_wood_Roughness.png"
+      ]
+    }
+  ],
+  "removed": [
+    {
+      "path": "assests/Poliigon_BrickReclaimedRunning_7787_BaseColor.jpg",
+      "bytes": 4053040
+    },
+    {
+      "path": "assests/Untitled.png",
+      "bytes": 540
+    },
+    {
+      "path": "assests/animation/Untitled.glb",
+      "bytes": 132868
+    },
+    {
+      "path": "assests/models/floor.glb",
+      "bytes": 24512804
+    },
+    {
+      "path": "assests/models/Mremireh O Desbiens_combined.gltf",
+      "bytes": 18424575
+    },
+    {
+      "path": "assests/models/pillar.glb",
+      "bytes": 41362412
+    },
+    {
+      "path": "assests/models/pillar_MI_PillarParts01_BaseColor.png",
+      "bytes": 8164506
+    },
+    {
+      "path": "assests/models/pillar_MI_PillarParts01_Normal.png",
+      "bytes": 3220651
+    },
+    {
+      "path": "assests/models/pillar_MI_PillarParts01_Occlusion-MI_PillarParts01_MetallicRoughness.png",
+      "bytes": 5803793
+    },
+    {
+      "path": "assests/models/pillar_MI_PillarParts01_Specular.png",
+      "bytes": 3269795
+    },
+    {
+      "path": "assests/models/pillar_MI_WallDirty01_BaseColor.png",
+      "bytes": 9207147
+    },
+    {
+      "path": "assests/models/pillar_MI_WallDirty01_Normal.png",
+      "bytes": 2890560
+    },
+    {
+      "path": "assests/models/pillar_MI_WallDirty01_Occlusion-MI_WallDirty01_MetallicRoughness.png",
+      "bytes": 5978450
+    },
+    {
+      "path": "assests/models/pillar_MI_WallDirty01_Specular.png",
+      "bytes": 2749680
+    },
+    {
+      "path": "assests/models/Untitled.glb",
+      "bytes": 14020868
+    },
+    {
+      "path": "assests/models/Untitled_mremireh_body_normal.png",
+      "bytes": 4300666
+    },
+    {
+      "path": "assests/models/Untitled_mremireh_body_specular.png",
+      "bytes": 4832682
+    },
+    {
+      "path": "assests/models/Untitled_mremireh_body__diffuse.png",
+      "bytes": 3960068
+    },
+    {
+      "path": "assests/models/Untitled_mremireh_shoe_diffuse.png",
+      "bytes": 217200
+    },
+    {
+      "path": "assests/models/Untitled_mremireh_shoe_normal.png",
+      "bytes": 203080
+    },
+    {
+      "path": "assests/models/Untitled_mremireh_shoe_specular.png",
+      "bytes": 182002
+    },
+    {
+      "path": "assests/projectile/projectile_model.glb",
+      "bytes": 19028
+    },
+    {
+      "path": "assests/sounds/mixkit-exclamation-of-pain-from-a-zombie-2207.wav",
+      "bytes": 304016
+    },
+    {
+      "path": "assests/Textures/Sprite-0001.png",
+      "bytes": 316
+    },
+    {
+      "path": "assests/Textures/Untitled.png",
+      "bytes": 31523
+    },
+    {
+      "path": "assests/models/ceiling props/clay_pot.glb",
+      "bytes": 56027460
+    },
+    {
+      "path": "assests/models/ceiling props/clay_pot_MI_Pot_4_BaseColor.png",
+      "bytes": 6286583
+    },
+    {
+      "path": "assests/models/ceiling props/clay_pot_MI_Pot_4_MetallicRoughness.png",
+      "bytes": 704306
+    },
+    {
+      "path": "assests/models/ceiling props/clay_pot_MI_Pot_4_Normal.png",
+      "bytes": 9104075
+    },
+    {
+      "path": "assests/models/ceiling props/head.glb",
+      "bytes": 14287556
+    },
+    {
+      "path": "assests/models/ceiling props/pot_2.glb",
+      "bytes": 13941476
+    },
+    {
+      "path": "assests/models/ceiling props/pot_3.glb",
+      "bytes": 13840908
+    },
+    {
+      "path": "assests/models/ceiling props/pot_3_MI_Censer01_BaseColor.png",
+      "bytes": 5574644
+    },
+    {
+      "path": "assests/models/ceiling props/pot_3_MI_Censer01_Normal.png",
+      "bytes": 2511084
+    },
+    {
+      "path": "assests/models/ceiling props/pot_3_MI_Censer01_Occlusion-MI_Censer01_MetallicRoughness.png",
+      "bytes": 5530967
+    },
+    {
+      "path": "assests/models/ceiling props/torch_wall.glb",
+      "bytes": 11797432
+    },
+    {
+      "path": "assests/models/guns/Steampunk Rifle.glb",
+      "bytes": 305796
+    },
+    {
+      "path": "assests/models/melee/Axe Double.glb",
+      "bytes": 84232
+    },
+    {
+      "path": "assests/models/melee/Stylized_Knife_01.glb",
+      "bytes": 41046632
+    },
+    {
+      "path": "assests/models/melee/Stylized_Knife_01_Knife_01_Base_Color.png",
+      "bytes": 20962339
+    },
+    {
+      "path": "assests/models/melee/Stylized_Knife_01_Knife_01_Emissive.png",
+      "bytes": 258341
+    },
+    {
+      "path": "assests/models/melee/Stylized_Knife_01_Knife_01_Metallic-Knife_01_Roughness.png",
+      "bytes": 901031
+    },
+    {
+      "path": "assests/models/melee/Stylized_Knife_01_Knife_01_Normal_OpenGL.png",
+      "bytes": 18777323
+    },
+    {
+      "path": "assests/models/skuls/Skulls.glb",
+      "bytes": 17911228
+    },
+    {
+      "path": "assests/models/walls/opening.glb",
+      "bytes": 10237972
+    },
+    {
+      "path": "assests/models/ceiling props/pot_1_MI_Censer01_BaseColor.png",
+      "bytes": 5574644
+    },
+    {
+      "path": "assests/models/ceiling props/pot_1_MI_Censer01_Normal.png",
+      "bytes": 2511084
+    },
+    {
+      "path": "assests/models/ceiling props/pot_1_MI_Censer01_Occlusion-MI_Censer01_MetallicRoughness.png",
+      "bytes": 5530967
+    },
+    {
+      "path": "2026-05-19 01-02-59.mp4",
+      "bytes": 29684647
+    }
+  ],
+  "source_bytes_after": 149787331,
+  "cache_bytes_after": 228952904,
+  "pack_bytes": 117756992,
+  "validation": {
+    "source_regressions": 26,
+    "packaged_gameplay_regressions": 24,
+    "geometry_materials_texture_pixels_unchanged": true
+  }
+}

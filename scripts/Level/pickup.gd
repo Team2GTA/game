@@ -1,11 +1,15 @@
 extends Node3D
 @export var type = "base"
+signal pickup_feedback(kind: String, message: String)
 signal proceed
+var collected := false
 @onready var base: MeshInstance3D = $Base
 @onready var heal: MeshInstance3D = $Heal
 @onready var text: Sprite3D = $Display/Sprite3D
 
 func _ready() -> void:
+	if get_parent().has_signal("combat_feedback"):
+		pickup_feedback.connect(func(kind, message): get_parent().combat_feedback.emit(kind, message))
 	match type:
 		"heal":
 			heal.visible = true
@@ -28,27 +32,29 @@ func _ready() -> void:
 			mat.albedo_color = Color(0.518, 0.502, 1.0, 1.0)
 			mat.emission = Color(0.219, 0.186, 0.641, 1.0)
 			base.set_surface_override_material(0, mat)
-			
+
 func _on_detection_body_entered(body: Node3D) -> void:
-	if body.is_in_group("player"):
+	if body.is_in_group("player") and not collected:
+		collected = true
 		var main: Node3D = $".."
-		var color_rect: ColorRect = $"../UI/ColorRect"
+		var message := "Supplies collected"
 		match type:
 			"heal":
-				body.health = min(body.health + 10, body.max_health)
+				var restored: int = mini(10, body.max_health - body.health)
+				body.health += restored
 				main.target_hp = body.health
 				main.update_health()
-				color_rect.color = Color(0x75a83a8e)
+				message = "+%d vitality" % restored
 			"mag":
 				Inventory.add_ammo("rifle", 10)
-				color_rect.color = Color(0xc777008e)
+				message = "+10 rifle ammunition"
 			"heal_gain":
 				body.max_health +=5
-				Inventory.add_ammo("rifle",10) 
+				Inventory.add_ammo("rifle",10)
 				body.health = body.max_health
 				main.target_hp = body.health
 				main.update_health()
-				color_rect.color = Color(0x548ed18e)
+				message = "+5 maximum vitality / fully healed / +10 ammunition"
 				main.hp_bar.max_value = body.max_health
 				main.hp_ghost.max_value = body.max_health
 				emit_signal("proceed")
@@ -57,8 +63,5 @@ func _on_detection_body_entered(body: Node3D) -> void:
 				rifle.mag_size = 20
 				rifle.capacity = 20
 				emit_signal("proceed")
-		color_rect.visible = true
-		await get_tree().create_timer(0.2).timeout
-		color_rect.visible = false
-		color_rect.color = Color(0xff00008e)
-		call_deferred("queue_free")
+		pickup_feedback.emit("pickup", message)
+		queue_free()

@@ -4,13 +4,14 @@ class_name StateMachine
 var current_state: State
 
 func _ready() -> void:
+	process_physics_priority = -1
 	call_deferred("initialize")
 
 func initialize() -> void:
 	for child in get_children():
 		child.enemy = get_parent()
 		child.player = get_parent().player
-	
+
 	current_state = get_child(0)
 	current_state.enter()
 
@@ -25,11 +26,11 @@ func transition(new_state_name: String) -> void:
 	current_state.enter()
 
 func _process(delta: float) -> void:
-	if current_state == null or current_state.player == null:
+	if current_state == null or current_state.player == null or get_parent().spawning:
 		return
 	current_state.update(delta)
 
 func _physics_process(delta: float) -> void:
-	if current_state == null or current_state.player == null:
+	if current_state == null or current_state.player == null or get_parent().spawning:
 		return
 	current_state.physics_update(delta)

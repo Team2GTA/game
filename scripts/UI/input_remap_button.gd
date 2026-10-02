@@ -4,46 +4,57 @@ class_name InputRemapButton
 @export var action: String
 @export var action_event_index: int = 0
 
-func _unhandled_input(event: InputEvent) -> void:
-	if !InputMap.has_action(action) or !is_pressed():
-		return
-		
-	if event.is_pressed() and (event is InputEventKey):
-		var action_events_list = InputMap.action_get_events(action)
-		if action_event_index<action_events_list.size():
-			InputMap.action_erase_event(action,action_events_list[action_event_index])
-		
-		InputMap.action_add_event(action, event)
-		action_event_index = InputMap.action_get_events(action).size()-1
-		button_pressed = false
-		release_focus()
-		_on_toggled(false)
-
 func _input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.is_pressed():
-		button_pressed = false
-		release_focus()
+	if not button_pressed or not InputMap.has_action(action):
+		return
+	if not event.is_pressed() or event.is_echo():
+		return
+	if event is InputEventKey and event.keycode == KEY_ESCAPE:
+		finish_remap()
+		get_viewport().set_input_as_handled()
+		return
+	if not (event is InputEventKey or event is InputEventMouseButton):
+		return
+	var events := InputMap.action_get_events(action)
+	if action_event_index < events.size():
+		events[action_event_index] = event
+	else:
+		events.append(event)
+		action_event_index = events.size() - 1
+	InputMap.action_erase_events(action)
+	for binding in events:
+		InputMap.action_add_event(action, binding)
+	Settings.save_binding(action)
+	finish_remap()
+	get_viewport().set_input_as_handled()
+
+func finish_remap() -> void:
+	button_pressed = false
+	release_focus()
+	_on_toggled(false)
 
 func _ready() -> void:
-	add_theme_font_size_override("font_size",48)
+	add_theme_font_size_override("font_size", 48)
 	toggle_mode = true
+	add_to_group("remap_buttons")
 	toggled.connect(_on_toggled)
 	_on_toggled(false)
 
 func _on_toggled(toggled_on: bool) -> void:
-	if !action or !InputMap.has_action(action):
+	if not InputMap.has_action(action):
 		return
 	if toggled_on:
-		text = "Awaiting Input"
+		for button in get_tree().get_nodes_in_group("remap_buttons"):
+			if button != self and button.button_pressed:
+				button.finish_remap()
+		text = "Press key / mouse (Esc cancels)"
 		return
-	
-	if action_event_index>=InputMap.action_get_events(action).size():
+	var events := InputMap.action_get_events(action)
+	if action_event_index >= events.size():
 		text = "Unassigned"
 		return
-		
-	var input = InputMap.action_get_events(action)[action_event_index]
-	if InputEventKey:
-		if input.physical_keycode !=0:
-			text = OS.get_keycode_string(input.physical_keycode)
-		else:
-			text = OS.get_keycode_string(input.keycode)
+	var binding = events[action_event_index]
+	if binding is InputEventKey:
+		text = OS.get_keycode_string(binding.physical_keycode if binding.physical_keycode != 0 else binding.keycode)
+	else:
+		text = binding.as_text()
